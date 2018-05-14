@@ -37,11 +37,13 @@
 // ----------------------------------------------------------------------------
 
 $SERVERNAME_ADMINAFK = '';
+$PORT_ADMINAFK = '';
 $DBNAME_ADMINAFK = '';
 $USERNAME_ADMINAFK = '';
 $PASSWORD_ADMINAFK = '';
 $BASE_URL = '';
 $SERVERNAME_EBOT = '';
+$PORT_EBOT = '';
 $DBNAME_EBOT = '';
 $USERNAME_EBOT = '';
 $PASSWORD_EBOT = '';
