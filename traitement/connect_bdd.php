@@ -38,7 +38,7 @@
 
 try
 {
-    $BDD_ADMINAFK = new PDO("mysql:host=$SERVERNAME_ADMINAFK;dbname=$DBNAME_ADMINAFK;charset=UTF8", $USERNAME_ADMINAFK, $PASSWORD_ADMINAFK);
+    $BDD_ADMINAFK = new PDO("mysql:host=$SERVERNAME_ADMINAFK;port=$PORT_ADMINAFK;dbname=$DBNAME_ADMINAFK;charset=UTF8", $USERNAME_ADMINAFK, $PASSWORD_ADMINAFK);
 	$BDD_ADMINAFK->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$global_config = $BDD_ADMINAFK->query('SELECT * FROM configs');
 	$CONFIG = array();
@@ -56,7 +56,7 @@ catch (PDOException $e)
 }
 try
 {
-    $BDD_EBOT = new PDO("mysql:host=$SERVERNAME_EBOT;dbname=$DBNAME_EBOT;charset=UTF8", $USERNAME_EBOT, $PASSWORD_EBOT);
+    $BDD_EBOT = new PDO("mysql:host=$SERVERNAME_EBOT;port=$PORT_EBOT;dbname=$DBNAME_EBOT;charset=UTF8", $USERNAME_EBOT, $PASSWORD_EBOT);
 	$BDD_EBOT->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } 
 catch (PDOException $e) 
