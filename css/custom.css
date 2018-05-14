@@ -1,0 +1,101 @@
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+/* 
+Extra small devices (portrait phones, less than 544px) 
+No media query since this is the default in Bootstrap because it is "mobile first"
+*/
+h1 {font-size:2.3rem;} /*1rem = 16px*/
+p {font-size:0.7rem;} /*1rem = 16px*/
+.special_footer {font-size:0.7rem;} /*1rem = 16px*/
+
+/*
+####################################################
+M E D I A  Q U E R I E S
+####################################################
+*/
+ 
+/*
+::::::::::::::::::::::::::::::::::::::::::::::::::::
+Bootstrap 4 breakpoints
+*/
+/* Small devices (landscape phones, 544px and up) */
+@media (min-width: 544px) {  
+  h1 {font-size:2.4rem;} /*1rem = 16px*/
+  p {font-size:0.8rem;} /*1rem = 16px*/
+  .special_footer {font-size:0.8rem;} /*1rem = 16px*/
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {  
+  h1 {font-size:2.6rem;} /*1rem = 16px*/
+  p {font-size:0.8rem;} /*1rem = 16px*/
+  .special_footer {font-size:0.8rem;} /*1rem = 16px*/
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+  h1 {font-size:3rem;} /*1rem = 16px*/
+  p {font-size:1rem;} /*1rem = 16px*/
+  .special_footer {font-size:1rem;} /*1rem = 16px*/
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+  h1 {font-size:3rem;} /*1rem = 16px*/
+  p {font-size:1rem;} /*1rem = 16px*/
+  .special_footer {font-size:1rem;} /*1rem = 16px*/
+}
+
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -8rem; 
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.footer, .page-wrap:after {
+  height: 8rem; 
+}
+.footer {
+  padding: 1rem;
+}
+
+.special_href{
+	color:white;
+}
+
+.social {
+	width:24px;
+	margin:3px;
+}
+
+.social:hover {
+	-webkit-animation: move 1s;
+    -moz-animation: move 1s;
+    -ms-animation: move 1s;
+    -o-animation: move 1s;
+    animation: move 1s;
+}
+
+@keyframes move{
+  0% 
+  {
+	transform: rotate(20deg);
+  }
+  25% 
+  {
+	transform: rotate(0deg);
+  }
+  50% 
+  {
+	transform: rotate(-20deg);
+  }
+  75% 
+  {
+	transform: rotate(0deg);
+  }
+}
