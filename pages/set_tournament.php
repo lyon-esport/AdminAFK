@@ -296,10 +296,15 @@ $season_display = check_season($BDD_EBOT);
 											echo '<td>';
 												echo '<select id="season" name="season" class="form-control">';
 												echo '<option></option>';
-												for($j=0;$j<count($season_id);$j++)
+												$k=0;
+												while ($donnees = $season_display->fetch())
 												{
-													echo "<option>id = ".$season_id[$j]." , name = ".$season_name[$j]."</option>";
+													$season_id[$k] = $donnees['id'];
+													$season_name[$k] = $donnees['name'];
+													echo "<option>id = ".$season_id[$k]." , name = ".$season_name[$k]."</option>";
+													$k++;
 												}
+												echo '</select>';
 											echo '</td>';
 											new_crsf("csrf_team_file");
 											echo "<td><button type='submit' name='choice' value='Create teams on eBot' class='btn btn-primary'>Import</button></td>";
@@ -309,7 +314,7 @@ $season_display = check_season($BDD_EBOT);
 								</tbody>
 							</table>
 						</div>
-						<h6>Choose CSV file (Separators : ";" / Encoding "UTF-8")</h6>
+						<h6>Choose CSV file (Separators : "," / Encoding "UTF-8")</h6>
 					</div>
 				</div>
 			</div>
@@ -343,7 +348,7 @@ $season_display = check_season($BDD_EBOT);
 								</tbody>
 							</table>
 						</div>
-						<h6>Choose CSV file (Separators : ";" / Encoding "UTF-8")</h6>
+						<h6>Choose CSV file (Separators : "," / Encoding "UTF-8")</h6>
 					</div>
 				</div>
 			</div>

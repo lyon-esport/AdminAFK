@@ -104,7 +104,6 @@ if(!empty($login) and !empty($pass))
 		$ip = get_ip();
 		$req2 = $BDD_ADMINAFK->prepare('INSERT INTO login_fail(login_try, fail, ip, date) VALUES(?, ?, ?, ?)');
 		$req2->execute(array($login, "login", $ip, date(' Y-m-d H:i:s')));
-		$resultat = $req2->fetch();
 		$req2->closeCursor();
 	}
 	else
@@ -133,7 +132,6 @@ if(!empty($login) and !empty($pass))
 		$ip = get_ip();
 		$req2 = $BDD_ADMINAFK->prepare('INSERT INTO login_fail(login_try, fail, ip, date) VALUES(?, ?, ?, ?)');
 		$req2->execute(array($login, "password", $ip, date(' Y-m-d H:i:s')));
-		$resultat = $req2->fetch();
 		$req2->closeCursor();
 	}
 }
