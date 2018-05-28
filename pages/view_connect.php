@@ -144,15 +144,15 @@ echo '<html>';
 									echo '</tr>';
 								echo '</thead>';
 								echo '<tbody class="text-center">';
-								$reponse = $BDD_EBOT->query('SELECT matchs.id, matchs.team_a_name, matchs.team_b_name, maps.map_name, matchs.ip, matchs.config_password, matchs.status, matchs.enable FROM matchs LEFT JOIN maps on maps.match_id = matchs.id');
+								$reponse = $BDD_EBOT->query('SELECT matchs.id, matchs.team_a_name, matchs.team_b_name, ta.name AS teama_name, tb.name AS teamb_name, maps.map_name, matchs.ip, matchs.config_password, matchs.status, matchs.enable FROM matchs LEFT JOIN maps ON maps.match_id = matchs.id LEFT JOIN teams AS ta ON ta.id = team_a LEFT JOIN teams AS tb ON tb.id = team_b');
 									while ($donnees = $reponse->fetch())
 									{
 										if(($donnees['status']>1) && ($donnees['status']<13) && ($donnees['enable']>0))
-										{
+										{	
 											echo "<tr>";
 											  echo "<td class=text-center>", $donnees['id'], "</td>";
-											  echo "<td class=text-center>", $donnees['team_a_name'], "</td>";
-											  echo "<td class=text-center>", $donnees['team_b_name'], "</td>";
+											  if(isset($donnees['teama_name'])){echo "<td class=text-center>", $donnees['teama_name'], "</td>";}else{echo "<td class=text-center>", $donnees['team_a_name'], "</td>";}
+											  if(isset($donnees['teamb_name'])){echo "<td class=text-center>", $donnees['teamb_name'], "</td>";}else{echo "<td class=text-center>", $donnees['team_b_name'], "</td>";}
 											  echo "<td class=text-center>", $donnees['map_name'], "</td>";
 											  if(!empty($donnees['ip']))
 											  {
