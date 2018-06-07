@@ -41,6 +41,7 @@ include_once '../traitement/check_config.php';
 include_once '../traitement/connect_bdd.php';
 include_once '../traitement/verif_user.php';
 include_once '../traitement/function_toornament.php';
+include_once 'header.php';
 include_once 'footer.php';
 include_once 'navbar.php';
 
@@ -91,24 +92,7 @@ else
 }
 echo '<html>';
 	echo '<head>';
-		echo '<title>AdminAFK</title>';
-		echo '<meta name="description" content="Outil d\'administration avec eBot et toornament par -MoNsTeRRR">';
-		echo '<meta name="author" content="Ludovic Ortega">';
-		echo '<meta charset="UTF-8">';
-		echo '<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">';
-		if(isset($CONFIG['url_glyphicon']) && !empty($CONFIG['url_glyphicon']))
-		{
-			echo '<link rel="icon" type="images/png" href="../'.$CONFIG['url_glyphicon'].'" />';
-		}
-		echo '<link rel="stylesheet" href="../css/bootstrap.min.css">';
-		echo '<link rel="stylesheet" href="../css/dataTables.bootstrap4.min.css">';
-		echo '<link rel="stylesheet" href="../css/custom.css">';
-		echo '<script src="../js/jquery-3.2.1.slim.min.js"></script>';
-		echo '<script src="../js/popper.min.js"></script>';
-		echo '<script src="../js/bootstrap.min.js"></script>';
-		echo '<script src="../js/jquery.dataTables.min.js"></script>';
-		echo '<script src="../js/dataTables.bootstrap4.min.js"></script>';
-		echo '<script src="../js/table_script.js"></script>';
+		header_html('../', False, $CONFIG['url_glyphicon']);
 	echo '</head>';
 	echo '<body>';
 		if($embed == false)

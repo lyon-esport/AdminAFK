@@ -42,6 +42,7 @@ include_once '../traitement/connect_bdd.php';
 include_once '../traitement/check_season.php';
 include_once '../traitement/verif_user.php';
 include_once '../traitement/csrf.php';
+include_once 'header.php';
 include_once 'footer.php';
 include_once 'navbar.php';
 
@@ -71,23 +72,7 @@ $season_display = check_season($BDD_EBOT);
 ?>
 <html>
 	<head>
-		<title>AdminAFK</title>
-		<meta name="description" content="Outil d'administration avec eBot et toornament par -MoNsTeRRR">
-		<meta name="author" content="Ludovic Ortega">
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<?php
-		if(isset($CONFIG['url_glyphicon']) && !empty($CONFIG['url_glyphicon']))
-		{
-			echo '<link rel="icon" type="images/png" href="../'.$CONFIG['url_glyphicon'].'" />';
-		}
-		?>
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" href="../css/custom.css">
-		<script src="../js/jquery-3.2.1.slim.min.js"></script>
-		<script src="../js/popper.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
-		<script src="../js/input_file.js"></script>
+		<?php header_html('../', False, $CONFIG['url_glyphicon']); ?>
 	</head>
 	<body>
 		<div class= "page-wrap">
