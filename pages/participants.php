@@ -165,7 +165,7 @@ echo '<html>';
 									echo '<div class="card">';
 									if(isset($result_toornament[0][$i]->custom_fields->country) && !empty($result_toornament[0][$i]->custom_fields->country))
 									{ 
-										$flag = '&nbsp<img class="img-fluid rounded float-left" style="max-height: 1.7rem;" src="../images/flags/'.$result_toornament[0][$i]->custom_fields->country.'.svg"/>';
+										$flag = '&nbsp<img class="img-fluid rounded float-left" style="max-height: 1.7rem;" src="../images/flags/'.strtolower($result_toornament[0][$i]->custom_fields->country).'.svg"/>';
 									}
 									else
 									{ 
@@ -228,7 +228,7 @@ echo '<html>';
 									echo '<div class="card">';
 									if(isset($result_toornament[0][$i]->custom_fields->country) && !empty($result_toornament[0][$i]->custom_fields->country))
 									{ 
-										$flag = '&nbsp<img class="img-fluid rounded float-right" style="max-height: 1.7rem;" src="../images/flags/'.$result_toornament[0][$i]->custom_fields->country.'.svg"/>';
+										$flag = '&nbsp<img class="img-fluid rounded float-left" style="max-height: 1.7rem;" src="../images/flags/'.strtolower($result_toornament[0][$i]->custom_fields->country).'.svg"/>';
 									}
 									else
 									{ 
