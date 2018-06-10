@@ -41,6 +41,7 @@ include_once 'connect_bdd.php';
 include_once 'verif_user.php';
 include_once 'csrf.php';
 include_once 'check_ip.php';
+include_once 'check_input.php';
 include_once 'save_log.php';
 
 session_start();
