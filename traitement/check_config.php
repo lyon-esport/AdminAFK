@@ -36,12 +36,13 @@
 // termes.
 // ----------------------------------------------------------------------------
 
-if(!isset($SERVERNAME_ADMINAFK) || empty($SERVERNAME_ADMINAFK) || !isset($DBNAME_ADMINAFK) || empty($DBNAME_ADMINAFK) || !isset($USERNAME_ADMINAFK) || empty($USERNAME_ADMINAFK) || !isset($PASSWORD_ADMINAFK) || !isset($BASE_URL) || empty($BASE_URL) || !isset($SERVERNAME_EBOT) || empty($SERVERNAME_EBOT) || !isset($DBNAME_EBOT) || empty($DBNAME_EBOT) || !isset($USERNAME_EBOT) || empty($USERNAME_EBOT) || !isset($PASSWORD_EBOT))
+if(!isset($SERVERNAME_ADMINAFK) || empty($SERVERNAME_ADMINAFK) || !isset($PORT_ADMINAFK) || empty($PORT_ADMINAFK) || !isset($DBNAME_ADMINAFK) || empty($DBNAME_ADMINAFK) || !isset($USERNAME_ADMINAFK) || empty($USERNAME_ADMINAFK) || !isset($PASSWORD_ADMINAFK) || !isset($BASE_URL) || empty($BASE_URL) || !isset($SERVERNAME_EBOT) || empty($SERVERNAME_EBOT) || !isset($PORT_EBOT) || empty($PORT_EBOT) || !isset($DBNAME_EBOT) || empty($DBNAME_EBOT) || !isset($USERNAME_EBOT) || empty($USERNAME_EBOT) || !isset($PASSWORD_EBOT))
 {
 	echo "/!\ERROR : /!\<br><br>";
 	echo "----------------------";
 	echo "<br><br>";
 	if(!isset($SERVERNAME_ADMINAFK)){echo "\$SERVERNAME_ADMINAFK isn't set <br>";}elseif(empty($SERVERNAME_ADMINAFK)){echo "\$SERVERNAME_ADMINAFK is empty <br>";}
+	if(!isset($PORT_ADMINAFK)){echo "\$PORT_ADMINAFK isn't set <br>";}elseif(empty($PORT_ADMINAFK)){echo "\$PORT_ADMINAFK is empty <br>";}
 	if(!isset($DBNAME_ADMINAFK)){echo "\$DBNAME_ADMINAFK isn't set <br>";}elseif(empty($DBNAME_ADMINAFK)){echo "\$DBNAME_ADMINAFK is empty <br>";}
 	if(!isset($USERNAME_ADMINAFK)){echo "\$USERNAME_ADMINAFK isn't set <br>";}elseif(empty($USERNAME_ADMINAFK)){echo "\$USERNAME_ADMINAFK is empty <br>";}
 	if(!isset($PASSWORD_ADMINAFK)){echo "\$PASSWORD_ADMINAFK isn't set <br>";}
@@ -49,6 +50,7 @@ if(!isset($SERVERNAME_ADMINAFK) || empty($SERVERNAME_ADMINAFK) || !isset($DBNAME
 	if(!isset($BASE_URL)){echo "\$BASE_URL isn't set <br>";}elseif(empty($BASE_URL)){echo "\$BASE_URL is empty <br>";}
 	
 	if(!isset($SERVERNAME_EBOT)){echo "\$SERVERNAME_EBOT isn't set <br>";}elseif(empty($SERVERNAME_EBOT)){echo "\$SERVERNAME_EBOT is empty <br>";}
+	if(!isset($PORT_EBOT)){echo "\$PORT_EBOT isn't set <br>";}elseif(empty($PORT_EBOT)){echo "\$PORT_EBOT is empty <br>";}
 	if(!isset($DBNAME_EBOT)){echo "\$DBNAME_EBOT isn't set <br>";}elseif(empty($DBNAME_EBOT)){echo "\$DBNAME_EBOT is empty <br>";}
 	if(!isset($USERNAME_EBOT)){echo "\$USERNAME_EBOT isn't set <br>";}elseif(empty($USERNAME_EBOT)){echo "\$USERNAME_EBOT is empty <br>";}
 	if(!isset($PASSWORD_EBOT)){echo "\$PASSWORD_EBOT isn't set <br>";}

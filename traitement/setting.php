@@ -159,6 +159,79 @@ if($choice=="match_ebot")
 	{
 		$ebot_pass = "";
 	}
+	if(isset($_POST['ebot_match_mmr']))
+	{
+		$ebot_match_mmr = $_POST['ebot_match_mmr'];
+		if(verify_input_text("/[\"']/", $ebot_match_mmr))
+		{
+			$_SESSION['state']="1";
+			$_SESSION['message']="Field \"Match MMR\" does not allow characters : \" '";
+			header('Location: '.$BASE_URL.'pages/setting.php');
+			exit();
+		}
+	}
+	else
+	{
+		$ebot_match_mmr = "";
+	}
+	if(isset($_POST['knife']))
+	{
+		if($_POST['knife'] != "Yes" && $_POST['knife'] != "No")
+		{
+			$_SESSION['state']="1";
+			$_SESSION['message']="Field \"Knife\" does not allow characters : \" '";
+			header('Location: '.$BASE_URL.'pages/setting.php');
+			exit();
+		}
+		else
+		{
+			if($_POST['knife'] == "Yes")
+			{
+				$ebot_knife = "1";
+			}
+			elseif($_POST['knife'] == "No")
+			{
+				$ebot_knife = "0";
+			}
+			else
+			{
+				$ebot_knife = "";
+			}
+		}
+	}
+	else
+	{
+		$ebot_knife = "";
+	}
+	if(isset($_POST['overtime_status']))
+	{
+		if($_POST['overtime_status'] != "Yes" && $_POST['overtime_status'] != "No")
+		{
+			$_SESSION['state']="1";
+			$_SESSION['message']="Field \"Overtime status\" does not allow characters : \" '";
+			header('Location: '.$BASE_URL.'pages/setting.php');
+			exit();
+		}
+		else
+		{
+			if($_POST['overtime_status'] == "Yes")
+			{
+				$overtime_status = "1";
+			}
+			elseif($_POST['overtime_status'] == "No")
+			{
+				$overtime_status = "0";
+			}
+			else
+			{
+				$overtime_status = "";
+			}
+		}
+	}
+	else
+	{
+		$overtime_status = "";
+	}
 	if(isset($_POST['overtime_mmr']))
 	{
 		$overtime_mmr = $_POST['overtime_mmr'];
@@ -201,9 +274,15 @@ if($choice=="match_ebot")
 	$req->closeCursor();
 	$req->execute(array($ebot_pass, "default_ebot_pass"));
 	$req->closeCursor();
-	$req->execute(array($overtime_mmr, "default_ebot_over_mmr"));
+	$req->execute(array($ebot_match_mmr, "default_ebot_match_mmr"));
 	$req->closeCursor();
-	$req->execute(array($overtime_money, "default_ebot_over_money"));
+	$req->execute(array($ebot_knife, "default_ebot_knife"));
+	$req->closeCursor();
+	$req->execute(array($overtime_status, "default_ebot_ot_status"));
+	$req->closeCursor();
+	$req->execute(array($overtime_mmr, "default_ebot_ot_mmr"));
+	$req->closeCursor();
+	$req->execute(array($overtime_money, "default_ebot_ot_money"));
 	$req->closeCursor();
 	$_SESSION['state']='2';
 	$_SESSION['message']="Updated default eBot configuration !";
