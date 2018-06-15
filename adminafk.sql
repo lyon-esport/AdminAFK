@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 14 mai 2018 à 09:45
+-- Généré le :  ven. 15 juin 2018 à 12:06
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `configs` (
   `value` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` varchar(3000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `configs`
@@ -44,19 +44,22 @@ CREATE TABLE IF NOT EXISTS `configs` (
 INSERT INTO `configs` (`id`, `name`, `value`, `type`) VALUES
 (1, 'url_ebot', '', 'string'),
 (2, 'url_glyphicon', '', 'string'),
-(3, 'default_ebot_rules', '', 'string'),
-(4, 'default_ebot_pass', '', 'string'),
-(5, 'default_ebot_over_mmr', '', 'integer'),
-(6, 'default_ebot_over_money', '', 'integer'),
-(7, 'toornament_api', '', 'string'),
-(8, 'toornament_client_id', '', 'string'),
-(9, 'toornament_client_secret', '', 'string'),
-(10, 'toornament_id', '', 'string'),
-(11, 'display_connect', '1', 'boolean'),
-(12, 'display_bracket', '1', 'boolean'),
-(13, 'display_participants', '1', 'boolean'),
-(14, 'display_schedule', '1', 'boolean'),
-(15, 'display_stream', '1', 'boolean');
+(3, 'default_ebot_rules', 'Lyon e-Sport', 'string'),
+(4, 'default_ebot_pass', 'LES', 'string'),
+(8, 'default_ebot_ot_mmr', '3', 'integer'),
+(9, 'default_ebot_ot_money', '16000', 'integer'),
+(10, 'toornament_api', '', 'string'),
+(11, 'toornament_client_id', '', 'string'),
+(12, 'toornament_client_secret', '', 'string'),
+(13, 'toornament_id', '', 'string'),
+(14, 'display_connect', '1', 'boolean'),
+(15, 'display_bracket', '1', 'boolean'),
+(16, 'display_participants', '1', 'boolean'),
+(17, 'display_schedule', '1', 'boolean'),
+(18, 'display_stream', '1', 'boolean'),
+(6, 'default_ebot_ot_status', '1', 'boolean'),
+(7, 'default_ebot_knife', '1', 'boolean'),
+(5, 'default_ebot_match_mmr', '15', 'integer');
 
 -- --------------------------------------------------------
 
@@ -138,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`login`, `password`, `level`, `created_at`, `created_by`, `update_at`, `update_by`, `last_login`, `last_ip`) VALUES
-('admin', '$2y$10$lGz.ChiP2zfaI0vWLNQUreTfiOldZ0aFdd/9OO5b.FHCebsGaup7.', 1, '2018-04-08 00:00:00', 'admin', '2018-05-05 13:51:29', 'admin', '2018-05-14 09:28:38', '127.0.0.1');
+('admin', '$2y$10$lGz.ChiP2zfaI0vWLNQUreTfiOldZ0aFdd/9OO5b.FHCebsGaup7.', 1, '2018-04-08 00:00:00', 'admin', '2018-05-05 13:51:29', 'admin', '2018-06-15 12:04:51', '127.0.0.1');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
