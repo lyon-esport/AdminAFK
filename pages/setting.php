@@ -262,31 +262,135 @@ if ($result_user['login']==$_SESSION['login'])
 				echo '<div class="card">';
 					echo '<div class="card-header text-white bg-secondary">Default eBot configuration</div>';
 					echo '<div class="card-body">';
+						echo '<form method="post" action="../traitement/setting.php">';
 						echo '<div class="table-responsive">';
 							echo '<table class="table table-bordered">';
 								echo '<thead class="thead text-center">';
 									echo '<tr>';
 										echo '<th scope="col">Rules</th>';
-										echo '<th scope="col">eBot password</th>';
-										echo '<th scope="col">Overtime MMR</th>';
-										echo '<th scope="col">Overtime money</th>';
+										echo '<th scope="col">Password</th>';
+										echo '<th scope="col">Match MMR</th>';
+										echo '<th scope="col">Knife</th>';
 										echo '<th scope="col">Action</th>';
 									echo '</tr>';
 								echo '</thead>';
 								echo '<tbody class="text-center">';
-									echo '<form method="post" action="../traitement/setting.php">';
 									echo '<tr>';
 										echo '<td><input type="text" name="rules" class="form-control" value="'.$CONFIG['default_ebot_rules'].'"></td>';
 										echo '<td><input type="text" name="ebot_pass" class="form-control" value="'.$CONFIG['default_ebot_pass'].'"></td>';
-										echo '<td><input type="text" name="overtime_mmr" class="form-control" value="'.$CONFIG['default_ebot_over_mmr'].'"></td>';
-										echo '<td><input type="text" name="overtime_money" class="form-control" value="'.$CONFIG['default_ebot_over_money'].'"></td>';
-										new_crsf("csrf_default_ebot");
-										echo "<td class='text-center align-middle'><button type='submit' name='choice' value='match_ebot' class='btn btn-primary'>Update</button>";
+										echo '<td>';
+											echo '<select id="default_ebot_match_mmr" name="default_ebot_match_mmr" class="form-control">';
+											if(isset($CONFIG['default_ebot_match_mmr']))
+											{
+												$tab_match_mmr = array("15", "12", "9", "5", "3");
+												if($CONFIG['default_ebot_match_mmr'] == "15" || $CONFIG['default_ebot_match_mmr'] == "12" || $CONFIG['default_ebot_match_mmr'] == "9" || $CONFIG['default_ebot_match_mmr'] == "5" || $CONFIG['default_ebot_match_mmr'] == "3")
+												{
+													echo "<option selected>".$CONFIG['default_ebot_match_mmr']."</option>";
+													for($i=0; $i<5;$i++)
+													{
+														if($tab_match_mmr[$i] != $CONFIG['default_ebot_match_mmr']){echo "<option>".$tab_match_mmr[$i]."</option>";}
+													}
+												}
+												else
+												{
+													echo "<option selected>15</option>";
+													echo "<option>12</option>";
+													echo "<option>9</option>";
+													echo "<option>5</option>";
+													echo "<option>3</option>";
+												}
+											}
+											else
+											{
+												echo "<option selected>15</option>";
+												echo "<option>12</option>";
+												echo "<option>9</option>";
+												echo "<option>5</option>";
+												echo "<option>3</option>";
+											}
+											echo '</select>';
+										echo '</td>';
+										echo '<td rowspan="3" class="text-center align-middle">';
+											echo '<select id="knife" name="knife" class="form-control">';
+											if(isset($CONFIG['default_ebot_knife']))
+											{
+												if($CONFIG['default_ebot_knife'] == "1")
+												{
+													echo "<option selected>Yes</option>";
+													echo "<option>No</option>";
+												}
+												else
+												{
+													echo "<option selected>No</option>";
+													echo "<option>Yes</option>";
+												}
+											}
+											else
+											{
+												echo "<option selected>Yes</option>";
+												echo "<option>No</option>";
+											}
+											echo '</select>';
+										echo '</td>';
+										echo "<td rowspan='3' class='text-center align-middle'><button type='submit' name='choice' value='match_ebot' class='btn btn-primary'>Update</button>";
 									echo '</tr>';
-									echo '</form>';
+									echo '<tr>';
+										echo '<th scope="col">Overtime status</th>';
+										echo '<th scope="col">Overtime MMR</th>';
+										echo '<th scope="col">Overtime money</th>';
+									echo '</tr>';
+									echo '<tr>';
+										echo '<td>';
+											echo '<select id="overtime_status" name="overtime_status" class="form-control">';
+											if(isset($CONFIG['default_ebot_ot_status']))
+											{
+												if($CONFIG['default_ebot_ot_status'] == "1")
+												{
+													echo "<option selected>Yes</option>";
+													echo "<option>No</option>";
+												}
+												else
+												{
+													echo "<option selected>No</option>";
+													echo "<option>Yes</option>";
+												}
+											}
+											else
+											{
+												echo "<option selected>Yes</option>";
+												echo "<option>No</option>";
+											}
+											echo '</select>';
+										echo '</td>';
+										echo '<td>';
+											echo '<select id="overtime_mmr" name="overtime_mmr" class="form-control">';
+											if(isset($CONFIG['default_ebot_ot_mmr']))
+											{
+												if($CONFIG['default_ebot_ot_mmr'] == 5)
+												{
+													echo "<option selected>5</option>";
+													echo "<option>3</option>";
+												}
+												else
+												{
+													echo "<option selected>3</option>";
+													echo "<option>5</option>";
+												}
+											}
+											else
+											{
+												echo "<option selected>3</option>";
+												echo "<option>5</option>";
+											}
+											echo '</select>';
+										echo '</td>';
+										echo '<td><input type="text" name="overtime_money" class="form-control" value="'.$CONFIG['default_ebot_ot_money'].'"></td>';
+									echo '</tr>';
 								echo '</tbody>';
 							echo '</table>';
-						echo '</div>';	
+						echo '</div>';
+						new_crsf("csrf_default_ebot");
+						echo '</form>';
 					echo '</div>';
 				echo '</div>';
 			echo '</div>';

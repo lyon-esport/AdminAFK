@@ -105,6 +105,7 @@ $req1->execute(array($login));
 while ($donnees = $req1->fetch())
 {
 	$login_bdd=$donnees['login'];
+	$level_number=$donnees['level'];
 	if($donnees['level']=="1")
 	{
 		$level_bdd="Super-admin";

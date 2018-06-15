@@ -207,11 +207,36 @@ $season_display = check_season($BDD_EBOT);
 							<div class="col">
 								<label for="match_mmr">Match MMR</label>
 								<select id="match_mmr" name="match_mmr" class="form-control">
-									<option selected>15</option>
-									<option>12</option>
-									<option>9</option>
-									<option>5</option>
-									<option>3</option>
+									<?php 
+									if(isset($CONFIG['default_ebot_match_mmr']))
+									{
+										$tab_match_mmr = array("15", "12", "9", "5", "3");
+										if($CONFIG['default_ebot_match_mmr'] == "15" || $CONFIG['default_ebot_match_mmr'] == "12" || $CONFIG['default_ebot_match_mmr'] == "9" || $CONFIG['default_ebot_match_mmr'] == "5" || $CONFIG['default_ebot_match_mmr'] == "3")
+										{
+											echo "<option selected>".$CONFIG['default_ebot_match_mmr']."</option>";
+											for($i=0; $i<5;$i++)
+											{
+											if($tab_match_mmr[$i] != $CONFIG['default_ebot_match_mmr']){echo "<option>".$tab_match_mmr[$i]."</option>";}
+											}
+										}
+										else
+										{
+											echo "<option selected>15</option>";
+											echo "<option>12</option>";
+											echo "<option>9</option>";
+											echo "<option>5</option>";
+											echo "<option>3</option>";
+										}
+									}
+									else
+									{
+										echo "<option selected>15</option>";
+										echo "<option>12</option>";
+										echo "<option>9</option>";
+										echo "<option>5</option>";
+										echo "<option>3</option>";
+									}
+									?>
 								</select>
 							</div>
 						</div>
@@ -219,15 +244,51 @@ $season_display = check_season($BDD_EBOT);
 						  <div class="col">
 							  <label for="overtime_status">Overtime status</label>
 							  <select id="overtime_status" name="overtime_status" class="form-control">
-									<option selected>Yes</option>
-									<option>No</option>
+									<?php 
+									if(isset($CONFIG['default_ebot_ot_status']))
+									{
+										if($CONFIG['default_ebot_ot_status'] == "1")
+										{
+											echo "<option selected>Yes</option>";
+											echo "<option>No</option>";
+										}
+										else
+										{
+											echo "<option selected>No</option>";
+											echo "<option>Yes</option>";
+										}
+									}
+									else
+									{
+										echo "<option selected>Yes</option>";
+										echo "<option>No</option>";
+									}
+									?>
 								</select>
 							</div>
 							<div class="col">
 							  <label for="knife">Knife</label>
 							  <select id="knife" name="knife" class="form-control">
-									<option selected>Yes</option>
-									<option>No</option>
+									<?php 
+									if(isset($CONFIG['default_ebot_knife']))
+									{
+										if($CONFIG['default_ebot_knife'] == "1")
+										{
+											echo "<option selected>Yes</option>";
+											echo "<option>No</option>";
+										}
+										else
+										{
+											echo "<option selected>No</option>";
+											echo "<option>Yes</option>";
+										}
+									}
+									else
+									{
+										echo "<option selected>Yes</option>";
+										echo "<option>No</option>";
+									}
+									?>
 								</select>
 							</div>
 					  </div>
@@ -236,9 +297,9 @@ $season_display = check_season($BDD_EBOT);
 						  <label for="overtime_mmr">Overtime MMR</label>
 						  <select id="overtime_mmr" name="overtime_mmr" class="form-control">
 								<?php 
-								if(isset($CONFIG['default_ebot_over_mmr']))
+								if(isset($CONFIG['default_ebot_ot_mmr']))
 								{
-									if($CONFIG['default_ebot_over_mmr'] == 3)
+									if($CONFIG['default_ebot_ot_mmr'] == 3)
 									{
 										echo "<option selected>5</option>";
 										echo "<option>3</option>";
@@ -259,7 +320,7 @@ $season_display = check_season($BDD_EBOT);
 						</div>
 						<div class="col">
 						  <label for="overtime_money">Overtime Money</label>
-						  <input type="number" name="overtime_money" class="form-control" <?php if(isset($CONFIG['default_ebot_over_money'])){echo "value='", $CONFIG['default_ebot_over_money'],"' ";}?> placeholder="16000" min="1" pattern=".{1,}" required title="1 character minimum">
+						  <input type="number" name="overtime_money" class="form-control" <?php if(isset($CONFIG['default_ebot_ot_money'])){echo "value='", $CONFIG['default_ebot_ot_money'],"' ";}?> placeholder="16000" min="1" pattern=".{1,}" required title="1 character minimum">
 						</div>
 					  </div>
 					  <br>
