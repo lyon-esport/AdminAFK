@@ -299,7 +299,7 @@ $season_display = check_season($BDD_EBOT);
 								<?php 
 								if(isset($CONFIG['default_ebot_ot_mmr']))
 								{
-									if($CONFIG['default_ebot_ot_mmr'] == 3)
+									if($CONFIG['default_ebot_ot_mmr'] == 5)
 									{
 										echo "<option selected>5</option>";
 										echo "<option>3</option>";
