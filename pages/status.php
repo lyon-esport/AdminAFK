@@ -241,17 +241,27 @@ if((isset($CONFIG['toornament_client_id']))&&(!empty($CONFIG['toornament_client_
 								<thead class="thead text-center">
 									<tr>
 										<th scope="col">Rules</th>
-										<th scope="col">Match password</th>
-										<th scope="col">Overtime MMR</th>
-										<th scope="col">Overtime Money</th>
+										<th scope="col">Password</th>
+										<th scope="col">Match MMR</th>
+										<th scope="col">Knife</th>
 									</tr>
 								</thead>
 								<tbody class="text-center">
 									<tr>
 										<td class="center"><?php if(isset($CONFIG['default_ebot_rules'])&&!empty($CONFIG['default_ebot_rules'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_rules'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
 										<td class="center"><?php if(isset($CONFIG['default_ebot_pass'])&&!empty($CONFIG['default_ebot_pass'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_pass'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
-										<td class="center"><?php if(isset($CONFIG['default_ebot_over_mmr'])&&!empty($CONFIG['default_ebot_over_mmr'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_over_mmr'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
-										<td class="center"><?php if(isset($CONFIG['default_ebot_over_money'])&&!empty($CONFIG['default_ebot_over_money'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_over_money'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
+										<td class="center"><?php if(isset($CONFIG['default_ebot_match_mmr'])&&!empty($CONFIG['default_ebot_match_mmr'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_match_mmr'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
+										<td class="text-center align-middle" rowspan="3"><?php if(isset($CONFIG['default_ebot_ot_money'])&&!empty($CONFIG['default_ebot_ot_money'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_ot_money'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
+									</tr>
+									<tr>
+										<th scope="col">Overtime status</th>
+										<th scope="col">Overtime MMR</th>
+										<th scope="col">Overtime Money</th>
+									</tr>
+									<tr>
+										<td class="center"><?php if(isset($CONFIG['default_ebot_ot_status'])&&!empty($CONFIG['default_ebot_ot_status'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_ot_status'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
+										<td class="center"><?php if(isset($CONFIG['default_ebot_ot_mmr'])&&!empty($CONFIG['default_ebot_ot_mmr'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_ot_mmr'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
+										<td class="center"><?php if(isset($CONFIG['default_ebot_ot_money'])&&!empty($CONFIG['default_ebot_ot_money'])){echo '<span class="badge badge-success">'.$CONFIG['default_ebot_ot_money'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
 									</tr>
 								</tbody>
 							</table>
@@ -280,7 +290,7 @@ if((isset($CONFIG['toornament_client_id']))&&(!empty($CONFIG['toornament_client_
 										<td class="center"><?php if(isset($CONFIG['toornament_client_id'])&&!empty($CONFIG['toornament_client_id'])){echo '<span class="badge badge-success">Filled</span>';}else{echo '<span class="badge badge-danger">Not filled</span>';} ?></td>
 										<td class="center"><?php if(isset($CONFIG['toornament_client_secret'])&&!empty($CONFIG['toornament_client_secret'])){echo '<span class="badge badge-success">Filled</span>';}else{echo '<span class="badge badge-danger">Not filled</span>';} ?></td>
 										<td class="center"><?php if(isset($CONFIG['toornament_api'])&&!empty($CONFIG['toornament_api'])){echo '<span class="badge badge-success">Filled</span>';}else{echo '<span class="badge badge-danger">Not filled</span>';} ?></td>
-										<td class="center"><?php if(isset($CONFIG['toornament_id'])&&!empty($CONFIG['toornament_id'])){echo '<span class="badge badge-success">'.$CONFIG['toornament_id'].'</span>';}else{echo '<span class="badge badge-warning">Not filled</span>';} ?></td>
+										<td class="center"><?php if(isset($CONFIG['toornament_id'])&&!empty($CONFIG['toornament_id'])){echo '<span class="badge badge-success">'.$CONFIG['toornament_id'].'</span>';}else{echo '<span class="badge badge-danger">Not filled</span>';} ?></td>
 										<td class="center"><?php if(isset($httpcode_toornament)&&($httpcode_toornament==200)){echo '<span class="badge badge-success">Online</span>';}else if(isset($httpcode_toornament)){echo '<span class="badge badge-danger">Error code : '.$httpcode_toornament.'</span>';}else{echo '<span class="badge badge-danger">Error</span>';} ?></td>
 									</tr>
 								</tbody>
@@ -308,10 +318,10 @@ if((isset($CONFIG['toornament_client_id']))&&(!empty($CONFIG['toornament_client_
 								<tbody class="text-center">
 									<tr>
 										<td class="center"><?php if($CONFIG['display_connect']){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
-										<td class="center"><?php if($CONFIG['display_bracket']){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
-										<td class="center"><?php if($CONFIG['display_participants']){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
-										<td class="center"><?php if($CONFIG['display_schedule']){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
-										<td class="center"><?php if($CONFIG['display_stream']){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
+										<td class="center"><?php if($CONFIG['display_bracket'] && !empty($CONFIG['toornament_client_id']) && !empty($CONFIG['toornament_client_secret']) && !empty($CONFIG['toornament_api'])){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
+										<td class="center"><?php if($CONFIG['display_participants'] && !empty($CONFIG['toornament_client_id']) && !empty($CONFIG['toornament_client_secret']) && !empty($CONFIG['toornament_api'])){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
+										<td class="center"><?php if($CONFIG['display_schedule'] && !empty($CONFIG['toornament_client_id']) && !empty($CONFIG['toornament_client_secret']) && !empty($CONFIG['toornament_api'])){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
+										<td class="center"><?php if($CONFIG['display_stream'] && !empty($CONFIG['toornament_client_id']) && !empty($CONFIG['toornament_client_secret']) && !empty($CONFIG['toornament_api'])){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
 									</tr>
 								</tbody>
 							</table>
