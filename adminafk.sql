@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 15 juin 2018 à 12:06
+-- Généré le :  mer. 20 juin 2018 à 00:25
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `configs` (
   `value` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` varchar(3000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `configs`
@@ -59,7 +59,10 @@ INSERT INTO `configs` (`id`, `name`, `value`, `type`) VALUES
 (18, 'display_stream', '1', 'boolean'),
 (6, 'default_ebot_ot_status', '1', 'boolean'),
 (7, 'default_ebot_knife', '1', 'boolean'),
-(5, 'default_ebot_match_mmr', '15', 'integer');
+(5, 'default_ebot_match_mmr', '15', 'integer'),
+(19, 'steam_api', '', 'string'),
+(20, 'steamid_api', '', 'string'),
+(21, 'display_vac_ban', '1', 'boolean');
 
 -- --------------------------------------------------------
 
@@ -76,7 +79,27 @@ CREATE TABLE IF NOT EXISTS `log` (
   `ip` varchar(3000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `level` int(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `log`
+--
+
+INSERT INTO `log` (`id`, `action`, `created_at`, `created_by`, `ip`, `level`) VALUES
+(1, 'Updated toornament configuration !', '2018-06-17 16:25:15', 'admin', '127.0.0.1', 1),
+(2, 'Updated toornament configuration !', '2018-06-17 16:25:36', 'admin', '127.0.0.1', 1),
+(3, 'Updated toornament configuration !', '2018-06-18 12:50:28', 'admin', '127.0.0.1', 1),
+(4, 'Updated toornament configuration !', '2018-06-18 12:50:41', 'admin', '127.0.0.1', 1),
+(5, 'Updated toornament configuration !', '2018-06-18 13:40:49', 'admin', '127.0.0.1', 1),
+(6, 'Updated toornament configuration !', '2018-06-19 19:14:57', 'admin', '127.0.0.1', 1),
+(7, 'Updated toornament configuration !', '2018-06-19 19:17:19', 'admin', '127.0.0.1', 1),
+(8, 'Updated Steam / SteamID configuration !', '2018-06-20 00:20:34', 'admin', '127.0.0.1', 1),
+(9, 'Updated Steam / SteamID configuration !', '2018-06-20 00:21:38', 'admin', '127.0.0.1', 1),
+(10, 'Updated Steam / SteamID configuration !', '2018-06-20 00:22:10', 'admin', '127.0.0.1', 1),
+(11, 'Updated Steam / SteamID configuration !', '2018-06-20 00:22:14', 'admin', '127.0.0.1', 1),
+(12, 'Updated Steam / SteamID configuration !', '2018-06-20 00:22:42', 'admin', '127.0.0.1', 1),
+(13, 'Updated Steam / SteamID configuration !', '2018-06-20 00:23:03', 'admin', '127.0.0.1', 1),
+(14, 'Updated Steam / SteamID configuration !', '2018-06-20 00:23:11', 'admin', '127.0.0.1', 1);
 
 -- --------------------------------------------------------
 
@@ -141,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`login`, `password`, `level`, `created_at`, `created_by`, `update_at`, `update_by`, `last_login`, `last_ip`) VALUES
-('admin', '$2y$10$lGz.ChiP2zfaI0vWLNQUreTfiOldZ0aFdd/9OO5b.FHCebsGaup7.', 1, '2018-04-08 00:00:00', 'admin', '2018-05-05 13:51:29', 'admin', '2018-06-15 12:04:51', '127.0.0.1');
+('admin', '$2y$10$lGz.ChiP2zfaI0vWLNQUreTfiOldZ0aFdd/9OO5b.FHCebsGaup7.', 1, '2018-04-08 00:00:00', 'admin', '2018-05-05 13:51:29', 'admin', '2018-06-19 19:14:18', '127.0.0.1');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
