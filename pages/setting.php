@@ -430,6 +430,44 @@ if ($result_user['login']==$_SESSION['login'])
 			echo '<br>';
 			echo '<div class="container">';
 				echo '<div class="card">';
+					echo '<div class="card-header text-white bg-secondary">Steam / SteamID API configuration</div>';
+					echo '<div class="card-body">';
+						echo '<div class="table-responsive">';
+							echo '<table class="table table-bordered">';
+								echo '<thead class="thead text-center">';
+									echo '<tr>';
+										echo '<th scope="col">Steam API key</th>';
+										echo '<th scope="col">SteamID API key</th>';
+										if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
+										{
+											echo '<th scope="col">Display VAC Ban</th>';
+										}
+										echo '<th scope="col">Action</th>';
+									echo '</tr>';
+								echo '</thead>';
+								echo '<tbody class="text-center">';
+									echo '<form method="post" action="../traitement/setting.php">';
+									echo '<tr>';
+										echo '<td><input type="text" name="steam_api" class="form-control" value="'.$CONFIG['steam_api'].'"></td>';
+										echo '<td><input type="text" name="steamid_api" class="form-control" value="'.$CONFIG['steamid_api'].'"></td>';
+										if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
+										{
+											if($CONFIG['display_vac_ban']){ $vac_ban_checked = "checked";}else{ $vac_ban_checked ="";}
+											echo '<td><div class="input-group-prepend d-flex justify-content-center"><div class="input-group-text"><input type="checkbox" name="vac_ban" value="1" '.$vac_ban_checked.' aria-label="Vac Ban">&nbspYes</div></div></td>';
+										}
+										new_crsf("csrf_steam_api");
+										echo "<td class='text-center align-middle'><button type='submit' name='choice' value='steam_api' class='btn btn-primary'>Update</button>";
+									echo '</tr>';
+									echo '</form>';
+								echo '</tbody>';
+							echo '</table>';
+						echo '</div>';	
+					echo '</div>';
+				echo '</div>';
+			echo '</div>';
+			echo '<br>';
+			echo '<div class="container">';
+				echo '<div class="card">';
 					echo '<div class="card-header text-white bg-danger">Activate the following pages</div>';
 					echo '<div class="card-body">';
 						echo '<div class="table-responsive">';
