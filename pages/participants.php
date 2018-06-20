@@ -41,6 +41,7 @@ include_once '../traitement/check_config.php';
 include_once '../traitement/connect_bdd.php';
 include_once '../traitement/verif_user.php';
 include_once '../traitement/function_toornament.php';
+include_once '../traitement/function_steam.php';
 include_once 'header.php';
 include_once 'footer.php';
 include_once 'navbar.php';
@@ -126,6 +127,8 @@ echo '<html>';
 				if(count($result_toornament[0])>0)
 				{
 					/////////////////
+					//// API TOORNAMENT PUBLIC TEMP WAITING API V2
+					/////////////////
 					if(count($result_toornament[0])==50)
 					{
 						$result2_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], "50", "99");
@@ -149,6 +152,76 @@ echo '<html>';
 						}
 					}
 					//////////////////////
+					//////Vac BAN Check api steam + api steamid
+					//////////////////////
+					if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
+					{	
+						if(isset($CONFIG['display_vac_ban']) && ($CONFIG['display_vac_ban'] == 1))
+						{
+							$global_data_steam = array();
+							$result_steam_id_list_toornament = create_steamid_list_toornament($result_toornament[0], $global_data_steam);
+							$steam_id_list_toornament = $result_steam_id_list_toornament[0];
+							$global_data_steam = $result_steam_id_list_toornament[1];
+							$steam_id_list_steamid = "";
+							for($i = 0; $i < count($steam_id_list_toornament); $i++)
+							{
+								$steamid_temp = get_steam_id($CONFIG['steamid_api'], $steam_id_list_toornament[$i]);
+								if($steamid_temp[1] == 200)
+								{
+									if(!empty($steamid_temp[0]))
+									{
+										for($j=0; $j<count($steamid_temp[0]->converted); $j++)
+										{
+											$key_searched = "";
+											$key_searched = recursive_array_search($steamid_temp[0]->converted[$j]->steamid64, $global_data_steam);
+											if(empty($key_searched))
+											{
+												$steam_split = explode(":", $steamid_temp[0]->converted[$j]->steamid);
+												if(isset($steam_split[2]))
+												{
+													$key_searched = recursive_array_search($steam_split[2], $global_data_steam);
+												}
+											}
+											if(empty($key_searched))
+											{
+												$key_searched = recursive_array_search($steamid_temp[0]->converted[$j]->steam3, $global_data_steam);
+											}
+											if(!empty($key_searched))
+											{
+												$global_data_steam[$key_searched]['steamid64'] = $steamid_temp[0]->converted[$j]->steamid64;
+												$global_data_steam[$key_searched]['steamid'] = $steamid_temp[0]->converted[$j]->steamid;
+												$global_data_steam[$key_searched]['steam3'] = $steamid_temp[0]->converted[$j]->steam3;
+											}
+										}
+										for($j=0; $j<count($steamid_temp[0]->converted);$j++)
+										{
+											if(empty($steam_id_list_steamid))
+											{
+												$steam_id_list_steamid = $steamid_temp[0]->converted[$j]->steamid64;
+											}
+											else
+											{
+												$steam_id_list_steamid = $steam_id_list_steamid.','.$steamid_temp[0]->converted[$j]->steamid64;
+											}
+										}
+										$result_vac_ban = check_vac_ban($CONFIG['steam_api'], $steam_id_list_steamid);
+										if($result_vac_ban[1] == 200)
+										{
+											for($j=0; $j<count($result_vac_ban[0]->players); $j++)
+											{
+												$key_searched = "";
+												$key_searched = recursive_array_search($result_vac_ban[0]->players[$j]->SteamId, $global_data_steam);
+												$global_data_steam[$key_searched]['NumberOfVACBans'] = $result_vac_ban[0]->players[$j]->NumberOfVACBans;
+												$global_data_steam[$key_searched]['DaysSinceLastBan'] = $result_vac_ban[0]->players[$j]->DaysSinceLastBan;
+											}
+										}
+									}
+								}
+								
+							}
+						}
+					}
+					///////////////////////
 					$size = (int)(count($result_toornament[0])/4);
 					$rest = count($result_toornament[0]);
 					$off_set = 0;
@@ -183,8 +256,23 @@ echo '<html>';
 													{
 														if(!empty($result_toornament[0][$i]->lineup[$k]->custom_fields->steam_id))
 														{
+															if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
+															{	
+																if(isset($CONFIG['display_vac_ban']) && ($CONFIG['display_vac_ban'] == 1))
+																{
+																	$steam_player = display_vac_ban($result_toornament[0][$i]->lineup[$k], $global_data_steam);
+																}
+																else
+																{
+																	$steam_player = "";
+																}
+															}
+															else
+															{
+																$steam_player = "";
+															}
 															$steam_[$k] = $result_toornament[0][$i]->lineup[$k]->custom_fields->steam_id;
-															echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam_[$k].'" target="blank">'.$name_[$k].'</a></li>';
+															echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam_[$k].'" target="blank">'.$name_[$k].'</a>'.$steam_player.'</li>';
 														}
 														else
 														{
@@ -202,8 +290,23 @@ echo '<html>';
 												$name = $result_toornament[0][$i]->name;
 												if(!empty($result_toornament[0][$i]->custom_fields->steam_id))
 												{
+													if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
+													{	
+														if(isset($CONFIG['display_vac_ban']) && ($CONFIG['display_vac_ban'] == 1))
+														{
+															$steam_player = display_vac_ban($result_toornament[0][$i], $global_data_steam);
+														}
+														else
+														{
+															$steam_player = "";
+														}
+													}
+													else
+													{
+														$steam_player = "";
+													}
 													$steam = $result_toornament[0][$i]->custom_fields->steam_id;
-													echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam.'" target="blank">'.$name.'</a></li>';
+													echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam.'" target="blank">'.$name.'</a>'.$steam_player.'</li>';
 												}
 												else
 												{
@@ -246,8 +349,23 @@ echo '<html>';
 													{
 														if(!empty($result_toornament[0][$i]->lineup[$k]->custom_fields->steam_id))
 														{
+															if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
+															{	
+																if(isset($CONFIG['display_vac_ban']) && ($CONFIG['display_vac_ban'] == 1))
+																{
+																	$steam_player = display_vac_ban($result_toornament[0][$i]->lineup[$k], $global_data_steam);
+																}
+																else
+																{
+																	$steam_player = "";
+																}
+															}
+															else
+															{
+																$steam_player = "";
+															}
 															$steam_[$k] = $result_toornament[0][$i]->lineup[$k]->custom_fields->steam_id;
-															echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam_[$k].'" target="blank">'.$name_[$k].'</a></li>';
+															echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam_[$k].'" target="blank">'.$name_[$k].'</a>'.$steam_player.'</li>';
 														}
 														else
 														{
@@ -265,8 +383,23 @@ echo '<html>';
 												$name = $result_toornament[0][$i]->name;
 												if(!empty($result_toornament[0][$i]->custom_fields->steam_id))
 												{
+													if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
+													{	
+														if(isset($CONFIG['display_vac_ban']) && ($CONFIG['display_vac_ban'] == 1))
+														{
+																$steam_player = display_vac_ban($result_toornament[0][$i], $global_data_steam);
+														}
+														else
+														{
+															$steam_player = "";
+														}
+													}
+													else
+													{
+														$steam_player = "";
+													}
 													$steam = $result_toornament[0][$i]->custom_fields->steam_id;
-													echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam.'" target="blank">'.$name.'</a></li>';
+													echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam.'" target="blank">'.$name.'</a>'.$steam_player.'</li>';
 												}
 												else
 												{
