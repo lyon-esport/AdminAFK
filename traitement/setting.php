@@ -378,6 +378,68 @@ if($choice=="toornament")
 	exit();
 }
 
+if($choice=="steam_api")
+{
+	if(isset($_POST['steam_api']))
+	{
+		$steam_api_key = $_POST['steam_api'];
+		if(verify_input_text("/[\"']/", $steam_api_key))
+		{
+			$_SESSION['state']="1";
+			$_SESSION['message']="Field \"API key\" does not allow characters : \" '";
+			header('Location: '.$BASE_URL.'pages/setting.php');
+			exit();
+		}
+	}
+	else
+	{
+		$steam_api_key = "";
+	}
+	if(isset($_POST['steamid_api']))
+	{
+		$steamid_api_key = $_POST['steamid_api'];
+		if(verify_input_text("/[\"']/", $steamid_api_key))
+		{
+			$_SESSION['state']="1";
+			$_SESSION['message']="Field \"API key\" does not allow characters : \" '";
+			header('Location: '.$BASE_URL.'pages/setting.php');
+			exit();
+		}
+	}
+	else
+	{
+		$steamid_api_key = "";
+	}
+	if(isset($_POST['vac_ban']))
+	{
+		$vac_ban = $_POST['vac_ban'];
+	}
+	else
+	{
+		$vac_ban = "0";
+	}
+	if(check_csrf("csrf_steam_api")==false)
+	{
+		$_SESSION['state']="1";
+		$_SESSION['message']="Error CSRF !";
+		header('Location: '.$BASE_URL.'pages/setting.php');
+		exit();
+	}
+	$req = $BDD_ADMINAFK->prepare('UPDATE configs SET value = ? WHERE name = ?');
+	$req->execute(array($steam_api_key, "steam_api"));
+	$req->closeCursor();
+	$req->execute(array($steamid_api_key, "steamid_api"));
+	$req->closeCursor();
+	$req->execute(array($vac_ban, "display_vac_ban"));
+	$req->closeCursor();
+	$_SESSION['state']='2';
+	$_SESSION['message']="Updated Steam / SteamID configuration !";
+	$action=$_SESSION['message'];
+	store_action($action, $ip, $BDD_ADMINAFK);
+	header('Location: '.$BASE_URL.'pages/setting.php');
+	exit();
+}
+
 if($choice=="pages")
 {
 	if(isset($_POST['connect_team_view']))
