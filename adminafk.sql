@@ -79,27 +79,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   `ip` varchar(3000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `level` int(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `log`
---
-
-INSERT INTO `log` (`id`, `action`, `created_at`, `created_by`, `ip`, `level`) VALUES
-(1, 'Updated toornament configuration !', '2018-06-17 16:25:15', 'admin', '127.0.0.1', 1),
-(2, 'Updated toornament configuration !', '2018-06-17 16:25:36', 'admin', '127.0.0.1', 1),
-(3, 'Updated toornament configuration !', '2018-06-18 12:50:28', 'admin', '127.0.0.1', 1),
-(4, 'Updated toornament configuration !', '2018-06-18 12:50:41', 'admin', '127.0.0.1', 1),
-(5, 'Updated toornament configuration !', '2018-06-18 13:40:49', 'admin', '127.0.0.1', 1),
-(6, 'Updated toornament configuration !', '2018-06-19 19:14:57', 'admin', '127.0.0.1', 1),
-(7, 'Updated toornament configuration !', '2018-06-19 19:17:19', 'admin', '127.0.0.1', 1),
-(8, 'Updated Steam / SteamID configuration !', '2018-06-20 00:20:34', 'admin', '127.0.0.1', 1),
-(9, 'Updated Steam / SteamID configuration !', '2018-06-20 00:21:38', 'admin', '127.0.0.1', 1),
-(10, 'Updated Steam / SteamID configuration !', '2018-06-20 00:22:10', 'admin', '127.0.0.1', 1),
-(11, 'Updated Steam / SteamID configuration !', '2018-06-20 00:22:14', 'admin', '127.0.0.1', 1),
-(12, 'Updated Steam / SteamID configuration !', '2018-06-20 00:22:42', 'admin', '127.0.0.1', 1),
-(13, 'Updated Steam / SteamID configuration !', '2018-06-20 00:23:03', 'admin', '127.0.0.1', 1),
-(14, 'Updated Steam / SteamID configuration !', '2018-06-20 00:23:11', 'admin', '127.0.0.1', 1);
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
