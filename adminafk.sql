@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 20 juin 2018 à 00:25
+-- Généré le :  lun. 25 juin 2018 à 02:17
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   `ip` varchar(3000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `level` int(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
