@@ -48,9 +48,48 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 		{
 			for($q=0;$q<count($result_toornament[$p]->lineup);$q++)
 			{
-				$global_data_steam[$f]['steam_toornament'] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
-				$steam_split = explode(":", $result_toornament[$p]->lineup[$q]->custom_fields->steam_id);
-				$steam_split2 = explode("/", $result_toornament[$p]->lineup[$q]->custom_fields->steam_id);
+				if(isset($result_toornament[$p]->lineup[$q]->custom_fields->steam_id) && !empty($result_toornament[$p]->lineup[$q]->custom_fields->steam_id))
+				{
+					$global_data_steam[$f]['steam_toornament'] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+					$steam_split = explode(":", $result_toornament[$p]->lineup[$q]->custom_fields->steam_id);
+					$steam_split2 = explode("/", $result_toornament[$p]->lineup[$q]->custom_fields->steam_id);
+					if(isset($steam_split[2]))
+					{
+						$global_data_steam[$f]['steam'] = $steam_split[2];
+					}
+					elseif(isset($steam_split2[4]))
+					{
+						$global_data_steam[$f]['steam'] = $steam_split2[4];
+					}
+					else
+					{
+						$global_data_steam[$f]['steam'] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+					}
+					if(empty($steam_id_list[$e]))
+					{
+						$steam_id_list[$e] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+					}
+					else
+					{
+						$steam_id_list[$e] = $steam_id_list[$e].','.$result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+					}
+					$d++;
+					$f++;
+					if($d > 49)
+					{
+						$e++;
+						$d = 0;
+					}
+				}
+			}
+		}
+		else
+		{
+			if(isset($result_toornament[$p]->custom_fields->steam_id) && !empty($result_toornament[$p]->custom_fields->steam_id))
+			{
+				$global_data_steam[$f]['steam_toornament'] = $result_toornament[$p]->custom_fields->steam_id;
+				$steam_split = explode(":", $result_toornament[$p]->custom_fields->steam_id);
+				$steam_split2 = explode("/", $result_toornament[$p]->custom_fields->steam_id);
 				if(isset($steam_split[2]))
 				{
 					$global_data_steam[$f]['steam'] = $steam_split[2];
@@ -61,15 +100,15 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 				}
 				else
 				{
-					$global_data_steam[$f]['steam'] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+					$global_data_steam[$f]['steam'] = $result_toornament[$p]->custom_fields->steam_id;
 				}
 				if(empty($steam_id_list[$e]))
 				{
-					$steam_id_list[$e] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+					$steam_id_list[$e] = $result_toornament[$p]->custom_fields->steam_id;
 				}
 				else
 				{
-					$steam_id_list[$e] = $steam_id_list[$e].','.$result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+					$steam_id_list[$e] = $steam_id_list[$e].','.$result_toornament[$p]->custom_fields->steam_id;
 				}
 				$d++;
 				$f++;
@@ -80,39 +119,8 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 				}
 			}
 		}
-		else
-		{
-			$global_data_steam[$f]['steam_toornament'] = $result_toornament[$p]->custom_fields->steam_id;
-			$steam_split = explode(":", $result_toornament[$p]->custom_fields->steam_id);
-			$steam_split2 = explode("/", $result_toornament[$p]->custom_fields->steam_id);
-			if(isset($steam_split[2]))
-			{
-				$global_data_steam[$f]['steam'] = $steam_split[2];
-			}
-			elseif(isset($steam_split2[4]))
-			{
-				$global_data_steam[$f]['steam'] = $steam_split2[4];
-			}
-			else
-			{
-				$global_data_steam[$f]['steam'] = $result_toornament[$p]->custom_fields->steam_id;
-			}
-			if(empty($steam_id_list[$e]))
-			{
-				$steam_id_list[$e] = $result_toornament[$p]->custom_fields->steam_id;
-			}
-			else
-			{
-				$steam_id_list[$e] = $steam_id_list[$e].','.$result_toornament[$p]->custom_fields->steam_id;
-			}
-			$d++;
-			$f++;
-			if($d > 49)
-			{
-				$e++;
-				$d = 0;
-			}
-		}
+		$steam_id_list = str_replace(" ", "", $steam_id_list);
+		$steam_id_list = str_replace("&", "", $steam_id_list);
 	}
 	return array($steam_id_list, $global_data_steam);
 }
@@ -200,7 +208,7 @@ function display_vac_ban($result_toornament, $global_data_steam)
 		}
 		else
 		{
-			$steam_player = '<img class="img-fluid float-right" title="Error SteamID or API" style="max-height: 1.7rem; max-width: 1.7rem;" src="../images/other/high_priority.svg"/>';
+			$steam_player = '<img class="img-fluid float-right" title="Error : API or wrong SteamID or SteamID already used by another player" style="max-height: 1.7rem; max-width: 1.7rem;" src="../images/other/high_priority.svg"/>';
 		}
 	}
 	else
