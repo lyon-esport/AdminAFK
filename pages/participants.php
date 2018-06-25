@@ -163,61 +163,95 @@ echo '<html>';
 							$steam_id_list_toornament = $result_steam_id_list_toornament[0];
 							$global_data_steam = $result_steam_id_list_toornament[1];
 							$steam_id_list_steamid = "";
-							for($i = 0; $i < count($steam_id_list_toornament); $i++)
+							if(isset($steam_id_list_toornament) && !empty($steam_id_list_toornament))
 							{
-								$steamid_temp = get_steam_id($CONFIG['steamid_api'], $steam_id_list_toornament[$i]);
-								if($steamid_temp[1] == 200)
+								for($i = 0; $i < count($steam_id_list_toornament); $i++)
 								{
-									if(!empty($steamid_temp[0]))
+									$steamid_temp = get_steam_id($CONFIG['steamid_api'], $steam_id_list_toornament[$i]);
+									if($steamid_temp[1] == 200)
 									{
-										for($j=0; $j<count($steamid_temp[0]->converted); $j++)
+										if(!empty($steamid_temp[0]))
 										{
-											$key_searched = "";
-											$key_searched = recursive_array_search($steamid_temp[0]->converted[$j]->steamid64, $global_data_steam);
-											if(empty($key_searched))
-											{
-												$steam_split = explode(":", $steamid_temp[0]->converted[$j]->steamid);
-												if(isset($steam_split[2]))
-												{
-													$key_searched = recursive_array_search($steam_split[2], $global_data_steam);
-												}
-											}
-											if(empty($key_searched))
-											{
-												$key_searched = recursive_array_search($steamid_temp[0]->converted[$j]->steam3, $global_data_steam);
-											}
-											if(!empty($key_searched))
-											{
-												$global_data_steam[$key_searched]['steamid64'] = $steamid_temp[0]->converted[$j]->steamid64;
-												$global_data_steam[$key_searched]['steamid'] = $steamid_temp[0]->converted[$j]->steamid;
-												$global_data_steam[$key_searched]['steam3'] = $steamid_temp[0]->converted[$j]->steam3;
-											}
-										}
-										for($j=0; $j<count($steamid_temp[0]->converted);$j++)
-										{
-											if(empty($steam_id_list_steamid))
-											{
-												$steam_id_list_steamid = $steamid_temp[0]->converted[$j]->steamid64;
-											}
-											else
-											{
-												$steam_id_list_steamid = $steam_id_list_steamid.','.$steamid_temp[0]->converted[$j]->steamid64;
-											}
-										}
-										$result_vac_ban = check_vac_ban($CONFIG['steam_api'], $steam_id_list_steamid);
-										if($result_vac_ban[1] == 200)
-										{
-											for($j=0; $j<count($result_vac_ban[0]->players); $j++)
+											for($j=0; $j<count($steamid_temp[0]->converted); $j++)
 											{
 												$key_searched = "";
-												$key_searched = recursive_array_search($result_vac_ban[0]->players[$j]->SteamId, $global_data_steam);
-												$global_data_steam[$key_searched]['NumberOfVACBans'] = $result_vac_ban[0]->players[$j]->NumberOfVACBans;
-												$global_data_steam[$key_searched]['DaysSinceLastBan'] = $result_vac_ban[0]->players[$j]->DaysSinceLastBan;
+												if(count($steamid_temp[0]->converted) == 1)
+												{
+													$pre_var = $steamid_temp[0]->converted;
+												}
+												else
+												{
+													$pre_var = $steamid_temp[0]->converted[$j];
+												}
+												$key_searched = recursive_array_search($pre_var->steamid64, $global_data_steam);								
+												if(is_bool($key_searched))
+												{
+													$steam_split = explode(":", $pre_var->steamid);
+													if(isset($steam_split[2]))
+													{
+														$key_searched = recursive_array_search($steam_split[2], $global_data_steam);
+													}
+												}
+												if(is_bool($key_searched))
+												{
+													$key_searched = recursive_array_search($pre_var->steam3, $global_data_steam);
+												}
+												if(!is_bool($key_searched))
+												{
+													$global_data_steam[$key_searched]['steamid64'] = $pre_var->steamid64;
+													$global_data_steam[$key_searched]['steamid'] = $pre_var->steamid;
+													$global_data_steam[$key_searched]['steam3'] = $pre_var->steam3;
+												}
 											}
 										}
 									}
 								}
-								
+								if($steamid_temp[1] == 200)
+								{
+									$d = 0;
+									$e = 0;
+									for($j=0; $j<count($global_data_steam); $j++)
+									{
+										if(isset($global_data_steam[$j]['steamid64']) && !empty($global_data_steam[$j]['steamid64']))
+										{
+											if(empty($steam_id_list_steamid[$e]))
+											{
+												$steam_id_list_steamid[$e] = $global_data_steam[$j]['steamid64'];
+											}
+											else
+											{
+												$steam_id_list_steamid[$e] = $steam_id_list_steamid[$e].','.$global_data_steam[$j]['steamid64'];
+											}
+											$d++;
+											if($d > 99)
+											{
+												$d = 0;
+												$e++;
+											}
+										}
+									}
+									if(!empty($steam_id_list_steamid))
+									{
+										for($d=0; $d<count($steam_id_list_steamid); $d++)
+										{
+											unset($result_vac_ban);
+											$result_vac_ban = check_vac_ban($CONFIG['steam_api'], $steam_id_list_steamid[$d]);
+											if($result_vac_ban[1] == 200)
+											{
+												for($j=0; $j<count($result_vac_ban[0]->players); $j++)
+												{
+													$key_searched = "";
+													$key_searched = recursive_array_search($result_vac_ban[0]->players[$j]->SteamId, $global_data_steam);
+													if(!is_bool($key_searched))
+													{
+														$global_data_steam[$key_searched]['NumberOfVACBans'] = $result_vac_ban[0]->players[$j]->NumberOfVACBans;
+														$global_data_steam[$key_searched]['DaysSinceLastBan'] = $result_vac_ban[0]->players[$j]->DaysSinceLastBan;
+													}
+												}
+											}
+										}
+									}
+								}
 							}
 						}
 					}
