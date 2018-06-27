@@ -159,9 +159,9 @@ if($choice=="match_ebot")
 	{
 		$ebot_pass = "";
 	}
-	if(isset($_POST['ebot_match_mmr']))
+	if(isset($_POST['default_ebot_match_mmr']))
 	{
-		$ebot_match_mmr = $_POST['ebot_match_mmr'];
+		$ebot_match_mmr = $_POST['default_ebot_match_mmr'];
 		if(verify_input_text("/[\"']/", $ebot_match_mmr))
 		{
 			$_SESSION['state']="1";
