@@ -90,11 +90,12 @@ if((isset($CONFIG['toornament_client_id']))&&(!empty($CONFIG['toornament_client_
 			if(!isset($CONFIG['toornament_client_secret'])){$CONFIG['toornament_client_secret'] = "";}
 			if(!isset($CONFIG['toornament_id'])){$CONFIG['toornament_id'] = "";}
 			if(!isset($CONFIG['display_connect'])){$CONFIG['display_connect'] = "";}
+			if(!isset($CONFIG['display_veto'])){$CONFIG['display_veto'] = "";}
 			if(!isset($CONFIG['display_bracket'])){$CONFIG['display_bracket'] = "";}
 			if(!isset($CONFIG['display_participants'])){$CONFIG['display_participants'] = "";}
 			if(!isset($CONFIG['display_schedule'])){$CONFIG['display_schedule'] = "";}
 			if(!isset($CONFIG['display_stream'])){$CONFIG['display_stream'] = "";}
-			display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
+			display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_veto'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
 			?>
 			<div class="container">
 				<br>
@@ -153,48 +154,62 @@ if((isset($CONFIG['toornament_client_id']))&&(!empty($CONFIG['toornament_client_
 			{
 				$pages_display_message = "Connect team";
 			}
-			if(!isset($CONFIG['display_bracket']) || $CONFIG['display_bracket'] == FALSE)
+			if(!isset($CONFIG['display_veto']) || $CONFIG['display_veto'] == FALSE)
 			{
 				if(!empty($pages_display_message))
 				{
-					$pages_display_message = $pages_display_message.", Bracket";
+					$pages_display_message = $pages_display_message.", Veto";
 				}
 				else
 				{
-					$pages_display_message = "Bracket";
+					$pages_display_message = "Veto";
 				}
 			}
-			if(!isset($CONFIG['display_participants']) || $CONFIG['display_participants'] == FALSE)
+			if(isset($CONFIG['toornament_api']) && !empty($CONFIG['toornament_api']) && isset($CONFIG['toornament_id']) && !empty($CONFIG['toornament_id']))
 			{
-				if(!empty($pages_display_message))
+				if(!isset($CONFIG['display_bracket']) || $CONFIG['display_bracket'] == FALSE)
 				{
-					$pages_display_message = $pages_display_message.", Participants";
+					if(!empty($pages_display_message))
+					{
+						$pages_display_message = $pages_display_message.", Bracket";
+					}
+					else
+					{
+						$pages_display_message = "Bracket";
+					}
 				}
-				else
+				if(!isset($CONFIG['display_participants']) || $CONFIG['display_participants'] == FALSE)
 				{
-					$pages_display_message = "Participants";
+					if(!empty($pages_display_message))
+					{
+						$pages_display_message = $pages_display_message.", Participants";
+					}
+					else
+					{
+						$pages_display_message = "Participants";
+					}
 				}
-			}
-			if(!isset($CONFIG['display_schedule']) || $CONFIG['display_schedule'] == FALSE)
-			{
-				if(!empty($pages_display_message))
+				if(!isset($CONFIG['display_schedule']) || $CONFIG['display_schedule'] == FALSE)
 				{
-					$pages_display_message = $pages_display_message.", Schedule";
+					if(!empty($pages_display_message))
+					{
+						$pages_display_message = $pages_display_message.", Schedule";
+					}
+					else
+					{
+						$pages_display_message = "Schedule";
+					}
 				}
-				else
+				if(!isset($CONFIG['display_stream']) || $CONFIG['display_stream']  == FALSE)
 				{
-					$pages_display_message = "Schedule";
-				}
-			}
-			if(!isset($CONFIG['display_stream']) || $CONFIG['display_stream']  == FALSE)
-			{
-				if(!empty($pages_display_message))
-				{
-					$pages_display_message = $pages_display_message.", Stream";
-				}
-				else
-				{
-					$pages_display_message = "Stream";
+					if(!empty($pages_display_message))
+					{
+						$pages_display_message = $pages_display_message.", Stream";
+					}
+					else
+					{
+						$pages_display_message = "Stream";
+					}
 				}
 			}
 			if(!empty($pages_display_message))
@@ -309,6 +324,7 @@ if((isset($CONFIG['toornament_client_id']))&&(!empty($CONFIG['toornament_client_
 								<thead class="thead text-center">
 									<tr>
 										<th scope="col">Connect team</th>
+										<th scope="col">Veto</th>
 										<th scope="col">Bracket</th>
 										<th scope="col">Participants</th>
 										<th scope="col">Schedule</th>
@@ -318,6 +334,7 @@ if((isset($CONFIG['toornament_client_id']))&&(!empty($CONFIG['toornament_client_
 								<tbody class="text-center">
 									<tr>
 										<td class="center"><?php if($CONFIG['display_connect']){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
+										<td class="center"><?php if($CONFIG['display_veto']){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
 										<td class="center"><?php if($CONFIG['display_bracket'] && !empty($CONFIG['toornament_client_id']) && !empty($CONFIG['toornament_client_secret']) && !empty($CONFIG['toornament_api'])){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
 										<td class="center"><?php if($CONFIG['display_participants'] && !empty($CONFIG['toornament_client_id']) && !empty($CONFIG['toornament_client_secret']) && !empty($CONFIG['toornament_api'])){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>
 										<td class="center"><?php if($CONFIG['display_schedule'] && !empty($CONFIG['toornament_client_id']) && !empty($CONFIG['toornament_client_secret']) && !empty($CONFIG['toornament_api'])){echo '<span class="badge badge-success">Displayed</span>';}else{echo '<span class="badge badge-danger">Not displayed</span>';} ?></td>

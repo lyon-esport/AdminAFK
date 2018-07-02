@@ -86,11 +86,12 @@ if ($result_user['login']==$_SESSION['login'])
 			if(!isset($CONFIG['toornament_client_secret'])){$CONFIG['toornament_client_secret'] = "";}
 			if(!isset($CONFIG['toornament_id'])){$CONFIG['toornament_id'] = "";}
 			if(!isset($CONFIG['display_connect'])){$CONFIG['display_connect'] = "";}
+			if(!isset($CONFIG['display_veto'])){$CONFIG['display_veto'] = "";}
 			if(!isset($CONFIG['display_bracket'])){$CONFIG['display_bracket'] = "";}
 			if(!isset($CONFIG['display_participants'])){$CONFIG['display_participants'] = "";}
 			if(!isset($CONFIG['display_schedule'])){$CONFIG['display_schedule'] = "";}
 			if(!isset($CONFIG['display_stream'])){$CONFIG['display_stream'] = "";}
-			display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
+			display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_veto'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
 			?>
 			<div class="container">
 				<br>
@@ -174,6 +175,17 @@ if ($result_user['login']==$_SESSION['login'])
 			if(!isset($CONFIG['display_connect']) || $CONFIG['display_connect'] == FALSE)
 			{
 				$pages_display_message = "Connect team";
+			}
+			if(!isset($CONFIG['display_veto']) || $CONFIG['display_veto'] == FALSE)
+			{
+				if(!empty($pages_display_message))
+				{
+					$pages_display_message = $pages_display_message.", Veto";
+				}
+				else
+				{
+					$pages_display_message = "Veto";
+				}
 			}
 			if(isset($CONFIG['toornament_api']) && !empty($CONFIG['toornament_api']) && isset($CONFIG['toornament_id']) && !empty($CONFIG['toornament_id']))
 			{
@@ -478,6 +490,7 @@ if ($result_user['login']==$_SESSION['login'])
 								echo '<thead class="thead text-center">';
 									echo '<tr>';
 										echo '<th scope="col">Connect team</th>';
+										echo '<th scope="col">Veto</th>';
 										if(isset($CONFIG['toornament_api']) && !empty($CONFIG['toornament_api']) && isset($CONFIG['toornament_id']) && !empty($CONFIG['toornament_id']))
 										{
 											echo '<th scope="col">Bracket</th>';
@@ -492,6 +505,7 @@ if ($result_user['login']==$_SESSION['login'])
 									echo '<tr>';
 										echo '<form method="post" action="../traitement/setting.php">';
 											if($CONFIG['display_connect']){ $connect_checked = "checked";}else{ $connect_checked ="";}
+											if($CONFIG['display_veto']){ $veto_checked = "checked";}else{ $veto_checked ="";}
 											if(isset($CONFIG['toornament_api']) && !empty($CONFIG['toornament_api']) && isset($CONFIG['toornament_id']) && !empty($CONFIG['toornament_id']))
 											{
 												if($CONFIG['display_bracket']){ $bracket_checked = "checked";}else{ $bracket_checked ="";}
@@ -500,12 +514,20 @@ if ($result_user['login']==$_SESSION['login'])
 												if($CONFIG['display_stream']){ $stream_checked = "checked";}else{ $stream_checked ="";}
 											}
 											echo '<td><div class="input-group-prepend d-flex justify-content-center"><div class="input-group-text"><input type="checkbox" name="connect_team_view" value="1" '.$connect_checked.' aria-label="connect_team">&nbspYes</div></div></td>';
+											echo '<td><div class="input-group-prepend d-flex justify-content-center"><div class="input-group-text"><input type="checkbox" name="veto_view" value="1" '.$veto_checked.' aria-label="veto">&nbspYes</div></div></td>';
 											if(isset($CONFIG['toornament_api']) && !empty($CONFIG['toornament_api']) && isset($CONFIG['toornament_id']) && !empty($CONFIG['toornament_id']))
 											{
 												echo '<td><div class="input-group-prepend d-flex justify-content-center"><div class="input-group-text"><input type="checkbox" name="bracket_view" value="1" '.$bracket_checked.' aria-label="bracket">&nbspYes</div></div></td>';
 												echo '<td><div class="input-group-prepend d-flex justify-content-center"><div class="input-group-text"><input type="checkbox" name="participants_view" value="1" '.$participants_checked.' aria-label="participants">&nbspYes</div></div></td>';
 												echo '<td><div class="input-group-prepend d-flex justify-content-center"><div class="input-group-text"><input type="checkbox" name="schedule_view" value="1" '.$schedule_checked.' aria-label="schedule">&nbspYes</div></div></td>';
 												echo '<td><div class="input-group-prepend d-flex justify-content-center"><div class="input-group-text"><input type="checkbox" name="stream_view" value="1" '.$stream_checked.' aria-label="stream">&nbspYes</div></div></td>';
+											}
+											else
+											{
+												echo "<input type=hidden name='bracket_view' value=".$CONFIG['display_bracket'].">";
+												echo "<input type=hidden name='participants_view' value=".$CONFIG['display_participants'].">";
+												echo "<input type=hidden name='schedule_view' value=".$CONFIG['display_schedule'].">";
+												echo "<input type=hidden name='stream_view' value=".$CONFIG['display_stream'].">";
 											}
 											new_crsf("csrf_pages");
 											echo "<td class='text-center'><button type='submit' name='choice' value='pages' class='btn btn-danger'>Update</button>";

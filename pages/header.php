@@ -49,7 +49,7 @@ function header_html($before, $table, $url_glyphicon)
 	}
 	echo '<link rel="stylesheet" href="'.$before.'css/bootstrap.min.css">';
 	echo '<link rel="stylesheet" href="'.$before.'css/custom.css">';
-	echo '<script src="'.$before.'js/jquery-3.2.1.slim.min.js"></script>';
+	echo '<script src="'.$before.'js/jquery-3.2.1.min.js"></script>';
 	echo '<script src="'.$before.'js/popper.min.js"></script>';
 	echo '<script src="'.$before.'js/bootstrap.min.js"></script>';
 	if($table == True)

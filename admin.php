@@ -41,6 +41,7 @@ include_once 'traitement/check_config.php';
 include_once 'traitement/connect_bdd.php';
 include_once 'traitement/verif_user.php';
 include_once 'traitement/csrf.php';
+include_once 'pages/header.php';
 include_once 'pages/footer.php';
 include_once 'pages/navbar.php';
 
@@ -63,22 +64,7 @@ if (isset($_SESSION['login']))
 ?>
 <html>
 	<head>
-		<title>AdminAFK</title>
-		<meta name="description" content="Outil d'administration avec eBot et toornament par -MoNsTeRRR">
-		<meta name="author" content="Ludovic Ortega">
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<?php
-		if(isset($CONFIG['url_glyphicon']) && !empty($CONFIG['url_glyphicon']))
-		{
-			echo '<link rel="icon" type="images/png" href="'.$CONFIG['url_glyphicon'].'" />';
-		}
-		?>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/custom.css">
-		<script src="js/jquery-3.2.1.slim.min.js"></script>
-		<script src="js/popper.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<?php header_html('', False, $CONFIG['url_glyphicon']); ?>
 	</head>
 	<body>
 		<div class= "page-wrap">
@@ -94,11 +80,12 @@ if (isset($_SESSION['login']))
 			if(!isset($CONFIG['toornament_client_secret'])){$CONFIG['toornament_client_secret'] = "";}
 			if(!isset($CONFIG['toornament_id'])){$CONFIG['toornament_id'] = "";}
 			if(!isset($CONFIG['display_connect'])){$CONFIG['display_connect'] = "";}
+			if(!isset($CONFIG['display_veto'])){$CONFIG['display_veto'] = "";}
 			if(!isset($CONFIG['display_bracket'])){$CONFIG['display_bracket'] = "";}
 			if(!isset($CONFIG['display_participants'])){$CONFIG['display_participants'] = "";}
 			if(!isset($CONFIG['display_schedule'])){$CONFIG['display_schedule'] = "";}
 			if(!isset($CONFIG['display_stream'])){$CONFIG['display_stream'] = "";}
-			display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
+			display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_veto'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
 			?>
 			<div class="container">
 				<br>

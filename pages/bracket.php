@@ -110,11 +110,12 @@ echo '<html>';
 				if(!isset($CONFIG['toornament_client_secret'])){$CONFIG['toornament_client_secret'] = "";}
 				if(!isset($CONFIG['toornament_id'])){$CONFIG['toornament_id'] = "";}
 				if(!isset($CONFIG['display_connect'])){$CONFIG['display_connect'] = "";}
+				if(!isset($CONFIG['display_veto'])){$CONFIG['display_veto'] = "";}
 				if(!isset($CONFIG['display_bracket'])){$CONFIG['display_bracket'] = "";}
 				if(!isset($CONFIG['display_participants'])){$CONFIG['display_participants'] = "";}
 				if(!isset($CONFIG['display_schedule'])){$CONFIG['display_schedule'] = "";}
 				if(!isset($CONFIG['display_stream'])){$CONFIG['display_stream'] = "";}
-				display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
+				display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_veto'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
 				echo '<div class="container">';
 					echo '<br>';
 					echo '<h1 class="text-center">Bracket</h1>';

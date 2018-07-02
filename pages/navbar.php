@@ -36,7 +36,7 @@
 // termes.
 // ----------------------------------------------------------------------------
 
-function display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $ip_ebot, $api_key, $client_id, $client_secret, $default_id_toornament, $connect_team_view, $bracket_view, $participants_view, $schedule_view, $stream_view)
+function display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $ip_ebot, $api_key, $client_id, $client_secret, $default_id_toornament, $connect_team_view, $veto_view, $bracket_view, $participants_view, $schedule_view, $stream_view)
 {
 	$import_match = "";
 	$export_match = "";
@@ -44,6 +44,7 @@ function display_navbar($current, $path_redirect, $path_redirect_disco, $path_re
 	$set_bo3 = "";
 	$start_map  = "";
 	$bracket = "";
+	$veto = "";
 	$schedule = "";
 	$view_connect = "";
 	$participants = "";
@@ -77,6 +78,10 @@ function display_navbar($current, $path_redirect, $path_redirect_disco, $path_re
         break;
 	case "bracket":
         $bracket = "active";
+		$info_drop = "active";
+        break;
+    case "veto":
+        $veto = "active";
 		$info_drop = "active";
         break;
 	case "schedule":
@@ -163,6 +168,12 @@ function display_navbar($current, $path_redirect, $path_redirect_disco, $path_re
 				 echo '<a class="nav-link" href="'.$path_redirect.'view_connect.php">Connect team</a>';
 				echo '</li>';
 			}
+			if($veto_view)
+			{
+				echo '<li class="nav-item '.$veto.'">';
+				 echo '<a class="nav-link" href="'.$path_redirect.'veto.php">Veto <span class="badge badge-primary">Béta</span></a>';
+				echo '</li>';
+			}
 			if(isset($api_key) && !empty($api_key) && isset($default_id_toornament) && !empty($default_id_toornament))
 			{
 				if($bracket_view)
@@ -193,12 +204,13 @@ function display_navbar($current, $path_redirect, $path_redirect_disco, $path_re
 		}
 		else
 		{
-			if(($connect_team_view) || ($bracket_view) || ($participants_view) || ($schedule_view) || ($stream_view))
+			if(($connect_team_view) || ($bracket_view) || ($participants_view) || ($schedule_view) || ($stream_view) || ($veto_view))
 			{
 				echo '<li class="nav-item dropdown">';
 				echo '	<a class="nav-link dropdown-toggle '.$info_drop.'" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Infos</a>';
 				echo '	<div class="dropdown-menu">';
 				if($connect_team_view){echo '  	<a class="dropdown-item '.$view_connect.'" href="'.$path_redirect.'view_connect.php">Connect team</a>';}
+				if($veto_view){echo '  	<a class="dropdown-item '.$veto.'" href="'.$path_redirect.'veto.php">Veto <span class="badge badge-primary">Béta</span></a>';}
 				if(isset($api_key) && !empty($api_key) && isset($default_id_toornament) && !empty($default_id_toornament))
 				{
 					if($bracket_view){echo '<a class="dropdown-item '.$bracket.'" href="'.$path_redirect.'bracket.php">Bracket</a>';}

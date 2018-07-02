@@ -40,13 +40,31 @@ include_once '../config/config.php';
 include_once '../traitement/check_config.php';
 include_once '../traitement/connect_bdd.php';
 include_once '../traitement/verif_user.php';
-include_once '../traitement/function_toornament.php';
+include_once '../traitement/check_input.php';
 include_once 'header.php';
-include_once 'footer.php';
 include_once 'navbar.php';
+include_once 'footer.php';
 
 session_start();
-if (isset($_GET['embed']) && $_GET['embed']=== '1')
+if(isset($_GET['id']) && !empty($_GET['id']))
+{
+	$id = $_GET['id'];
+	if(verify_input_text('/[^0-9]/', $id))
+	{
+		$_SESSION['state']="1";
+		$_SESSION['message']="The lobby id must be a number !";
+		header('Location: '.$BASE_URL.'pages/veto.php');
+		exit();
+	}
+}
+else
+{
+	$_SESSION['state']='1';
+	$_SESSION['message']="The lobby doesn't exist !";
+	header('Location: '.$BASE_URL.'pages/veto.php');
+	exit();
+}
+if(isset($_GET['embed']) && $_GET['embed']=== '1')
 {
 	$embed = true;
 }
@@ -55,15 +73,10 @@ else
 	$embed = false;
 }
 $level=3;
-if(isset($_SESSION['login']))
+if (isset($_SESSION['login']))
 {
-	$result_user = check_user($BDD_ADMINAFK, $_SESSION['login']);	
-	if(!isset($CONFIG['toornament_id']) || empty($CONFIG['toornament_id']) || !isset($CONFIG['toornament_api']) || empty($CONFIG['toornament_api']))
-	{
-		header('Location: '.$BASE_URL.'pages/status.php');
-		exit();
-	}
-	if(isset($CONFIG['display_stream']) && $CONFIG['display_stream'] == FALSE)
+	$result_user = check_user($BDD_ADMINAFK, $_SESSION['login']);
+	if(isset($CONFIG['display_veto']) && $CONFIG['display_veto'] == FALSE)
 	{
 		header('Location: '.$BASE_URL.'pages/status.php');
 		exit();
@@ -75,16 +88,11 @@ if(isset($_SESSION['login']))
 		{
 			$level=1;
 		}
-	}		
+	}
 }
 else
 {
-	if(!isset($CONFIG['toornament_id']) || empty($CONFIG['toornament_id']) || !isset($CONFIG['toornament_api']) || empty($CONFIG['toornament_api']))
-	{
-		header('Location: '.$BASE_URL.'index.php');
-		exit();
-	}
-	if(isset($CONFIG['display_stream']) && $CONFIG['display_stream'] == FALSE)
+	if(isset($CONFIG['display_veto']) && $CONFIG['display_veto'] == FALSE)
 	{
 		header('Location: '.$BASE_URL.'index.php');
 		exit();
@@ -93,6 +101,7 @@ else
 echo '<html>';
 	echo '<head>';
 		header_html('../', False, $CONFIG['url_glyphicon']);
+		echo '<script type="text/javascript" src="../js/lobby_veto.js"></script>';
 	echo '</head>';
 	echo '<body>';
 		if($embed == false)
@@ -102,7 +111,7 @@ echo '<html>';
 				$path_redirect_disco ="../traitement/";
 				$path_redirect_index="../";
 				$path_img = "../images/";
-				$current = "stream";
+				$current = "veto";
 				if(!isset($CONFIG['url_ebot'])){$CONFIG['url_ebot'] = "";}
 				if(!isset($CONFIG['toornament_api'])){$CONFIG['toornament_api'] = "";}
 				if(!isset($CONFIG['toornament_client_id'])){$CONFIG['toornament_client_id'] = "";}
@@ -117,58 +126,26 @@ echo '<html>';
 				display_navbar($current, $path_redirect, $path_redirect_disco, $path_redirect_index, $path_img, $level, $CONFIG['url_ebot'], $CONFIG['toornament_api'], $CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_id'], $CONFIG['display_connect'], $CONFIG['display_veto'], $CONFIG['display_bracket'], $CONFIG['display_participants'], $CONFIG['display_schedule'], $CONFIG['display_stream']);
 				echo '<div class="container">';
 					echo '<br>';
-					echo '<h1 class="text-center">Stream</h1>';
+					echo '<h1 class="text-center">Veto <span class="badge badge-primary">Béta</span></h1>';
 					echo '<br>';
 				echo '</div>';
-		}
-			$result_toornament = get_streams($CONFIG['toornament_id'], $CONFIG['toornament_api']);
-			if($result_toornament[1]==200 || $result_toornament[1]==206)
-			{
-				if(count($result_toornament[0])>0)
-				{
-					for($i=0; $i<count($result_toornament[0]);$i++)
-					{
-						echo '<div class="container-fluids">';
-							echo '<div class="row">';
-								echo '<div class="col-1">';
-								echo '</div>';
-								echo '<div class="col-10">';
-									echo '<div class="card">';
-										echo '<div class="card-header text-white bg-secondary">'.$result_toornament[0][$i]->name.'</div>';
-										echo '<div class="card-body">'; 
-										$name_channel = explode("/", $result_toornament[0][$i]->url);
-											echo '<div class="row">';
-												echo '<div class="embed-responsive embed-responsive-16by9">';
-												  echo '<iframe class="embed-responsive-item" src="https://player.twitch.tv/?channel='.$name_channel[3].'&chat=default&autoplay=false" allowfullscreen></iframe>';
-												echo '</div>';
-											echo '</div>';
-										echo '</div>';
-									echo '</div>';
-								echo '</div>';
-							echo '</div>';
-						echo '</div>';
-						echo '<br>';
-					}
-				}
-				else
-				{
-					echo '<br>';
-					echo '<div class="container">';
-					echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>There is no streams<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-					echo '</div>';
-				}
-			}
-			else
-			{
-				echo '<br>';
-				echo '<div class="container">';
-				echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Something wrent wrong, Toornament API code error : ".$result_toornament[1]."<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+		}	
+			$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			echo '<div class="container">';
+				echo '<div class="input-group mb-3">';
+				  echo '<input type="text" id="copy" class="form-control" value="'.$url.'" placeholder="URL of map veto" aria-label="URL of map veto" aria-describedby="basic-addon2">';
+				  echo '<div class="input-group-append">';
+					echo '<button id="button_copy" class="btn btn-outline-secondary" type="button" onclick="myFunction()">Copy</button>';
+				  echo '</div>';
 				echo '</div>';
-			}
-			echo '<br>';
-			echo '<div class="container text-center">';
-				echo '<a href="https://www.toornament.com" target="blank"><img src="../images/other/PoweredbyToor_Black.png" width="120px" class="img-fluid" alt="Powered by Toornament"></a>';
 			echo '</div>';
+			///////////////////////////
+			echo "<input id='lobby_id' name='lobby_id' type='hidden' value='".$id."'>";
+			echo '<span id="veto">';
+				include('data_veto.php');
+			echo '</span>';
+			echo '<fieldset disabled><input id="veto_save" type="hidden" class="form-control"></input></fieldset>';
+			/////////////////////
 			echo '<br>';
 		if($embed == false)
 		{
