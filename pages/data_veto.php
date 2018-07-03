@@ -60,7 +60,13 @@ echo '<html>';
 		$reponse = $BDD_ADMINAFK->prepare('SELECT * FROM veto WHERE id = ?');
 		$reponse->execute(array($id));
 		$count_result = $reponse->rowCount();
-		
+		if($count_result == "0")
+		{
+			$_SESSION['state']='1';
+			$_SESSION['message']="There is an error in the lobby, you need to create a new room";
+			header('Location: '.$BASE_URL.'pages/veto.php');
+			exit();
+		}
 		$error_get_bdd = 0;
 		while ($donnees = $reponse->fetch())
 		{
