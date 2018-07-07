@@ -59,7 +59,7 @@ INSERT INTO `configs` (`id`, `name`, `value`, `type`) VALUES
 (19, 'display_stream', '1', 'boolean'),
 (6, 'default_ebot_ot_status', '1', 'boolean'),
 (7, 'default_ebot_knife', '1', 'boolean'),
-(5, 'default_ebot_match_mmr', '5', 'integer'),
+(5, 'default_ebot_match_mmr', '15', 'integer'),
 (20, 'steam_api', '', 'string'),
 (21, 'steamid_api', '', 'string'),
 (15, 'display_veto', '1', 'boolean'),
