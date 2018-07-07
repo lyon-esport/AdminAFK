@@ -192,17 +192,14 @@ echo '<html>';
 						  echo '<div class="modal-body">';
 							  echo '<div class="form-group">';
 								echo '<div class="col text-center">';
-									if($map['de_dust2']==1){echo '<img id="de_dust2" style="max-width: 30%;" src="../images/veto/de_dust2.jpg" class="map veto_map rounded" alt="Dust2">&nbsp';}
-									if($map['de_cache']==1){echo '<img id="de_cache" style="max-width: 30%;" src="../images/veto/de_cache.jpg" class="map veto_map rounded" alt="Cache">&nbsp';}
-									if($map['de_mirage']==1){echo '<img id="de_mirage" style="max-width: 30%;" src="../images/veto/de_mirage.jpg" class="map veto_map rounded" alt="Mirage">&nbsp';}
-									if($map['de_inferno']==1){echo '<img id="de_inferno" style="max-width: 30%;" src="../images/veto/de_inferno.jpg" class="map veto_map rounded" alt="Inferno">&nbsp';}
-								echo '</div>';
-								echo '<br>';
-								echo '<div class="col text-center">';
-									if($map['de_overpass']==1){echo '<img id="de_overpass" style="max-width: 30%;" src="../images/veto/de_overpass.jpg" class="map veto_map rounded" alt="Overpass">';}
-									if($map['de_cobblestone']==1){echo '<img id="de_cobblestone" style="max-width: 30%;" src="../images/veto/de_cobblestone.jpg" class="map veto_map rounded" alt="Cobblestone">&nbsp';}
-									if($map['de_nuke']==1){echo '<img id="de_nuke" style="max-width: 30%;" src="../images/veto/de_nuke.jpg" class="map veto_map rounded" alt="Nuke">&nbsp';}
-									if($map['de_train']==1){echo '<img id="de_train" style="max-width: 30%;" src="../images/veto/de_train.jpg" class="map veto_map rounded" alt="Train">';}
+									if($map['de_dust2']==1){echo '<img id="de_dust2" src="../images/veto/de_dust2.jpg" class="map veto_map rounded special_veto" alt="Dust2">';}
+									if($map['de_cache']==1){echo '<img id="de_cache" src="../images/veto/de_cache.jpg" class="map veto_map rounded special_veto" alt="Cache">';}
+									if($map['de_mirage']==1){echo '<img id="de_mirage" src="../images/veto/de_mirage.jpg" class="map veto_map rounded special_veto" alt="Mirage">';}
+									if($map['de_inferno']==1){echo '<img id="de_inferno" src="../images/veto/de_inferno.jpg" class="map veto_map rounded special_veto" alt="Inferno">';}
+									if($map['de_overpass']==1){echo '<img id="de_overpass" src="../images/veto/de_overpass.jpg" class="map veto_map rounded special_veto" alt="Overpass">';}
+									if($map['de_cobblestone']==1){echo '<img id="de_cobblestone" src="../images/veto/de_cobblestone.jpg" class="map veto_map rounded special_veto" alt="Cobblestone">';}
+									if($map['de_nuke']==1){echo '<img id="de_nuke" src="../images/veto/de_nuke.jpg" class="map veto_map rounded special_veto" alt="Nuke">';}
+									if($map['de_train']==1){echo '<img id="de_train" src="../images/veto/de_train.jpg" class="map veto_map rounded special_veto" alt="Train">';}
 								echo '</div>';
 							  echo '</div>';
 						  echo '</div>';

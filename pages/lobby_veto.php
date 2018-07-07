@@ -144,7 +144,7 @@ echo '<html>';
 			echo '<span id="veto">';
 				include('data_veto.php');
 			echo '</span>';
-			echo '<fieldset disabled><input id="veto_save" type="hidden" class="form-control"></input></fieldset>';
+			echo '<fieldset disabled><input id="veto_save" type="hidden" class="form-control" value=""></input></fieldset>';
 			/////////////////////
 			echo '<br>';
 		if($embed == false)
