@@ -81,6 +81,33 @@ Bootstrap 4 breakpoints
     animation: move 1s;
 }
 
+.veto_ban {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.veto_map{
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.veto_ban:hover {
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.veto_map:hover {
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(100%);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
 @keyframes move{
   0% 
   {
@@ -98,4 +125,9 @@ Bootstrap 4 breakpoints
   {
 	transform: rotate(0deg);
   }
+}
+
+.special_veto{
+	padding: 0.1rem;
+	max-width: 12rem;
 }
