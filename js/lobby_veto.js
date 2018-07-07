@@ -56,6 +56,7 @@ $.ajax({
 });
 }
 $(document).ready(function(){
+   get_data();
    setInterval(get_data,1000);
    $(".map").click(function() {
 		var id = $('#lobby_id').val();
