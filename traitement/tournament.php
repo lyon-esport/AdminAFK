@@ -153,76 +153,87 @@ if($choice=="Set Teams on eBot")
 		header('Location: '.$BASE_URL.'pages/set_tournament.php');
 		exit();
 	}
-	$result_toornament = get_participants($id_toornament, $CONFIG['toornament_api'], "0", "49");
-	if($result_toornament[1]==200 || $result_toornament[1]==206)
+	$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:participant');
+	if($result_token[1]==200 || $result_token[1]==206)
 	{
-		if(count($result_toornament[0])>0)
+		$result_toornament = get_participants($id_toornament, $CONFIG['toornament_api'], $result_token[0], "0", "49");
+		if($result_toornament[1]==200 || $result_toornament[1]==206)
 		{
-			if(count($result_toornament[0])==50)
+			if(count($result_toornament[0])>0)
 			{
-				$result2_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], "50", "99");
-				if($result2_toornament[1]==200 || $result2_toornament[1]==206)
+				if(count($result_toornament[0])==50)
 				{
-					for($p=50;$p<count($result2_toornament[0])+50; $p++)
+					$result2_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], "50", "99");
+					if($result2_toornament[1]==200 || $result2_toornament[1]==206)
 					{
-						$result_toornament[0][$p] = $result2_toornament[0][$p-50];
-					}
-					if(count($result2_toornament[0])==50)
-					{
-						$result3_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], "100", "149");
-						if($result3_toornament[1]==200 || $result3_toornament[1]==206)
+						for($p=50;$p<count($result2_toornament[0])+50; $p++)
 						{
-							for($p=100;$p<count($result3_toornament[0])+100; $p++)
+							$result_toornament[0][$p] = $result2_toornament[0][$p-50];
+						}
+						if(count($result2_toornament[0])==50)
+						{
+							$result3_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], "100", "149");
+							if($result3_toornament[1]==200 || $result3_toornament[1]==206)
 							{
-								$result_toornament[0][$p] = $result2_toornament[0][$p-100];
+								for($p=100;$p<count($result3_toornament[0])+100; $p++)
+								{
+									$result_toornament[0][$p] = $result2_toornament[0][$p-100];
+								}
 							}
 						}
 					}
 				}
-			}
-			try 
-			{
-				for($i = 0; $i <= count($result_toornament[0])-1; $i++)
+				try 
 				{
-					if(isset($result_toornament[0][$i]->custom_fields->country)){$flag=$result_toornament[0][$i]->custom_fields->country;}else{$flag="";}
-					$req = $BDD_EBOT->prepare('INSERT INTO teams(name, shorthandle, flag, created_at, updated_at) VALUES(?, ?, ?, ?, ?)');
-					$req->execute(array($result_toornament[0][$i]->name, $result_toornament[0][$i]->name, $flag, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')));
-					if(!empty($season))
+					for($i = 0; $i <= count($result_toornament[0])-1; $i++)
 					{
-						$reponse = $BDD_EBOT->prepare('SELECT id FROM teams WHERE name= ?');
-						$reponse->execute(array($result_toornament[0][$i]->name));
-						while ($donnees = $reponse->fetch())
+						if(isset($result_toornament[0][$i]->custom_fields->country)){$flag=$result_toornament[0][$i]->custom_fields->country;}else{$flag="";}
+						$req = $BDD_EBOT->prepare('INSERT INTO teams(name, shorthandle, flag, created_at, updated_at) VALUES(?, ?, ?, ?, ?)');
+						$req->execute(array($result_toornament[0][$i]->name, $result_toornament[0][$i]->name, $flag, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')));
+						if(!empty($season))
 						{
-							$id_team = $donnees['id'];
+							$reponse = $BDD_EBOT->prepare('SELECT id FROM teams WHERE name= ?');
+							$reponse->execute(array($result_toornament[0][$i]->name));
+							while ($donnees = $reponse->fetch())
+							{
+								$id_team = $donnees['id'];
+							}
+							$req2 = $BDD_EBOT->prepare('INSERT INTO teams_in_seasons(season_id, team_id, created_at, updated_at) VALUES(?, ?, ?, ?)');
+							$req2->execute(array($season, $id_team, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')));
 						}
-						$req2 = $BDD_EBOT->prepare('INSERT INTO teams_in_seasons(season_id, team_id, created_at, updated_at) VALUES(?, ?, ?, ?)');
-						$req2->execute(array($season, $id_team, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')));
 					}
 				}
-			}
-			catch(PDOException $e)
-			{
-				print "Erreur ! : " . $e->getMessage() . "<br/>";
-				die();
-			}
-			$_SESSION['state']="2";
-			if(empty($season))
-			{	
-				$_SESSION['message']=($i)."  teams have been added on eBot from toornament";
+				catch(PDOException $e)
+				{
+					print "Erreur ! : " . $e->getMessage() . "<br/>";
+					die();
+				}
+				$_SESSION['state']="2";
+				if(empty($season))
+				{	
+					$_SESSION['message']=($i)."  teams have been added on eBot from toornament";
+				}
+				else
+				{
+					$_SESSION['message']=($i)." teams have been added on eBot from toornament in ".$season_name." season";
+				}
+				$action=$_SESSION['message'];
+				store_action($action, $ip, $BDD_ADMINAFK);
+				header('Location: '.$BASE_URL.'pages/set_tournament.php');
+				exit();
 			}
 			else
 			{
-				$_SESSION['message']=($i)." teams have been added on eBot from toornament in ".$season_name." season";
+				$_SESSION['state']="1";
+				$_SESSION['message']= "There is no participants";
+				header('Location: '.$BASE_URL.'pages/set_tournament.php');
+				exit();
 			}
-			$action=$_SESSION['message'];
-			store_action($action, $ip, $BDD_ADMINAFK);
-			header('Location: '.$BASE_URL.'pages/set_tournament.php');
-			exit();
 		}
 		else
 		{
 			$_SESSION['state']="1";
-			$_SESSION['message']= "There is no participants";
+			$_SESSION['message']= "Something wrent wrong, Toornament API code error : ".$result_toornament[1];
 			header('Location: '.$BASE_URL.'pages/set_tournament.php');
 			exit();
 		}

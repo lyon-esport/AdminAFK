@@ -36,11 +36,12 @@
 // termes.
 // ----------------------------------------------------------------------------
 
-function get_token($client_id, $client_secret, $api_key, $bdd_adminafk)
+function get_token($client_id, $client_secret, $api_key, $bdd_adminafk, $token_scope)
 {
 	try 
 	{
-		$reponse = $bdd_adminafk->query('SELECT number, end_at FROM token WHERE id = 1');
+		$reponse = $bdd_adminafk->prepare('SELECT number, end_at FROM token WHERE name = ?');
+		$reponse->execute(array($token_scope));
 	}
 	catch(PDOException $e)
 	{
@@ -52,12 +53,14 @@ function get_token($client_id, $client_secret, $api_key, $bdd_adminafk)
 		$access_token = $donnees['number'];
 		$end_at	= $donnees['end_at'];
 	}
+	$reponse->closeCursor();
+	$httpcode = '200';
 	if(strtotime(date('Y-m-d')) >= strtotime($end_at))
 	{
 		$curl = curl_init();
 		curl_setopt_array(
 			$curl, array(
-			CURLOPT_URL             => 'https://api.toornament.com/oauth/v2/token?grant_type=client_credentials&client_id='.$client_id.'&client_secret='.$client_secret,
+			CURLOPT_URL             => 'https://api.toornament.com/oauth/v2/token?grant_type=client_credentials&client_id='.$client_id.'&client_secret='.$client_secret.'&scope='.$token_scope,
 			CURLOPT_RETURNTRANSFER  => true,
 			CURLOPT_VERBOSE         => true,
 			CURLOPT_HEADER          => true,
@@ -71,13 +74,13 @@ function get_token($client_id, $client_secret, $api_key, $bdd_adminafk)
 		$header_size    = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 		$header         = substr($output, 0, $header_size);
 		$body           = json_decode(substr($output, $header_size));
-		$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$httpcode 		= curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$access_token   = $body->access_token;
 		curl_close($curl);
 		try 
 		{
-			$req = $bdd_adminafk->prepare('UPDATE token SET number = ?, created_at = ?, end_at = ? WHERE id = 1');
-			$req->execute(array($access_token, date(' Y-m-d'), date('Y-m-d', strtotime("+1 days"))));
+			$req = $bdd_adminafk->prepare('UPDATE token SET number = ?, created_at = ?, end_at = ? WHERE name = ?');
+			$req->execute(array($access_token, date(' Y-m-d'), date('Y-m-d', strtotime("+1 days")), $token_scope));
 			$req->closeCursor();
 		}
 		catch(PDOException $e)
@@ -89,18 +92,19 @@ function get_token($client_id, $client_secret, $api_key, $bdd_adminafk)
 	return array($access_token, $httpcode);
 }
 
-function get_participants($id_toornament, $api_key, $start, $stop)
+function get_participants($id_toornament, $api_key, $access_token, $start, $stop)
 {
 	$curl = curl_init();
 	curl_setopt_array(
 		$curl, array(
-		CURLOPT_URL             => 'https://api.toornament.com/viewer/v2/tournaments/'.$id_toornament.'/participants',
+		CURLOPT_URL             => 'https://api.toornament.com/organizer/v2/tournaments/'.$id_toornament.'/participants',
 		CURLOPT_RETURNTRANSFER  => true,
 		CURLOPT_VERBOSE         => true,
 		CURLOPT_HEADER          => true,
 		CURLOPT_SSL_VERIFYPEER  => false,
 		CURLOPT_HTTPHEADER      => array(
 			'X-Api-Key: '.$api_key,
+			'Authorization: Bearer '.$access_token,
 			'Range: participants='.$start.'-'.$stop,
 			'Content-Type: application/json'
 		)
@@ -109,7 +113,7 @@ function get_participants($id_toornament, $api_key, $start, $stop)
 	$header_size    = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 	$header         = substr($output, 0, $header_size);
 	$body           = json_decode(substr($output, $header_size));
-	$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	$httpcode 		= curl_getinfo($curl, CURLINFO_HTTP_CODE);
 	curl_close($curl);
 	return array($body, $httpcode);
 }
@@ -133,23 +137,24 @@ function get_stages($id_toornament, $api_key)
 	$header_size    = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 	$header         = substr($output, 0, $header_size);
 	$body           = json_decode(substr($output, $header_size));
-	$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	$httpcode 		= curl_getinfo($curl, CURLINFO_HTTP_CODE);
 	curl_close($curl);
 	return array($body, $httpcode);
 }
 
-function get_matches($id_toornament, $api_key)
+function get_matches($id_toornament, $api_key, $access_token)
 {
 	$curl = curl_init();
 	curl_setopt_array(
 		$curl, array(
-		CURLOPT_URL             => 'https://api.toornament.com/viewer/v2/tournaments/'.$id_toornament.'/matches',
+		CURLOPT_URL             => 'https://api.toornament.com/organizer/v2/tournaments/'.$id_toornament.'/matches',
 		CURLOPT_RETURNTRANSFER  => true,
 		CURLOPT_VERBOSE         => true,
 		CURLOPT_HEADER          => true,
 		CURLOPT_SSL_VERIFYPEER  => false,
 		CURLOPT_HTTPHEADER      => array(
 			'X-Api-Key: '.$api_key,
+			'Authorization: Bearer '.$access_token,
 			'Range: matches=0-127',
 			'Content-Type: application/json'
 		)
@@ -158,23 +163,24 @@ function get_matches($id_toornament, $api_key)
 	$header_size    = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 	$header         = substr($output, 0, $header_size);
 	$body           = json_decode(substr($output, $header_size));
-	$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	$httpcode 		= curl_getinfo($curl, CURLINFO_HTTP_CODE);
 	curl_close($curl);
 	return array($body, $httpcode);
 }
 
-function get_streams($id_toornament, $api_key)
+function get_streams($id_toornament, $api_key, $access_token)
 {
 	$curl = curl_init();
 	curl_setopt_array(
 		$curl, array(
-		CURLOPT_URL             => 'https://api.toornament.com/viewer/v2/tournaments/'.$id_toornament.'/streams',
+		CURLOPT_URL             => 'https://api.toornament.com/organizer/v2/tournaments/'.$id_toornament.'/streams',
 		CURLOPT_RETURNTRANSFER  => true,
 		CURLOPT_VERBOSE         => true,
 		CURLOPT_HEADER          => true,
 		CURLOPT_SSL_VERIFYPEER  => false,
 		CURLOPT_HTTPHEADER      => array(
 			'X-Api-Key: '.$api_key,
+			'Authorization: Bearer '.$access_token,
 			'Range: streams=0-49',
 			'Content-Type: application/json'
 		)
@@ -183,7 +189,7 @@ function get_streams($id_toornament, $api_key)
 	$header_size    = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 	$header         = substr($output, 0, $header_size);
 	$body           = json_decode(substr($output, $header_size));
-	$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	$httpcode 		= curl_getinfo($curl, CURLINFO_HTTP_CODE);
 	curl_close($curl);
 	return array($body, $httpcode);
 }
@@ -247,7 +253,7 @@ function test_api($client_id, $client_secret, $api_key)
 	$header_size    = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 	$header         = substr($output, 0, $header_size);
 	$body           = json_decode(substr($output, $header_size));
-	$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	$httpcode 		= curl_getinfo($curl, CURLINFO_HTTP_CODE);
 	curl_close($curl);
 
 	return ($httpcode);
