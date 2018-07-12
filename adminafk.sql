@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 02 juil. 2018 à 23:10
+-- Généré le :  jeu. 12 juil. 2018 à 23:54
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -106,19 +106,21 @@ CREATE TABLE IF NOT EXISTS `login_fail` (
 
 DROP TABLE IF EXISTS `token`;
 CREATE TABLE IF NOT EXISTS `token` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `name` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `number` varchar(3000) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` date NOT NULL,
   `end_at` date NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `token`
 --
 
-INSERT INTO `token` (`id`, `number`, `created_at`, `end_at`) VALUES
-(1, '', '2018-04-05', '2018-04-06');
+INSERT INTO `token` (`name`, `number`, `created_at`, `end_at`) VALUES
+('organizer:admin', '', '2018-07-12', '2018-07-12'),
+('organizer:result', '', '2018-07-12', '2018-07-12'),
+('organizer:participant', '', '2018-07-12', '2018-07-12');
 
 -- --------------------------------------------------------
 
@@ -145,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`login`, `password`, `level`, `created_at`, `created_by`, `update_at`, `update_by`, `last_login`, `last_ip`) VALUES
-('admin', '$2y$10$lGz.ChiP2zfaI0vWLNQUreTfiOldZ0aFdd/9OO5b.FHCebsGaup7.', 1, '2018-04-08 00:00:00', 'admin', '2018-05-05 13:51:29', 'admin', '2018-07-02 16:47:47', '127.0.0.1');
+('admin', '$2y$10$lGz.ChiP2zfaI0vWLNQUreTfiOldZ0aFdd/9OO5b.FHCebsGaup7.', 1, '2018-04-08 00:00:00', 'admin', '2018-05-05 13:51:29', 'admin', '2018-07-08 14:32:14', '127.0.0.1');
 
 -- --------------------------------------------------------
 
