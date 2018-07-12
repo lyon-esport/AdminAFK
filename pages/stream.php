@@ -121,40 +121,51 @@ echo '<html>';
 					echo '<br>';
 				echo '</div>';
 		}
-			$result_toornament = get_streams($CONFIG['toornament_id'], $CONFIG['toornament_api']);
-			if($result_toornament[1]==200 || $result_toornament[1]==206)
+			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:admin');
+			if($result_token[1]==200 || $result_token[1]==206)
 			{
-				if(count($result_toornament[0])>0)
+				$result_toornament = get_streams($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0]);
+				if($result_toornament[1]==200 || $result_toornament[1]==206)
 				{
-					for($i=0; $i<count($result_toornament[0]);$i++)
+					if(count($result_toornament[0])>0)
 					{
-						echo '<div class="container-fluids">';
-							echo '<div class="row">';
-								echo '<div class="col-1">';
-								echo '</div>';
-								echo '<div class="col-10">';
-									echo '<div class="card">';
-										echo '<div class="card-header text-white bg-secondary">'.$result_toornament[0][$i]->name.'</div>';
-										echo '<div class="card-body">'; 
-										$name_channel = explode("/", $result_toornament[0][$i]->url);
-											echo '<div class="row">';
-												echo '<div class="embed-responsive embed-responsive-16by9">';
-												  echo '<iframe class="embed-responsive-item" src="https://player.twitch.tv/?channel='.$name_channel[3].'&chat=default&autoplay=false" allowfullscreen></iframe>';
+						for($i=0; $i<count($result_toornament[0]);$i++)
+						{
+							echo '<div class="container-fluids">';
+								echo '<div class="row">';
+									echo '<div class="col-1">';
+									echo '</div>';
+									echo '<div class="col-10">';
+										echo '<div class="card">';
+											echo '<div class="card-header text-white bg-secondary">'.$result_toornament[0][$i]->name.'</div>';
+											echo '<div class="card-body">'; 
+											$name_channel = explode("/", $result_toornament[0][$i]->url);
+												echo '<div class="row">';
+													echo '<div class="embed-responsive embed-responsive-16by9">';
+													  echo '<iframe class="embed-responsive-item" src="https://player.twitch.tv/?channel='.$name_channel[3].'&chat=default&autoplay=false" allowfullscreen></iframe>';
+													echo '</div>';
 												echo '</div>';
 											echo '</div>';
 										echo '</div>';
 									echo '</div>';
 								echo '</div>';
 							echo '</div>';
-						echo '</div>';
+							echo '<br>';
+						}
+					}
+					else
+					{
 						echo '<br>';
+						echo '<div class="container">';
+						echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>There is no streams<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+						echo '</div>';
 					}
 				}
 				else
 				{
 					echo '<br>';
 					echo '<div class="container">';
-					echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>There is no streams<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+					echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Something wrent wrong, Toornament API code error : ".$result_toornament[1]."<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
 					echo '</div>';
 				}
 			}

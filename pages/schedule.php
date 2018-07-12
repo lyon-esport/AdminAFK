@@ -121,68 +121,80 @@ echo '<html>';
 					echo '<br>';
 				echo '</div>';
 		}
-			$result_toornament = get_matches($CONFIG['toornament_id'], $CONFIG['toornament_api']);
-			$check_exist_scheduled_datetime = false;
+			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:result');
+			if($result_token[1]==200 || $result_token[1]==206)
+			{
+				$result_toornament = get_matches($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0]);
+				$check_exist_scheduled_datetime = false;
 
-			for($i=0; $i < count($result_toornament[0]); $i++)
-			{
-				if(!empty($result_toornament[0][$i]->scheduled_datetime) && ($result_toornament[0][$i]->status == "pending" || $result_toornament[0][$i]->status == "running") && (isset($result_toornament[0][$i]->opponents[0]->participant->name) && isset($result_toornament[0][$i]->opponents[1]->participant->name))){$check_exist_scheduled_datetime = true;}
-			}
-			if($result_toornament[1]==200 || $result_toornament[1]==206)
-			{
-			  if($check_exist_scheduled_datetime === true)
-			  {
-				  echo "<div class='container'>";
-					echo "<div class='card'>";
-						echo "<div class='card-header text-white bg-secondary'>Matches scheduled</div>";
-						echo "<div class='card-body'>";
-						  echo "<div class='table-responsive'>";
-								echo "<table id=connect_teams class='table table-bordered table-responsive-sm'>";
-									echo "<thead class='thead text-center'>";
-										echo "<tr>";
-										  echo "<th scope='col'>Team A</th>";
-										  echo "<th scope='col'>Team B</th>";
-										  echo "<th scope='col'>Scheduled date (timezone: Europe/Paris)</th>";
-										  echo "<th scope='col'>Status</th>";
-										echo "</tr>";
-									echo "</thead>";
-									echo "<tbody class=text-center>";
-									for($i=0; $i < count($result_toornament[0]); $i++)
-									{
-										if(isset($result_toornament[0][$i]->opponents[0]->participant->name) && isset($result_toornament[0][$i]->opponents[1]->participant->name) && isset($result_toornament[0][$i]->scheduled_datetime) && isset($result_toornament[0][$i]->status))
+				for($i=0; $i < count($result_toornament[0]); $i++)
+				{
+					if(!empty($result_toornament[0][$i]->scheduled_datetime) && ($result_toornament[0][$i]->status == "pending" || $result_toornament[0][$i]->status == "running") && (isset($result_toornament[0][$i]->opponents[0]->participant->name) && isset($result_toornament[0][$i]->opponents[1]->participant->name))){$check_exist_scheduled_datetime = true;}
+				}
+				if($result_toornament[1]==200 || $result_toornament[1]==206)
+				{
+				  if($check_exist_scheduled_datetime === true)
+				  {
+					  echo "<div class='container'>";
+						echo "<div class='card'>";
+							echo "<div class='card-header text-white bg-secondary'>Matches scheduled</div>";
+							echo "<div class='card-body'>";
+							  echo "<div class='table-responsive'>";
+									echo "<table id=connect_teams class='table table-bordered table-responsive-sm'>";
+										echo "<thead class='thead text-center'>";
+											echo "<tr>";
+											  echo "<th scope='col'>Team A</th>";
+											  echo "<th scope='col'>Team B</th>";
+											  echo "<th scope='col'>Scheduled date (timezone: Europe/Paris)</th>";
+											  echo "<th scope='col'>Status</th>";
+											echo "</tr>";
+										echo "</thead>";
+										echo "<tbody class=text-center>";
+										for($i=0; $i < count($result_toornament[0]); $i++)
 										{
-											if($result_toornament[0][$i]->status == "pending" || $result_toornament[0][$i]->status == "running")
+											if(isset($result_toornament[0][$i]->opponents[0]->participant->name) && isset($result_toornament[0][$i]->opponents[1]->participant->name) && isset($result_toornament[0][$i]->scheduled_datetime) && isset($result_toornament[0][$i]->status))
 											{
-												
-												$name_team_a = $result_toornament[0][$i]->opponents[0]->participant->name;
-												$name_team_b = $result_toornament[0][$i]->opponents[1]->participant->name;
-												$dt = new DateTime($result_toornament[0][$i]->scheduled_datetime, new DateTimeZone('UTC'));
-												$dt->setTimezone(new DateTimeZone('Europe/Paris'));
-												$schedule = date_format($dt, 'l w F Y - H:i:s');
-												$status_match = $result_toornament[0][$i]->status;
-												echo "<tr>";
-													echo "<td class=text-center>".$name_team_a."</td>";
-													echo "<td class=text-center>".$name_team_b."</td>";
-													echo "<td class=text-center>".$schedule."</td>";
-													echo "<td class=text-center>".$status_match."</td>";
-												echo "</tr>";
+												if($result_toornament[0][$i]->status == "pending" || $result_toornament[0][$i]->status == "running")
+												{
+													
+													$name_team_a = $result_toornament[0][$i]->opponents[0]->participant->name;
+													$name_team_b = $result_toornament[0][$i]->opponents[1]->participant->name;
+													$dt = new DateTime($result_toornament[0][$i]->scheduled_datetime, new DateTimeZone('UTC'));
+													$dt->setTimezone(new DateTimeZone('Europe/Paris'));
+													$schedule = date_format($dt, 'l w F Y - H:i:s');
+													$status_match = $result_toornament[0][$i]->status;
+													echo "<tr>";
+														echo "<td class=text-center>".$name_team_a."</td>";
+														echo "<td class=text-center>".$name_team_b."</td>";
+														echo "<td class=text-center>".$schedule."</td>";
+														echo "<td class=text-center>".$status_match."</td>";
+													echo "</tr>";
+												}
 											}
 										}
-									}
-									echo "</tbody>";
-								echo "</table>";
-						   echo "</div>";
+										echo "</tbody>";
+									echo "</table>";
+							   echo "</div>";
+							echo "</div>";
+							echo "</div>";
 						echo "</div>";
-						echo "</div>";
-					echo "</div>";
-			  }
-			  else
-			  {
-				  echo '<br>';
-				  echo '<div class="container">';
-				  echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>There is no schedule<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-				  echo '</div>';
-			  }
+				  }
+				  else
+				  {
+					  echo '<br>';
+					  echo '<div class="container">';
+					  echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>There is no schedule<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+					  echo '</div>';
+				  }
+				}
+				else
+				{
+					echo '<br>';
+					echo '<div class="container">';
+					echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Something wrent wrong, Toornament API code error : ".$result_toornament[1]."<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+					echo '</div>';
+					echo '<br>';
+				}
 			}
 			else
 			{

@@ -192,8 +192,8 @@ $season_display = check_season($BDD_EBOT);
 								<tbody class="text-center">
 									<tr>
 										<form method='post' action='../traitement/tournament.php'>
-											<td><input type="text" name="name" class="form-control" placeholder="Lyon eSport" min="1" pattern=".{1,}" required title="1 character minimum"></td>
-											<td><input type="text" name="event_name" class="form-control" placeholder="Lyon eSport 2018" min="1" pattern=".{1,}" required title="1 character minimum"></td>
+											<td><input type="text" name="name" class="form-control" placeholder="Lyon e-Sport" min="1" pattern=".{1,}" required title="1 character minimum"></td>
+											<td><input type="text" name="event_name" class="form-control" placeholder="Lyon e-Sport 2018" min="1" pattern=".{1,}" required title="1 character minimum"></td>
 											<td><input type="text" name="link_tn" class="form-control" placeholder="https://www.lyon-esport.fr/"></td>
 											<?php
 											new_crsf("csrf_season_ebot");
