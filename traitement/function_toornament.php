@@ -193,6 +193,31 @@ function get_streams($id_toornament, $api_key, $access_token)
 	curl_close($curl);
 	return array($body, $httpcode);
 }
+
+function get_tournament($id_toornament, $api_key, $access_token)
+{
+	$curl = curl_init();
+	curl_setopt_array(
+		$curl, array(
+		CURLOPT_URL             => 'https://api.toornament.com/organizer/v2/tournaments/'.$id_toornament,
+		CURLOPT_RETURNTRANSFER  => true,
+		CURLOPT_VERBOSE         => true,
+		CURLOPT_HEADER          => true,
+		CURLOPT_SSL_VERIFYPEER  => false,
+		CURLOPT_HTTPHEADER      => array(
+			'X-Api-Key: '.$api_key,
+			'Authorization: Bearer '.$access_token,
+			'Content-Type: application/json'
+		)
+	)); 
+	$output         = curl_exec($curl);
+	$header_size    = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+	$header         = substr($output, 0, $header_size);
+	$body           = json_decode(substr($output, $header_size));
+	$httpcode 		= curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	curl_close($curl);
+	return array($body, $httpcode);
+}
 /*
 // 3. Setting a match result
 $data = '{
