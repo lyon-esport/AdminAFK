@@ -122,6 +122,8 @@ echo '<html>';
 					echo '<br>';
 				echo '</div>';
 		}
+			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:view');
+			$info_toornament = get_tournament($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0]);
 			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:participant');
 			if($result_token[1]==200 || $result_token[1]==206)
 			{
@@ -279,7 +281,7 @@ echo '<html>';
 										{ 
 											$flag = '';
 										}
-										if(isset($result_toornament[0][$i]->checked_in))
+										if(isset($result_toornament[0][$i]->checked_in) && $info_toornament[0]->check_in_enabled == TRUE)
 										{ 
 											if($result_toornament[0][$i]->checked_in == TRUE)
 											{
@@ -388,7 +390,7 @@ echo '<html>';
 										{ 
 											$flag = '';
 										}
-										if(isset($result_toornament[0][$i]->checked_in))
+										if(isset($result_toornament[0][$i]->checked_in) && $info_toornament[0]->check_in_enabled == TRUE)
 										{ 
 											if($result_toornament[0][$i]->checked_in == TRUE)
 											{
