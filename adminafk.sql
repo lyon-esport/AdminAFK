@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 12 juil. 2018 à 23:54
+-- Généré le :  sam. 14 juil. 2018 à 13:48
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -118,9 +118,10 @@ CREATE TABLE IF NOT EXISTS `token` (
 --
 
 INSERT INTO `token` (`name`, `number`, `created_at`, `end_at`) VALUES
-('organizer:admin', '', '2018-07-12', '2018-07-12'),
-('organizer:result', '', '2018-07-12', '2018-07-12'),
-('organizer:participant', '', '2018-07-12', '2018-07-12');
+('organizer:admin', '', '2018-07-13', '2018-07-13'),
+('organizer:result', '', '2018-07-13', '2018-07-13'),
+('organizer:participant', '', '2018-07-13', '2018-07-13'),
+('organizer:view', '', '2018-07-13', '2018-07-13');
 
 -- --------------------------------------------------------
 
