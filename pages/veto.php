@@ -49,10 +49,12 @@ session_start();
 if (isset($_GET['embed']) && $_GET['embed']=== '1')
 {
 	$embed = true;
+	$before_embed = "-fluids";
 }
 else
 {
 	$embed = false;
+	$before_embed = "";
 }
 $level=3;
 if (isset($_SESSION['login']))
@@ -131,7 +133,7 @@ echo '<html>';
 				echo '</div>';
 		}
 			echo '<form method="post" action="../traitement/create_lobby_veto.php">';	
-				echo '<div class="container">';
+				echo '<div class="container'.$before_embed.'">';
 					echo '<div class="form-row">';
 						echo '<div class="col">';
 						  echo '<label for="name_1">Name of Team 1</label>';
@@ -166,7 +168,7 @@ echo '<html>';
 					echo '</div>';
 				echo '</div>';
 				echo '<br>';
-				echo '<div class="container">';
+				echo '<div class="container'.$before_embed.'">';
 					echo '<h5>Preview</h5>';
 					echo '<ul id="preview" class="list-group">';
 					  echo '<li class="list-group-item list-group-item-danger font-weight-bold">Team 1 BAN</li>';
@@ -179,7 +181,7 @@ echo '<html>';
 					echo '</ul>';
 				echo '</div>';
 				echo '<br>';
-				echo '<div class="container">';
+				echo '<div class="container'.$before_embed.'">';
 					echo '<h5>Map list</h5>';
 					echo '<div class="col text-center">';
 						echo '<img id="de_dust2" src="../images/veto/de_dust2.jpg" class="map veto_map rounded special_veto" alt="Dust2">';
@@ -204,6 +206,7 @@ echo '<html>';
 				echo '<div class="container">';
 					echo '<h5 id="error" class="text-danger text-center"></h5>';
 					new_crsf('csrf');
+					echo '<input name="embed" type="hidden" value='.$embed.'>';
 					echo '<button type="submit" id="button_veto" name="veto" class="btn text-white bg-secondary btn-lg btn-block">Create a lobby for map veto</button>';
 				echo '</div>';
 			echo '</form>';

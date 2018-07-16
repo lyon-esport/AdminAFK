@@ -50,10 +50,12 @@ session_start();
 if (isset($_GET['embed']) && $_GET['embed']=== '1')
 {
 	$embed = true;
+	$before_embed = "-fluids";
 }
 else
 {
 	$embed = false;
+	$before_embed = "";
 }
 $level=3;
 if(isset($_SESSION['login']))
@@ -125,35 +127,31 @@ echo '<html>';
 			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:view');
 			$info_toornament = get_tournament($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0]);
 			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:participant');
-			if($result_token[1]==200 || $result_token[1]==206)
+			$range_start = 0;
+			$range_stop = 49;
+			if($result_token[1]==200)
 			{
-				$result_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], "0", "49");
+				$result_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
 				if($result_toornament[1]==200 || $result_toornament[1]==206)
 				{
+					if($result_toornament[1]==206)
+					{
+						$range_start = $range_start + 50;
+						$range_stop = $range_stop + 50;
+						$temp_result_toornament[1]=206;
+						while($temp_result_toornament[1]==206)
+						{
+							$temp_result_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
+							for($p=50;$p<count($temp_result_toornament[0])+50; $p++)
+							{
+								$result_toornament[0][$p] = $temp_result_toornament[0][$p-50];
+							}
+							$range_start = $range_start + 50;
+							$range_stop = $range_stop + 50;
+						}
+					}
 					if(count($result_toornament[0])>0)
 					{
-						if(count($result_toornament[0])==50)
-						{
-							$result2_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], "50", "99");
-							if($result2_toornament[1]==200 || $result2_toornament[1]==206)
-							{
-								for($p=50;$p<count($result2_toornament[0])+50; $p++)
-								{
-									$result_toornament[0][$p] = $result2_toornament[0][$p-50];
-								}
-								if(count($result2_toornament[0])==50)
-								{
-									$result3_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], "100", "149");
-									if($result3_toornament[1]==200 || $result3_toornament[1]==206)
-									{
-										for($p=100;$p<count($result3_toornament[0])+100; $p++)
-										{
-											$result_toornament[0][$p] = $result2_toornament[0][$p-100];
-										}
-									}
-								}
-							}
-						}
 						//////////////////////
 						//////Vac BAN Check api steam + api steamid
 						//////////////////////
@@ -262,7 +260,7 @@ echo '<html>';
 						$size = (int)(count($result_toornament[0])/4);
 						$rest = count($result_toornament[0]);
 						$off_set = 0;
-						echo '<div class="container">';
+						echo '<div class="container'.$before_embed.'">';
 							for($h=0; $h<$size+1;$h++)
 							{
 								if($rest>3)
@@ -281,15 +279,22 @@ echo '<html>';
 										{ 
 											$flag = '';
 										}
-										if(isset($result_toornament[0][$i]->checked_in) && $info_toornament[0]->check_in_enabled == TRUE)
-										{ 
-											if($result_toornament[0][$i]->checked_in == TRUE)
-											{
-												$check_in = '<div class="card-header text-white bg-success">Check in : Yes</div>';
+										if($info_toornament[1] == 200)
+										{
+											if(isset($result_toornament[0][$i]->checked_in) && $info_toornament[0]->check_in_enabled == TRUE)
+											{ 
+												if($result_toornament[0][$i]->checked_in == TRUE)
+												{
+													$check_in = '<div class="card-header text-white bg-success">Check in : Yes</div>';
+												}
+												else
+												{
+													$check_in = '<div class="card-header text-white bg-danger">Check in : No</div>';
+												}
 											}
 											else
-											{
-												$check_in = '<div class="card-header text-white bg-danger">Check in : No</div>';
+											{ 
+												$check_in = '';
 											}
 										}
 										else
@@ -390,15 +395,22 @@ echo '<html>';
 										{ 
 											$flag = '';
 										}
-										if(isset($result_toornament[0][$i]->checked_in) && $info_toornament[0]->check_in_enabled == TRUE)
-										{ 
-											if($result_toornament[0][$i]->checked_in == TRUE)
-											{
-												$check_in = '<div class="card-header text-white bg-success">Check in : Yes</div>';
+										if($info_toornament[1] == 200)
+										{
+											if(isset($result_toornament[0][$i]->checked_in) && $info_toornament[0]->check_in_enabled == TRUE)
+											{ 
+												if($result_toornament[0][$i]->checked_in == TRUE)
+												{
+													$check_in = '<div class="card-header text-white bg-success">Check in : Yes</div>';
+												}
+												else
+												{
+													$check_in = '<div class="card-header text-white bg-danger">Check in : No</div>';
+												}
 											}
 											else
-											{
-												$check_in = '<div class="card-header text-white bg-danger">Check in : No</div>';
+											{ 
+												$check_in = '';
 											}
 										}
 										else

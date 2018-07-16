@@ -89,8 +89,7 @@ else
 	}
 }
 echo '<html>';
-	echo '<head>';
-		header_html('../', False, $CONFIG['url_glyphicon']);
+	echo '<head>';	
 		echo '<script type="text/javascript" src="../js/lobby_veto.js"></script>';
 	echo '</head>';
 	echo '<body>';

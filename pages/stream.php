@@ -49,10 +49,12 @@ session_start();
 if (isset($_GET['embed']) && $_GET['embed']=== '1')
 {
 	$embed = true;
+	$before_embed = "-fluids";
 }
 else
 {
 	$embed = false;
+	$before_embed = "";
 }
 $level=3;
 if(isset($_SESSION['login']))
@@ -122,20 +124,48 @@ echo '<html>';
 				echo '</div>';
 		}
 			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:admin');
-			if($result_token[1]==200 || $result_token[1]==206)
+			$range_start = 0;
+			$range_stop = 49;
+			if($result_token[1]==200)
 			{
-				$result_toornament = get_streams($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0]);
+				$result_toornament = get_streams($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
 				if($result_toornament[1]==200 || $result_toornament[1]==206)
 				{
+					if($result_toornament[1]==206)
+					{
+						$range_start = $range_start + 50;
+						$range_stop = $range_stop + 50;
+						$temp_result_toornament[1]=206;
+						while($temp_result_toornament[1]==206)
+						{
+							$temp_result_toornament = get_streams($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
+							for($p=50;$p<count($temp_result_toornament[0])+50; $p++)
+							{
+								$result_toornament[0][$p] = $temp_result_toornament[0][$p-50];
+							}
+							$range_start = $range_start + 50;
+							$range_stop = $range_stop + 50;
+						}
+					}
 					if(count($result_toornament[0])>0)
 					{
 						for($i=0; $i<count($result_toornament[0]);$i++)
 						{
-							echo '<div class="container-fluids">';
+							echo '<div class="container'.$before_embed.'">';
 								echo '<div class="row">';
-									echo '<div class="col-1">';
-									echo '</div>';
-									echo '<div class="col-10">';
+									if(empty($before_embed))
+									{
+										echo '<div class="col-1">';
+										echo '</div>';
+									}
+									if(empty($before_embed))
+									{
+										echo '<div class="col-10">';
+									}
+									else
+									{
+										echo '<div class="col">';
+									}
 										echo '<div class="card">';
 											echo '<div class="card-header text-white bg-secondary">'.$result_toornament[0][$i]->name.'</div>';
 											echo '<div class="card-body">'; 

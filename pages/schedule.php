@@ -49,10 +49,12 @@ session_start();
 if (isset($_GET['embed']) && $_GET['embed']=== '1')
 {
 	$embed = true;
+	$before_embed = "-fluids";
 }
 else
 {
 	$embed = false;
+	$before_embed = "";
 }
 $level=3;
 if (isset($_SESSION['login']))
@@ -122,7 +124,7 @@ echo '<html>';
 				echo '</div>';
 		}
 			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:result');
-			if($result_token[1]==200 || $result_token[1]==206)
+			if($result_token[1]==200)
 			{
 				$result_toornament = get_matches($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0]);
 				$check_exist_scheduled_datetime = false;
@@ -135,7 +137,7 @@ echo '<html>';
 				{
 				  if($check_exist_scheduled_datetime === true)
 				  {
-					  echo "<div class='container'>";
+					  echo "<div class='container".$before_embed."'>";
 						echo "<div class='card'>";
 							echo "<div class='card-header text-white bg-secondary'>Matches scheduled</div>";
 							echo "<div class='card-body'>";

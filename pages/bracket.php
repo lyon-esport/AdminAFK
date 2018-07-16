@@ -50,10 +50,12 @@ session_start();
 if (isset($_GET['embed']) && $_GET['embed']=== '1')
 {
 	$embed = true;
+	$before_embed = "-fluids";
 }
 else
 {
 	$embed = false;
+	$before_embed = "";
 }
 $level=3;
 if(isset($_SESSION['login']))
@@ -130,7 +132,7 @@ echo '<html>';
 					$nb_bracket = count($result_toornament[0]);
 					for($i=0;$i<$nb_bracket;$i++)
 					{
-						bracket($result_toornament[0][$i]->name, $CONFIG['toornament_id'], $result_toornament[0][$i]->id);
+						bracket($result_toornament[0][$i]->name, $CONFIG['toornament_id'], $result_toornament[0][$i]->id, $before_embed);
 					}	
 				}
 				else
