@@ -70,6 +70,15 @@ else
 	}
 }
 
+if(isset($_POST['embed']) && !empty($_POST['embed']))
+{
+	$embed = "&embed=1";
+}
+else
+{
+	$embed = "";
+}
+
 if(isset($_POST['name_1']) && !empty($_POST['name_1']))
 {	
 	$name_1=$_POST['name_1'];
@@ -456,7 +465,7 @@ catch (PDOException $e)
 	print "Error ! : " . $e->getMessage() . "<br/>";
 	die();
 }
-	header('Location: '.$BASE_URL.'pages/lobby_veto.php?id='.$BDD_ADMINAFK->lastInsertId());
+	header('Location: '.$BASE_URL.'pages/lobby_veto.php?id='.$BDD_ADMINAFK->lastInsertId().$embed);
 	exit();
 
 ?>

@@ -36,10 +36,10 @@
 // termes.
 // ----------------------------------------------------------------------------
 
-function bracket($title, $id_toornament, $id_bracket)
+function bracket($title, $id_toornament, $id_bracket, $before_embed)
 {
 	echo '<br>';
-	echo '<div class="container">';
+	echo '<div class="container'.$before_embed.'">';
 	echo '<h3 class="text-center">'.$title.'</h3>';
 	echo '<br>';
 	echo '<div class="embed-responsive embed-responsive-16by9">';
