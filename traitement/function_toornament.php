@@ -168,7 +168,7 @@ function get_matches($id_toornament, $api_key, $access_token)
 	return array($body, $httpcode);
 }
 
-function get_streams($id_toornament, $api_key, $access_token)
+function get_streams($id_toornament, $api_key, $access_token, $start, $stop)
 {
 	$curl = curl_init();
 	curl_setopt_array(
@@ -181,7 +181,7 @@ function get_streams($id_toornament, $api_key, $access_token)
 		CURLOPT_HTTPHEADER      => array(
 			'X-Api-Key: '.$api_key,
 			'Authorization: Bearer '.$access_token,
-			'Range: streams=0-49',
+			'Range: streams='.$start.'-'.$stop,
 			'Content-Type: application/json'
 		)
 	)); 

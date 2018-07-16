@@ -416,7 +416,7 @@ if($choice=="steam_api")
 	}
 	else
 	{
-		$vac_ban = "0";
+		$vac_ban = "1";
 	}
 	if(check_csrf("csrf_steam_api")==false)
 	{
@@ -449,6 +449,14 @@ if($choice=="pages")
 	else
 	{
 		$connect_team_view = "0";
+	}
+	if(isset($_POST['veto_view']))
+	{
+		$veto_view = $_POST['veto_view'];
+	}
+	else
+	{
+		$veto_view = "0";
 	}
 	if(isset($_POST['bracket_view']))
 	{
@@ -491,6 +499,8 @@ if($choice=="pages")
 	}
 	$req = $BDD_ADMINAFK->prepare('UPDATE configs SET value = ? WHERE name = ?');
 	$req->execute(array($connect_team_view, "display_connect"));
+	$req->closeCursor();
+	$req->execute(array($veto_view, "display_veto"));
 	$req->closeCursor();
 	$req->execute(array($bracket_view, "display_bracket"));
 	$req->closeCursor();

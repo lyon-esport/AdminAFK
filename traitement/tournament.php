@@ -154,35 +154,31 @@ if($choice=="Set Teams on eBot")
 		exit();
 	}
 	$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:participant');
-	if($result_token[1]==200 || $result_token[1]==206)
+	$range_start = 0;
+	$range_stop = 49;
+	if($result_token[1]==200)
 	{
-		$result_toornament = get_participants($id_toornament, $CONFIG['toornament_api'], $result_token[0], "0", "49");
+		$result_toornament = get_participants($id_toornament, $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
 		if($result_toornament[1]==200 || $result_toornament[1]==206)
 		{
+			if($result_toornament[1]==206)
+			{
+				$range_start = $range_start + 50;
+				$range_stop = $range_stop + 50;
+				$temp_result_toornament[1]=206;
+				while($temp_result_toornament[1]==206)
+				{
+					$temp_result_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
+					for($p=50;$p<count($temp_result_toornament[0])+50; $p++)
+					{
+						$result_toornament[0][$p] = $temp_result_toornament[0][$p-50];
+					}
+					$range_start = $range_start + 50;
+					$range_stop = $range_stop + 50;
+				}
+			}
 			if(count($result_toornament[0])>0)
 			{
-				if(count($result_toornament[0])==50)
-				{
-					$result2_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], "50", "99");
-					if($result2_toornament[1]==200 || $result2_toornament[1]==206)
-					{
-						for($p=50;$p<count($result2_toornament[0])+50; $p++)
-						{
-							$result_toornament[0][$p] = $result2_toornament[0][$p-50];
-						}
-						if(count($result2_toornament[0])==50)
-						{
-							$result3_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], "100", "149");
-							if($result3_toornament[1]==200 || $result3_toornament[1]==206)
-							{
-								for($p=100;$p<count($result3_toornament[0])+100; $p++)
-								{
-									$result_toornament[0][$p] = $result2_toornament[0][$p-100];
-								}
-							}
-						}
-					}
-				}
 				try 
 				{
 					for($i = 0; $i <= count($result_toornament[0])-1; $i++)
