@@ -61,7 +61,6 @@ $(document).ready(function(){
    $(".map").click(function() {
 		var id = $('#lobby_id').val();
 		var map = $(this).attr('id');
-		var old_code_html = "";
 		$.ajax({
 		   url : '../traitement/veto_map.php',
 		   type : 'POST',
