@@ -123,20 +123,38 @@ echo '<html>';
 					echo '<br>';
 				echo '</div>';
 		}
+			$range_start = 0;
+			$range_stop = 127;
 			$result_token = get_token($CONFIG['toornament_client_id'], $CONFIG['toornament_client_secret'], $CONFIG['toornament_api'], $BDD_ADMINAFK, 'organizer:result');
 			if($result_token[1]==200)
 			{
-				$result_toornament = get_matches($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0]);
 				$check_exist_scheduled_datetime = false;
-
-				for($i=0; $i < count($result_toornament[0]); $i++)
-				{
-					if(!empty($result_toornament[0][$i]->scheduled_datetime) && ($result_toornament[0][$i]->status == "pending" || $result_toornament[0][$i]->status == "running") && (isset($result_toornament[0][$i]->opponents[0]->participant->name) && isset($result_toornament[0][$i]->opponents[1]->participant->name))){$check_exist_scheduled_datetime = true;}
-				}
+				
+				$result_toornament = get_matches($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
 				if($result_toornament[1]==200 || $result_toornament[1]==206)
 				{
-				  if($check_exist_scheduled_datetime === true)
-				  {
+					if($result_toornament[1]==206)
+					{
+						$range_start = $range_start + 128;
+						$range_stop = $range_stop + 128;
+						$temp_result_toornament[1]=206;
+						while($temp_result_toornament[1]==206)
+						{
+							$temp_result_toornament = get_matches($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
+							for($p=128;$p<count($temp_result_toornament[0])+128; $p++)
+							{
+								$result_toornament[0][$p] = $temp_result_toornament[0][$p-128];
+							}
+							$range_start = $range_start + 128;
+							$range_stop = $range_stop + 128;
+						}
+					}
+					for($i=0; $i < count($result_toornament[0]); $i++)
+					{
+						if(!empty($result_toornament[0][$i]->scheduled_datetime) && ($result_toornament[0][$i]->status == "pending" || $result_toornament[0][$i]->status == "running") && (isset($result_toornament[0][$i]->opponents[0]->participant->name) && isset($result_toornament[0][$i]->opponents[1]->participant->name))){$check_exist_scheduled_datetime = true;}
+					}
+					if($check_exist_scheduled_datetime === true)
+					{
 					  echo "<div class='container".$before_embed."'>";
 						echo "<div class='card'>";
 							echo "<div class='card-header text-white bg-secondary'>Matches scheduled</div>";
@@ -180,14 +198,14 @@ echo '<html>';
 							echo "</div>";
 							echo "</div>";
 						echo "</div>";
-				  }
-				  else
-				  {
-					  echo '<br>';
-					  echo '<div class="container">';
-					  echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>There is no schedule<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-					  echo '</div>';
-				  }
+					}
+					else
+					{
+						  echo '<br>';
+						  echo '<div class="container">';
+						  echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>There is no schedule<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+						  echo '</div>';
+					}
 				}
 				else
 				{
