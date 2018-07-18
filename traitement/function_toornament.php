@@ -75,18 +75,24 @@ function get_token($client_id, $client_secret, $api_key, $bdd_adminafk, $token_s
 		$header         = substr($output, 0, $header_size);
 		$body           = json_decode(substr($output, $header_size));
 		$httpcode 		= curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		$access_token   = $body->access_token;
-		curl_close($curl);
-		try 
+		if(isset($body->access_token))
 		{
-			$req = $bdd_adminafk->prepare('UPDATE token SET number = ?, created_at = ?, end_at = ? WHERE name = ?');
-			$req->execute(array($access_token, date(' Y-m-d'), date('Y-m-d', strtotime("+1 days")), $token_scope));
-			$req->closeCursor();
+			$access_token   = $body->access_token;
 		}
-		catch(PDOException $e)
+		curl_close($curl);
+		if($httpcode == 200)
 		{
-			print "Error ! : " . $e->getMessage() . "<br/>";
-			die();
+			try 
+			{
+				$req = $bdd_adminafk->prepare('UPDATE token SET number = ?, created_at = ?, end_at = ? WHERE name = ?');
+				$req->execute(array($access_token, date(' Y-m-d'), date('Y-m-d', strtotime("+1 days")), $token_scope));
+				$req->closeCursor();
+			}
+			catch(PDOException $e)
+			{
+				print "Error ! : " . $e->getMessage() . "<br/>";
+				die();
+			}
 		}
 	}
 	return array($access_token, $httpcode);
@@ -142,7 +148,7 @@ function get_stages($id_toornament, $api_key)
 	return array($body, $httpcode);
 }
 
-function get_matches($id_toornament, $api_key, $access_token)
+function get_matches($id_toornament, $api_key, $access_token, $start, $stop)
 {
 	$curl = curl_init();
 	curl_setopt_array(
@@ -155,7 +161,7 @@ function get_matches($id_toornament, $api_key, $access_token)
 		CURLOPT_HTTPHEADER      => array(
 			'X-Api-Key: '.$api_key,
 			'Authorization: Bearer '.$access_token,
-			'Range: matches=0-127',
+			'Range: matches='.$start.'-'.$stop,
 			'Content-Type: application/json'
 		)
 	)); 
