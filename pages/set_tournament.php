@@ -69,10 +69,14 @@ if ($result_user['login']==$_SESSION['login'])
 	$level=1;
 }
 $season_display = check_season($BDD_EBOT);
+$season_display2 = check_season($BDD_EBOT);
 ?>
 <html>
 	<head>
-		<?php header_html('../', False, $CONFIG['url_glyphicon']); ?>
+		<?php 
+		header_html('../', False, $CONFIG['url_glyphicon']); 
+		echo '<script type="text/javascript" src="../js/input_file.js"></script>';
+		?>
 	</head>
 	<body>
 		<div class= "page-wrap">
@@ -232,7 +236,7 @@ $season_display = check_season($BDD_EBOT);
 													echo '<select id="season" name="season" class="form-control">';
 													echo '<option></option>';
 													$k=0;
-													while ($donnees = $season_display->fetch())
+													while ($donnees = $season_display2->fetch())
 													{
 														$season_id[$k] = $donnees['id'];
 														$season_name[$k] = $donnees['name'];

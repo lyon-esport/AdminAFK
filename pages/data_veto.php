@@ -88,192 +88,186 @@ else
 		exit();
 	}
 }
-echo '<html>';
-	echo '<head>';	
-		echo '<script type="text/javascript" src="../js/lobby_veto.js"></script>';
-	echo '</head>';
-	echo '<body>';
-		$reponse = $BDD_ADMINAFK->prepare('SELECT * FROM veto WHERE id = ?');
-		$reponse->execute(array($id));
-		$count_result = $reponse->rowCount();
-		if($count_result == "0")
+echo '<script type="text/javascript" src="../js/lobby_veto.js"></script>';
+$reponse = $BDD_ADMINAFK->prepare('SELECT * FROM veto WHERE id = ?');
+$reponse->execute(array($id));
+$count_result = $reponse->rowCount();
+if($count_result == "0")
+{
+	$_SESSION['state']='1';
+	$_SESSION['message']="There is an error in the lobby, you need to create a new room";
+	header('Location: '.$BASE_URL.'pages/veto.php');
+	exit();
+}
+$error_get_bdd = 0;
+while ($donnees = $reponse->fetch())
+{
+	if(isset($donnees['team_1'])){$team_1 = $donnees['team_1'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['team_2'])){$team_2 = $donnees['team_2'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['format'])){$format = $donnees['format'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['mode'])){$mode = $donnees['mode'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_dust2'])){$de_dust2 = $donnees['de_dust2'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_cache'])){$de_cache = $donnees['de_cache'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_mirage'])){$de_mirage = $donnees['de_mirage'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_overpass'])){$de_overpass = $donnees['de_overpass'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_nuke'])){$de_nuke = $donnees['de_nuke'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_cobblestone'])){$de_cobblestone = $donnees['de_cobblestone'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_train'])){$de_train = $donnees['de_train'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_inferno'])){$de_inferno = $donnees['de_inferno'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['ban_order'])){$ban_order = $donnees['ban_order'];}else{$error_get_bdd = 1;}
+}
+$reponse->closeCursor();
+if($error_get_bdd == 1)
+{
+	$_SESSION['state']='1';
+	$_SESSION['message']="There is an error in the lobby, you need to create a new room";
+	header('Location: '.$BASE_URL.'pages/veto.php');
+	exit();
+}
+$map = array(
+	"de_dust2" => $de_dust2,
+	"de_cache" => $de_cache,
+	"de_mirage" => $de_mirage,
+	"de_overpass" => $de_overpass,
+	"de_nuke" => $de_nuke,
+	"de_cobblestone" => $de_cobblestone,
+	"de_train" => $de_train,
+	"de_inferno" => $de_inferno
+);
+$veto_order = array();
+if($ban_order != "0")
+{
+	$split_veto_order = explode("/", $ban_order);
+	for($i=0;$i<count($split_veto_order);$i++)
+	{
+		$veto_order[$i] = $split_veto_order[$i];
+	}
+}
+$veto_mode = array();
+$split_mode = explode("/", $mode);
+for($i=0; $i<count($split_mode);$i++)
+{
+	$split_split_mode = explode(" ", $split_mode[$i]);
+	if($split_split_mode[0] != "Random")
+	{
+		$veto_mode[$i]['action'] = $split_split_mode[0];
+		if($split_split_mode[1] == "1")
 		{
-			$_SESSION['state']='1';
-			$_SESSION['message']="There is an error in the lobby, you need to create a new room";
-			header('Location: '.$BASE_URL.'pages/veto.php');
-			exit();
+			$veto_mode[$i]['team'] = $team_1;
 		}
-		$error_get_bdd = 0;
-		while ($donnees = $reponse->fetch())
+		else
 		{
-			if(isset($donnees['team_1'])){$team_1 = $donnees['team_1'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['team_2'])){$team_2 = $donnees['team_2'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['format'])){$format = $donnees['format'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['mode'])){$mode = $donnees['mode'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['de_dust2'])){$de_dust2 = $donnees['de_dust2'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['de_cache'])){$de_cache = $donnees['de_cache'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['de_mirage'])){$de_mirage = $donnees['de_mirage'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['de_overpass'])){$de_overpass = $donnees['de_overpass'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['de_nuke'])){$de_nuke = $donnees['de_nuke'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['de_cobblestone'])){$de_cobblestone = $donnees['de_cobblestone'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['de_train'])){$de_train = $donnees['de_train'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['de_inferno'])){$de_inferno = $donnees['de_inferno'];}else{$error_get_bdd = 1;}
-			if(isset($donnees['ban_order'])){$ban_order = $donnees['ban_order'];}else{$error_get_bdd = 1;}
+			$veto_mode[$i]['team'] = $team_2;
 		}
-		$reponse->closeCursor();
-		if($error_get_bdd == 1)
-		{
-			$_SESSION['state']='1';
-			$_SESSION['message']="There is an error in the lobby, you need to create a new room";
-			header('Location: '.$BASE_URL.'pages/veto.php');
-			exit();
-		}
-		$map = array(
-			"de_dust2" => $de_dust2,
-			"de_cache" => $de_cache,
-			"de_mirage" => $de_mirage,
-			"de_overpass" => $de_overpass,
-			"de_nuke" => $de_nuke,
-			"de_cobblestone" => $de_cobblestone,
-			"de_train" => $de_train,
-			"de_inferno" => $de_inferno
-		);
-		$veto_order = array();
-		if($ban_order != "0")
-		{
-			$split_veto_order = explode("/", $ban_order);
-			for($i=0;$i<count($split_veto_order);$i++)
-			{
-				$veto_order[$i] = $split_veto_order[$i];
-			}
-		}
-		$veto_mode = array();
-		$split_mode = explode("/", $mode);
-		for($i=0; $i<count($split_mode);$i++)
-		{
-			$split_split_mode = explode(" ", $split_mode[$i]);
-			if($split_split_mode[0] != "Random")
-			{
-				$veto_mode[$i]['action'] = $split_split_mode[0];
-				if($split_split_mode[1] == "1")
-				{
-					$veto_mode[$i]['team'] = $team_1;
-				}
-				else
-				{
-					$veto_mode[$i]['team'] = $team_2;
-				}
-			}
-			else
-			{
-				$veto_mode[$i]['action'] = $split_split_mode[0];
-			}
-		}
-		echo '<div class="container-fluids">';
-			echo '<div class="row">';
-				echo '<div class="col">';
-					echo '<h4 class="text-center">'.$team_1.'</h4>';
-				echo '</div>';
-				echo '<div class="col-6">';
-					echo '<br><br><br>';
-					///////////////////
-					/////MODAL/////////
-					///////////////////
-					echo '<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-					  echo '<div class="modal-dialog modal-lg modal-dialog-centered" role="document">';
-						echo '<div class="modal-content">';
-						  echo '<div class="modal-header">';
-							echo '<h5 class="modal-title" id="exampleModalLabel">Choose a map to ban</h5>';
-							echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-							  echo '<span aria-hidden="true">&times;</span>';
-							echo '</button>';
-						  echo '</div>';
-						  echo '<div class="modal-body">';
-							  echo '<div class="form-group">';
-								echo '<div class="col text-center">';
-									if($map['de_dust2']==1){echo '<img id="de_dust2" src="../images/veto/de_dust2.jpg" class="map veto_map rounded special_veto" alt="Dust2">';}
-									if($map['de_cache']==1){echo '<img id="de_cache" src="../images/veto/de_cache.jpg" class="map veto_map rounded special_veto" alt="Cache">';}
-									if($map['de_mirage']==1){echo '<img id="de_mirage" src="../images/veto/de_mirage.jpg" class="map veto_map rounded special_veto" alt="Mirage">';}
-									if($map['de_inferno']==1){echo '<img id="de_inferno" src="../images/veto/de_inferno.jpg" class="map veto_map rounded special_veto" alt="Inferno">';}
-									if($map['de_overpass']==1){echo '<img id="de_overpass" src="../images/veto/de_overpass.jpg" class="map veto_map rounded special_veto" alt="Overpass">';}
-									if($map['de_cobblestone']==1){echo '<img id="de_cobblestone" src="../images/veto/de_cobblestone.jpg" class="map veto_map rounded special_veto" alt="Cobblestone">';}
-									if($map['de_nuke']==1){echo '<img id="de_nuke" src="../images/veto/de_nuke.jpg" class="map veto_map rounded special_veto" alt="Nuke">';}
-									if($map['de_train']==1){echo '<img id="de_train" src="../images/veto/de_train.jpg" class="map veto_map rounded special_veto" alt="Train">';}
-								echo '</div>';
-							  echo '</div>';
-						  echo '</div>';
-						  echo '<div class="modal-footer">';
-							echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
-						  echo '</div>';
+	}
+	else
+	{
+		$veto_mode[$i]['action'] = $split_split_mode[0];
+	}
+}
+echo '<div class="container-fluids">';
+	echo '<div class="row">';
+		echo '<div class="col">';
+			echo '<h4 class="text-center">'.$team_1.'</h4>';
+		echo '</div>';
+		echo '<div class="col-6">';
+			echo '<br><br><br>';
+			///////////////////
+			/////MODAL/////////
+			///////////////////
+			echo '<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+			  echo '<div class="modal-dialog modal-lg modal-dialog-centered" role="document">';
+				echo '<div class="modal-content">';
+				  echo '<div class="modal-header">';
+					echo '<h5 class="modal-title" id="exampleModalLabel">Choose a map to ban</h5>';
+					echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+					  echo '<span aria-hidden="true">&times;</span>';
+					echo '</button>';
+				  echo '</div>';
+				  echo '<div class="modal-body">';
+					  echo '<div class="form-group">';
+						echo '<div class="col text-center">';
+							if($map['de_dust2']==1){echo '<img id="de_dust2" src="../images/veto/de_dust2.jpg" class="map veto_map rounded special_veto" alt="Dust2">';}
+							if($map['de_cache']==1){echo '<img id="de_cache" src="../images/veto/de_cache.jpg" class="map veto_map rounded special_veto" alt="Cache">';}
+							if($map['de_mirage']==1){echo '<img id="de_mirage" src="../images/veto/de_mirage.jpg" class="map veto_map rounded special_veto" alt="Mirage">';}
+							if($map['de_inferno']==1){echo '<img id="de_inferno" src="../images/veto/de_inferno.jpg" class="map veto_map rounded special_veto" alt="Inferno">';}
+							if($map['de_overpass']==1){echo '<img id="de_overpass" src="../images/veto/de_overpass.jpg" class="map veto_map rounded special_veto" alt="Overpass">';}
+							if($map['de_cobblestone']==1){echo '<img id="de_cobblestone" src="../images/veto/de_cobblestone.jpg" class="map veto_map rounded special_veto" alt="Cobblestone">';}
+							if($map['de_nuke']==1){echo '<img id="de_nuke" src="../images/veto/de_nuke.jpg" class="map veto_map rounded special_veto" alt="Nuke">';}
+							if($map['de_train']==1){echo '<img id="de_train" src="../images/veto/de_train.jpg" class="map veto_map rounded special_veto" alt="Train">';}
 						echo '</div>';
 					  echo '</div>';
-					echo '</div>';
-					////////////////////////////
-					echo '<ul id="preview" class="list-group">';
-					  $map_ban = "";
-					  $next_veto = "";
-					  $random_ban = "";
-					  $map_ban = "";
-					  $k = 0;
-					  for($i=0;$i<count($veto_mode);$i++)
-					  {
-						  if(isset($veto_order[$i]) && !empty($veto_order[$i]))
-						  {
-							  $map_ban = '<img style="max-width: auto; height: 3rem;" src="../images/veto/'.$veto_order[$i].'.jpg" class="rounded float-right" alt="'.$veto_order[$i].'">';
-						  }
-						  else if($k == 0)
-						  {
-							  $next_veto = '<button type="button" class="btn btn-light float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="map">Choose map</button>'; 
-							  if($veto_mode[$i]['action'] != "Random")
-							  {
-								$k++;
-							  }
-						  }
-						  else
-						  {
-							  $map_ban = '';
-						  }
-						  if($veto_mode[$i]['action'] == "Ban")
-						  {
-							  echo '<li class="list-group-item list-group-item-danger font-weight-bold">'.$veto_mode[$i]['team'].' BAN'.$map_ban.$next_veto.'</li>';
-						  }
-						  else if($veto_mode[$i]['action'] == "Pick")
-						  {
-							  echo '<li class="list-group-item list-group-item-primary font-weight-bold">'.$veto_mode[$i]['team'].' PICK'.$map_ban.$next_veto.'</li>';
-						  }
-						  else if($veto_mode[$i]['action'] == "Random")
-						  {
-							  if($k == 0 && !isset($veto_order[$i]))
-							  {
-								  $map_random = array();
-								  $e = 0;
-								  foreach ($map as $key => $value) 
-								  {
-									  if($value == "1")
-									  {
-										  $map_random[$e] = $key;
-										  $e++;
-									  }
-								  }
-								  $random_ban = $map_random[rand(0, count($map_random)-1)];
-								  update_ban_map($id, $random_ban, $BDD_ADMINAFK);
-								  $map_ban = '<img style="max-width: auto; height: 3rem;" src="../images/veto/'.$random_ban.'.jpg" class="rounded float-right" alt="'.$random_ban.'">';
-
-							  }
-							  echo '<li class="list-group-item list-group-item-warning font-weight-bold">RANDOM'.$map_ban.'</li>';
-						  }
-						  $map_ban = "";
-						  $next_veto = "";
-						  $random_ban = "";
-						  $map_ban = "";
-					  }
-					echo '</ul>';
+				  echo '</div>';
+				  echo '<div class="modal-footer">';
+					echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+				  echo '</div>';
 				echo '</div>';
-				echo '<div class="col">';
-					echo '<h4 class="text-center">'.$team_2.'</h4>';
-				echo '</div>';
+			  echo '</div>';
 			echo '</div>';
+			////////////////////////////
+			echo '<ul id="preview" class="list-group">';
+			  $map_ban = "";
+			  $next_veto = "";
+			  $random_ban = "";
+			  $map_ban = "";
+			  $k = 0;
+			  for($i=0;$i<count($veto_mode);$i++)
+			  {
+				  if(isset($veto_order[$i]) && !empty($veto_order[$i]))
+				  {
+					  $map_ban = '<img style="max-width: auto; height: 3rem;" src="../images/veto/'.$veto_order[$i].'.jpg" class="rounded float-right" alt="'.$veto_order[$i].'">';
+				  }
+				  else if($k == 0)
+				  {
+					  $next_veto = '<button type="button" class="btn btn-light float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="map">Choose map</button>'; 
+					  if($veto_mode[$i]['action'] != "Random")
+					  {
+						$k++;
+					  }
+				  }
+				  else
+				  {
+					  $map_ban = '';
+				  }
+				  if($veto_mode[$i]['action'] == "Ban")
+				  {
+					  echo '<li class="list-group-item list-group-item-danger font-weight-bold">'.$veto_mode[$i]['team'].' BAN'.$map_ban.$next_veto.'</li>';
+				  }
+				  else if($veto_mode[$i]['action'] == "Pick")
+				  {
+					  echo '<li class="list-group-item list-group-item-primary font-weight-bold">'.$veto_mode[$i]['team'].' PICK'.$map_ban.$next_veto.'</li>';
+				  }
+				  else if($veto_mode[$i]['action'] == "Random")
+				  {
+					  if($k == 0 && !isset($veto_order[$i]))
+					  {
+						  $map_random = array();
+						  $e = 0;
+						  foreach ($map as $key => $value) 
+						  {
+							  if($value == "1")
+							  {
+								  $map_random[$e] = $key;
+								  $e++;
+							  }
+						  }
+						  $random_ban = $map_random[rand(0, count($map_random)-1)];
+						  update_ban_map($id, $random_ban, $BDD_ADMINAFK);
+						  $map_ban = '<img style="max-width: auto; height: 3rem;" src="../images/veto/'.$random_ban.'.jpg" class="rounded float-right" alt="'.$random_ban.'">';
+
+					  }
+					  echo '<li class="list-group-item list-group-item-warning font-weight-bold">RANDOM'.$map_ban.'</li>';
+				  }
+				  $map_ban = "";
+				  $next_veto = "";
+				  $random_ban = "";
+				  $map_ban = "";
+			  }
+			echo '</ul>';
 		echo '</div>';
-	echo '</body>';
-echo '</html>';
+		echo '<div class="col">';
+			echo '<h4 class="text-center">'.$team_2.'</h4>';
+		echo '</div>';
+	echo '</div>';
+echo '</div>';
 ?>
