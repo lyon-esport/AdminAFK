@@ -237,7 +237,7 @@ if($choice=="Set Teams on eBot")
 	else
 	{
 		$_SESSION['state']="1";
-		$_SESSION['message']= "Something wrent wrong, Toornament API code error : ".$result_toornament[1];
+		$_SESSION['message']= "Something wrent wrong, Toornament API code error : ".$result_token[1];
 		header('Location: '.$BASE_URL.'pages/set_tournament.php');
 		exit();
 	}
