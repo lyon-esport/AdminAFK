@@ -14,7 +14,7 @@ AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 * Linux, Windows with a web server
 * MySQL 5.7.19 or newer
 * eBot 3.1 or newer
-* PHP 5.3 or newer
+* 5.29 > PHP < 7.0.24
 * CURL 7.51 or newer
 * SSL 1.0.2 or newer
 * PDO with the good drivers for your database
@@ -36,7 +36,7 @@ AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 
 * Public content –> http://localhost/adminafk/index.php
 * You can embed Public content for your own intranet by adding "?embed=1" like this : http://localhost/adminafk/pages/view_connect.php?embed=1
-* Admin content –> http://localhost/adminafk/admin.php
+* Admin content –> http://localhost/adminafk/admin.php (default : admin/admin)
 * AdminAFK setting –> http://localhost/adminafk/pages/setting.php
 * You got an example of csv file here : https://github.com/lyon-esport/AdminAFK
 
