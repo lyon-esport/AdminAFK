@@ -130,7 +130,7 @@ function get_steam_id($api_key, $steam_id_list)
 	$curl = curl_init();
 	curl_setopt_array(
 		$curl, array(
-		CURLOPT_URL             => 'https://api.steamid.eu/convert.php?api='.$api_key.'&input='.$steam_id_list.'&format=json',
+		CURLOPT_URL             => 'https://api.steamid.uk/convert.php?api='.$api_key.'&input='.$steam_id_list.'&format=json',
 		CURLOPT_RETURNTRANSFER  => true,
 		CURLOPT_VERBOSE         => true,
 		CURLOPT_HEADER          => true,
