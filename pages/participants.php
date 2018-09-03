@@ -531,7 +531,8 @@ echo '<html>';
 			
 			echo '<br>';
 			echo '<div class="container text-center">';
-				echo '<a href="https://www.toornament.com" target="blank"><img src="../images/other/PoweredbyToor_Black.png" width="120px" class="img-fluid" alt="Powered by Toornament"></a>';
+				echo '<a href="https://www.toornament.com" target="blank"><img src="../images/other/PoweredbyToor_Black.png" width="120px" class="img-fluid" alt="Powered by Toornament"></a>&nbsp&nbsp&nbsp&nbsp';
+				echo '<a href="https://steamid.uk" target="blank"><img src="../images/other/steamid.svg" width="120px" class="img-fluid" alt="steamID"></a>';
 			echo '</div>';
 			echo '<br>';
 		if($embed == false)
