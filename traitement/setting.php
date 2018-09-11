@@ -416,7 +416,7 @@ if($choice=="steam_api")
 	}
 	else
 	{
-		$vac_ban = "1";
+		$vac_ban = "0";
 	}
 	if(check_csrf("csrf_steam_api")==false)
 	{
