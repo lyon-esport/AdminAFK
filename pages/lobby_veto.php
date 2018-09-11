@@ -143,7 +143,7 @@ echo '<html>';
 			$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 			echo '<div class="container">';
 				echo '<div class="input-group mb-3">';
-				  echo '<input type="text" id="copy" class="form-control" value="'.$url.'" placeholder="URL of map veto" aria-label="URL of map veto" aria-describedby="basic-addon2">';
+				  echo '<input type="text" id="copy" class="form-control" value="'.$url.'" placeholder="URL of map veto" aria-label="URL of map veto" aria-describedby="basic-addon2" readonly>';
 				  echo '<div class="input-group-append">';
 					echo '<button id="button_copy" class="btn btn-outline-secondary" type="button" onclick="myFunction()">Copy</button>';
 				  echo '</div>';
