@@ -97,7 +97,7 @@ if(!isset($CONFIG['toornament_api']) || empty($CONFIG['toornament_api']) || !iss
 				<br>
 				<h1 class="text-center">Import matches from toornament</h1>
 				<br>
-				<h1 class="text-center">/!\ Work in progress 13/07 /!\</h1>
+				<h1 class="text-center">/!\ Waiting toornament structures API endpoint /!\</h1>
 			</div>
 			<br>
 			<br>

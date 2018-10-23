@@ -53,7 +53,7 @@ if (isset($_SESSION['login']))
 	if ($result_user['login']==$_SESSION['login'])
 	{
 		$level=2;
-		$level_char="Admin"; 
+		$level_char="Admin";
 		if($result_user['level']==1)
 		{
 			$level=1;
@@ -89,7 +89,7 @@ if (isset($_SESSION['login']))
 			?>
 			<div class="container">
 				<br>
-				<h1 class="text-center">AdminAFK V1.0 by -MoNsTeRRR</h1>
+				<h1 class="text-center">AdminAFK V1.74 by -MoNsTeRRR</h1>
 				<br>
 				<h6 class="text-center">Admin access</h6>
 				<br>
@@ -129,7 +129,7 @@ if (isset($_SESSION['login']))
 				echo '</div>';
 				echo '<br>';
 				new_crsf('csrf');
-				echo '<button type="submit" name="envoyer" class="btn text-white bg-secondary btn-lg btn-block">Envoyer</button>';
+				echo '<button type="submit" name="envoyer" class="btn text-white bg-secondary btn-lg btn-block">Login</button>';
 				echo '</div>';
 				echo '</form>';
 			}

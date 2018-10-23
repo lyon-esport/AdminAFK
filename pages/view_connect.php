@@ -109,6 +109,7 @@ echo '<html>';
 				echo '<h1 class="text-center">Connect team</h1>';
 				echo '<br>';
 			echo '</div>';
+    }
 			echo '<div class="container">';
 				echo '<div class="row">';
 					echo '<div class="col-3 align-self-center">';
@@ -122,7 +123,6 @@ echo '<html>';
 				echo '</div>';
 			echo '</div>';
 			echo '<br>';
-	}
 			echo '<div class="container-fluid">';
 				echo '<div class="card">';
 					echo '<div class="card-header text-white bg-secondary">Matches</div>';
@@ -133,7 +133,7 @@ echo '<html>';
 					echo "</div>";
 				echo "</div>";
 			echo "</div>";
-			echo '<fieldset disabled><input id="connect_save" type="hidden" class="form-control" value=""></input></fieldset>';
+			echo '<fieldset disabled><input id="connect_save" type="hidden" class="form-control" value=""></fieldset>';
 			echo '<script type="text/javascript" src="../js/view_connect.js"></script>';
 	if($embed == false)
 	{

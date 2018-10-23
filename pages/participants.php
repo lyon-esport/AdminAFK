@@ -136,18 +136,16 @@ echo '<html>';
 				{
 					if($result_toornament[1]==206)
 					{
-						$range_start = $range_start + 50;
-						$range_stop = $range_stop + 50;
 						$temp_result_toornament[1]=206;
 						while($temp_result_toornament[1]==206)
 						{
-							$temp_result_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
-							for($p=50;$p<count($temp_result_toornament[0])+50; $p++)
+                            $range_start = $range_start + 50;
+                            $range_stop = $range_stop + 50;
+						    $temp_result_toornament = get_participants($CONFIG['toornament_id'], $CONFIG['toornament_api'], $result_token[0], $range_start, $range_stop);
+							for($p=0;$p<count($temp_result_toornament[0]); $p++)
 							{
-								$result_toornament[0][$p] = $temp_result_toornament[0][$p-50];
+								$result_toornament[0][$range_start+$p] = $temp_result_toornament[0][$p];
 							}
-							$range_start = $range_start + 50;
-							$range_stop = $range_stop + 50;
 						}
 					}
 					if(count($result_toornament[0])>0)
