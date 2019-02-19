@@ -181,7 +181,7 @@ echo '<html>';
 													$name_team_b = $result_toornament[0][$i]->opponents[1]->participant->name;
 													$dt = new DateTime($result_toornament[0][$i]->scheduled_datetime, new DateTimeZone('UTC'));
 													$dt->setTimezone(new DateTimeZone('Europe/Paris'));
-													$schedule = date_format($dt, 'l w F Y - H:i:s');
+													$schedule = date_format($dt, 'l j F Y - H:i:s');
 													$status_match = $result_toornament[0][$i]->status;
 													echo "<tr>";
 														echo "<td class=text-center>".$name_team_a."</td>";
