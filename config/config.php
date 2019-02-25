@@ -36,15 +36,15 @@
 // termes.
 // ----------------------------------------------------------------------------
 
-$SERVERNAME_ADMINAFK = '';
-$PORT_ADMINAFK = '';
-$DBNAME_ADMINAFK = '';
-$USERNAME_ADMINAFK = '';
-$PASSWORD_ADMINAFK = '';
-$BASE_URL = '';
-$SERVERNAME_EBOT = '';
-$PORT_EBOT = '';
-$DBNAME_EBOT = '';
-$USERNAME_EBOT = '';
-$PASSWORD_EBOT = '';
+$SERVERNAME_ADMINAFK = ''; // MySQL IP to access to AdminAFK database
+$PORT_ADMINAFK = ''; // MySQL port to access to AdminAFK database
+$DBNAME_ADMINAFK = ''; // MySQL Database name to access to AdminAFK database
+$USERNAME_ADMINAFK = ''; // MySQL username to access to AdminAFK database
+$PASSWORD_ADMINAFK = ''; // MySQL password to access to AdminAFK database
+$BASE_URL = ''; //
+$SERVERNAME_EBOT = ''; // MySQL IP to access to eBot database
+$PORT_EBOT = ''; // MySQL port  to access to eBot database
+$DBNAME_EBOT = ''; // MySQL Database name to access to eBot database
+$USERNAME_EBOT = ''; // MySQL username  to access to eBot database
+$PASSWORD_EBOT = ''; // MySQL password to access to eBot database
 ?>
