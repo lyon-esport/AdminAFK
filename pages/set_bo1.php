@@ -157,6 +157,7 @@ $season_display = check_season($BDD_EBOT);
 									<option>de_cbble</option>
 									<option>de_nuke</option>
 									<option>de_train</option>
+									<option>de_vertigo</option>
 								</select>
 							</div>
 							<div class="col">

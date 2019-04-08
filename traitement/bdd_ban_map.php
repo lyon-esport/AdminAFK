@@ -50,6 +50,7 @@ function update_ban_map($id, $map, $BDD_ADMINAFK)
 		$map_status['de_cobblestone'] = $donnees['de_cobblestone'];
 		$map_status['de_train'] = $donnees['de_train'];
 		$map_status['de_inferno'] = $donnees['de_inferno'];
+		$map_status['de_vertigo'] = $donnees['de_vertigo'];
 		$ban_order = $donnees['ban_order'];
 	}
 	if(!isset($map_status[$map]) || empty($map_status[$map]) || $map_status[$map] == "0" ||!isset($ban_order))
@@ -89,6 +90,9 @@ function update_ban_map($id, $map, $BDD_ADMINAFK)
 			break;
 		case "de_inferno":
 			$req2 = $BDD_ADMINAFK->prepare("UPDATE veto SET de_inferno = 0, ban_order = ? WHERE id= ?");
+			break;
+		case "de_vertigo":
+			$req2 = $BDD_ADMINAFK->prepare("UPDATE veto SET de_vertigo = 0, ban_order = ? WHERE id= ?");
 			break;
 		default:
 			exit();

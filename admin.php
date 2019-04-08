@@ -89,7 +89,7 @@ if (isset($_SESSION['login']))
 			?>
 			<div class="container">
 				<br>
-				<h1 class="text-center">AdminAFK V1.74 by -MoNsTeRRR</h1>
+				<h1 class="text-center">AdminAFK V1.76 by -MoNsTeRRR</h1>
 				<br>
 				<h6 class="text-center">Admin access</h6>
 				<br>

@@ -171,7 +171,7 @@ function display_navbar($current, $path_redirect, $path_redirect_disco, $path_re
 			if($veto_view)
 			{
 				echo '<li class="nav-item '.$veto.'">';
-				 echo '<a class="nav-link" href="'.$path_redirect.'veto.php">Veto <span class="badge badge-primary">Béta</span></a>';
+				 echo '<a class="nav-link" href="'.$path_redirect.'veto.php">Veto</a>';
 				echo '</li>';
 			}
 			if(isset($api_key) && !empty($api_key) && isset($default_id_toornament) && !empty($default_id_toornament))
@@ -210,7 +210,7 @@ function display_navbar($current, $path_redirect, $path_redirect_disco, $path_re
 				echo '	<a class="nav-link dropdown-toggle '.$info_drop.'" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Infos</a>';
 				echo '	<div class="dropdown-menu">';
 				if($connect_team_view){echo '  	<a class="dropdown-item '.$view_connect.'" href="'.$path_redirect.'view_connect.php">Connect team</a>';}
-				if($veto_view){echo '  	<a class="dropdown-item '.$veto.'" href="'.$path_redirect.'veto.php">Veto <span class="badge badge-primary">Béta</span></a>';}
+				if($veto_view){echo '  	<a class="dropdown-item '.$veto.'" href="'.$path_redirect.'veto.php">Veto</a>';}
 				if(isset($api_key) && !empty($api_key) && isset($default_id_toornament) && !empty($default_id_toornament))
 				{
 					if($bracket_view){echo '<a class="dropdown-item '.$bracket.'" href="'.$path_redirect.'bracket.php">Bracket</a>';}

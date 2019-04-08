@@ -114,6 +114,7 @@ while ($donnees = $reponse->fetch())
 	if(isset($donnees['de_cobblestone'])){$de_cobblestone = $donnees['de_cobblestone'];}else{$error_get_bdd = 1;}
 	if(isset($donnees['de_train'])){$de_train = $donnees['de_train'];}else{$error_get_bdd = 1;}
 	if(isset($donnees['de_inferno'])){$de_inferno = $donnees['de_inferno'];}else{$error_get_bdd = 1;}
+	if(isset($donnees['de_vertigo'])){$de_vertigo = $donnees['de_vertigo'];}else{$error_get_bdd = 1;}
 	if(isset($donnees['ban_order'])){$ban_order = $donnees['ban_order'];}else{$error_get_bdd = 1;}
 }
 $reponse->closeCursor();
@@ -132,7 +133,8 @@ $map = array(
 	"de_nuke" => $de_nuke,
 	"de_cobblestone" => $de_cobblestone,
 	"de_train" => $de_train,
-	"de_inferno" => $de_inferno
+	"de_inferno" => $de_inferno,
+	"de_vertigo" => $de_vertigo
 );
 $veto_order = array();
 if($ban_order != "0")
@@ -195,6 +197,7 @@ echo '<div class="container-fluids">';
 							if($map['de_cobblestone']==1){echo '<img id="de_cobblestone" src="../images/veto/de_cobblestone.jpg" class="map veto_map rounded special_veto" alt="Cobblestone">';}
 							if($map['de_nuke']==1){echo '<img id="de_nuke" src="../images/veto/de_nuke.jpg" class="map veto_map rounded special_veto" alt="Nuke">';}
 							if($map['de_train']==1){echo '<img id="de_train" src="../images/veto/de_train.jpg" class="map veto_map rounded special_veto" alt="Train">';}
+							if($map['de_vertigo']==1){echo '<img id="de_vertigo" src="../images/veto/de_vertigo.jpg" class="map veto_map rounded special_veto" alt="Vertigo">';}
 						echo '</div>';
 					  echo '</div>';
 				  echo '</div>';

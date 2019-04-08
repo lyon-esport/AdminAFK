@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 14 juil. 2018 à 13:48
--- Version du serveur :  5.7.19
--- Version de PHP :  5.6.31
+-- Généré le :  lun. 08 avr. 2019 à 07:41
+-- Version du serveur :  5.7.23
+-- Version de PHP :  7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -172,6 +172,7 @@ CREATE TABLE IF NOT EXISTS `veto` (
   `de_cobblestone` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `de_train` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `de_inferno` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `de_vertigo` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `ban_order` varchar(3000) CHARACTER SET utf32 COLLATE utf32_unicode_ci DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

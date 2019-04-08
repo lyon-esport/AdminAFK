@@ -74,20 +74,44 @@ $(document).ready(function(){
 	});	
 });
 
-function myFunction() {
-  var copyText = document.getElementById("copy");
-  copyText.select();
-  document.execCommand("copy");
+function show()
+{
+	var copyText = document.getElementById("copy");
+	var button_show = document.getElementById("button_show");
+
+	if(copyText.type === "text")
+	{
+		copyText.type = "password";
+		button_show.innerHTML= "Show";
+	}
+	else
+	{
+		copyText.type = "text";
+		button_show.innerHTML= "Hide";
+	}
+}
+
+function copy() {
+  	var copyText = document.getElementById("copy");
+	var buttonCoppy = document.getElementById("button_copy");
+
+	var beforeChangeCopy = copyText.type === "text";
+
+	buttonCoppy.classList.remove("btn-outline-secondary");
+	buttonCoppy.classList.add("btn-outline-success");
+
+	copyText.type = "text";
+
+  	copyText.select();
+  	document.execCommand("copy");
+
+	beforeChangeCopy ? copyText.type = "text" : copyText.type = "password";
   
-  var buttonCoppy = document.getElementById("button_copy");
-  buttonCoppy.classList.remove("btn-outline-secondary");
-  buttonCoppy.classList.add("btn-outline-success");
-  
-  TimeOut = setTimeout(changeColorBack, 1000);
+  	TimeOut = setTimeout(changeColorBack, 1000);
 }
 
 function changeColorBack() {
-  var buttonCoppy = document.getElementById("button_copy");
-  buttonCoppy.classList.add("btn-outline-secondary");
-  buttonCoppy.classList.remove("btn-outline-success");
+	var buttonCoppy = document.getElementById("button_copy");
+	buttonCoppy.classList.add("btn-outline-secondary");
+	buttonCoppy.classList.remove("btn-outline-success");
 }

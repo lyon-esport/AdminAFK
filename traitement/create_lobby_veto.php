@@ -438,6 +438,26 @@ else
 	exit();
 }
 
+if(isset($_POST['de_vertigo']) && ($_POST['de_vertigo']=="yes" || $_POST['de_vertigo']=="no"))
+{
+    if($_POST['de_vertigo'] == "yes")
+    {
+        $de_vertigo = 1;
+        $number_map_selected++;
+    }
+    else
+    {
+        $de_vertigo = 0;
+    }
+}
+else
+{
+    $_SESSION['state']="1";
+    $_SESSION['message']="Error during map selection !";
+    header('Location: '.$BASE_URL.'pages/veto.php');
+    exit();
+}
+
 if($number_map_selected != 7)
 {
 	$_SESSION['state']="1";
@@ -456,8 +476,8 @@ if(check_csrf('csrf')==false)
 
 try
 {
-	$req = $BDD_ADMINAFK->prepare('INSERT INTO veto (date, team_1, team_2, format, mode, de_dust2, de_cache, de_mirage, de_overpass, de_nuke, de_cobblestone, de_train, de_inferno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-	$req->execute(array(date('Y-m-d H:i:s'), $name_1, $name_2, $format, $mode, $de_dust2, $de_cache, $de_mirage, $de_overpass, $de_nuke, $de_cobblestone, $de_train, $de_inferno));
+	$req = $BDD_ADMINAFK->prepare('INSERT INTO veto (date, team_1, team_2, format, mode, de_dust2, de_cache, de_mirage, de_overpass, de_nuke, de_cobblestone, de_train, de_inferno, de_vertigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+	$req->execute(array(date('Y-m-d H:i:s'), $name_1, $name_2, $format, $mode, $de_dust2, $de_cache, $de_mirage, $de_overpass, $de_nuke, $de_cobblestone, $de_train, $de_inferno, $de_vertigo));
 	$req->closeCursor();
 }
 catch (PDOException $e) 
