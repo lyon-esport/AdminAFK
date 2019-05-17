@@ -35,9 +35,9 @@
 # termes.
 # ----------------------------------------------------------------------------
 
-FROM php:7.0-apache as build
+FROM php:7.0-apache
 
-mAINTAINER Ludovic Ortega ludovic.ortega@lyon-esport.fr
+MAINTAINER Ludovic Ortega ludovic.ortega@lyon-esport.fr
 
 # update packages
 RUN apt-get update
