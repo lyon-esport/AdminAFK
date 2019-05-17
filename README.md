@@ -39,7 +39,7 @@ AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 
 ## Docker
 1. Download `Dockerfile`, `docker-compose.yml` and `adminafk.sql`
-2. Fill `ADMINAFK_SERVERNAME_EBOT` and `ADMINAFK_BASE_URL` on `docker-compose.yml` (if you use an other database for adminafk you can delete the mysql container and you need to edit EBOT variables). Description of variable is available on the repository `config/config.php`
+2. Fill `ADMINAFK_SERVERNAME_EBOT` and `ADMINAFK_BASE_URL` on `docker-compose.yml` (if you use an other database server for adminafk you can delete the mysql container). Description of variables is available on the repository `config/config.php`
 3. Run it with `docker-compose up -d`
 
 # Usage guide
