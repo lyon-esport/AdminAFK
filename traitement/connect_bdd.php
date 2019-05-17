@@ -51,7 +51,7 @@ try
 } 
 catch (PDOException $e) 
 {
-    print "Erreur ! : " . $e->getMessage() . "<br/>";
+    print "Error ! : " . $e->getMessage() . "<br/>";
     die();
 }
 try

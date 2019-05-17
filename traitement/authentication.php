@@ -37,6 +37,7 @@
 // ----------------------------------------------------------------------------
 
 include_once '../config/config.php';
+include_once 'check_config.php';
 include_once 'connect_bdd.php';
 include_once 'check_ip.php';
 include_once 'csrf.php';

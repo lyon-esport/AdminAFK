@@ -10,6 +10,7 @@ AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 * [SteamID API](https://steamid.eu/)
 
 # Requirements
+## Standard
 
 * Linux, Windows with a web server
 * MySQL 5.7.19 or newer
@@ -17,7 +18,10 @@ AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 * 5.29 > PHP < 7.0.24
 * CURL 7.51 or newer
 * SSL 1.0.2 or newer
-* PDO with the good drivers for your database
+* PDO with PDO MySQL driver
+
+## Docker
+* Docker-compose
 
 # Get your API key
 
@@ -26,11 +30,17 @@ AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 * [SteamID API](https://steamid.eu/steamidapi/)
 
 # Install guide
+## Standard
 
 1. Download –> https://github.com/lyon-esport/AdminAFK
 2. Extract the AdminAFK files
 3. Import the file adminafk.sql on a new database.
 4. Edit config/config.php with the good setting
+
+## Docker
+1. Download `Dockerfile`, `docker-compose.yml` and `adminafk.sql`
+2. Fill `ADMINAFK_SERVERNAME_EBOT` and `ADMINAFK_BASE_URL` on `docker-compose.yml` (if you use an other database for adminafk you can delete the mysql container and you need to edit EBOT variables). Description of variable is available on the repository `config/config.php`
+3. Run it with `docker-compose up -d`
 
 # Usage guide
 

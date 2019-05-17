@@ -37,10 +37,10 @@
 // ----------------------------------------------------------------------------
 
 include_once '../config/config.php';
-include_once '../traitement/check_config.php';
-include_once '../traitement/connect_bdd.php';
-include_once '../traitement/check_input.php';
-include_once '../traitement/bdd_ban_map.php';
+include_once 'check_config.php';
+include_once 'connect_bdd.php';
+include_once 'check_input.php';
+include_once 'bdd_ban_map.php';
 
 if(isset($_POST['id']) && !empty($_POST['id']))
 {

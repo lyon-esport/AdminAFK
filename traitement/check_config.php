@@ -35,6 +35,20 @@
 // pris connaissance de la licence CeCILL, et que vous en avez accepté les
 // termes.
 // ----------------------------------------------------------------------------
+if(!isset($SERVERNAME_ADMINAFK) || empty($SERVERNAME_ADMINAFK)){$SERVERNAME_ADMINAFK = getenv("ADMINAFK_SERVERNAME_ADMINAFK");}
+if(!isset($PORT_ADMINAFK) || empty($PORT_ADMINAFK)){$PORT_ADMINAFK = getenv("ADMINAFK_PORT_ADMINAFK");}
+if(!isset($DBNAME_ADMINAFK) || empty($DBNAME_ADMINAFK)){$DBNAME_ADMINAFK = getenv("ADMINAFK_DBNAME_ADMINAFK");}
+if(!isset($USERNAME_ADMINAFK) || empty($USERNAME_ADMINAFK)){$USERNAME_ADMINAFK = getenv("ADMINAFK_USERNAME_ADMINAFK");}
+if(!isset($PASSWORD_ADMINAFK) || empty($PASSWORD_ADMINAFK)){$PASSWORD_ADMINAFK = getenv("ADMINAFK_PASSWORD_ADMINAFK");}
+
+if(!isset($BASE_URL) || empty($BASE_URL)){$BASE_URL = getenv("ADMINAFK_BASE_URL");}
+
+if(!isset($SERVERNAME_EBOT) || empty($SERVERNAME_EBOT)){$SERVERNAME_EBOT = getenv("ADMINAFK_SERVERNAME_EBOT");}
+if(!isset($PORT_EBOT) || empty($PORT_EBOT)){$PORT_EBOT = getenv("ADMINAFK_PORT_EBOT");}
+if(!isset($DBNAME_EBOT) || empty($DBNAME_EBOT)){$DBNAME_EBOT = getenv("ADMINAFK_DBNAME_EBOT");}
+if(!isset($USERNAME_EBOT) || empty($USERNAME_EBOT)){$USERNAME_EBOT = getenv("ADMINAFK_USERNAME_EBOT");}
+if(!isset($PASSWORD_EBOT) || empty($PASSWORD_EBOT)){$PASSWORD_EBOT = getenv("ADMINAFK_PASSWORD_EBOT");}
+
 
 if(!isset($SERVERNAME_ADMINAFK) || empty($SERVERNAME_ADMINAFK) || !isset($PORT_ADMINAFK) || empty($PORT_ADMINAFK) || !isset($DBNAME_ADMINAFK) || empty($DBNAME_ADMINAFK) || !isset($USERNAME_ADMINAFK) || empty($USERNAME_ADMINAFK) || !isset($PASSWORD_ADMINAFK) || !isset($BASE_URL) || empty($BASE_URL) || !isset($SERVERNAME_EBOT) || empty($SERVERNAME_EBOT) || !isset($PORT_EBOT) || empty($PORT_EBOT) || !isset($DBNAME_EBOT) || empty($DBNAME_EBOT) || !isset($USERNAME_EBOT) || empty($USERNAME_EBOT) || !isset($PASSWORD_EBOT))
 {

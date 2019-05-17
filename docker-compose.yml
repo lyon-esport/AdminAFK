@@ -1,0 +1,40 @@
+version: '3'
+services:
+  adminafk:
+    build: .
+    container_name: adminafk
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - mysql
+    environment:
+      ADMINAFK_SERVERNAME_ADMINAFK: 'mysql'
+      ADMINAFK_PORT_ADMINAFK: '3306'
+      ADMINAFK_DBNAME_ADMINAFK: 'adminafk'
+      ADMINAFK_USERNAME_ADMINAFK: 'adminafk'
+      ADMINAFK_PASSWORD_ADMINAFK: 'adminafk'
+      ADMINAFK_BASE_URL: ''
+      ADMINAFK_SERVERNAME_EBOT: ''
+      ADMINAFK_PORT_EBOT: '3306'
+      ADMINAFK_DBNAME_EBOT: 'ebotv3'
+      ADMINAFK_USERNAME_EBOT: 'ebotv3'
+      ADMINAFK_PASSWORD_EBOT: 'ebotv3'
+
+
+  mysql:
+    image: mysql:5.7
+    container_name: adminafk-mysql
+    restart: always
+    command: mysqld --user=root
+    volumes:
+      - ./adminafk.sql:/docker-entrypoint-initdb.d/adminafk.sql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=adminafk
+      - MYSQL_USER=adminafk
+      - MYSQL_PASSWORD=adminafk
+      - MYSQL_ROOT_PASSWORD=MyAwesomePassword
+      - MYSQL_ROOT_HOST=%
+    command: mysqld --sql_mode="NO_ENGINE_SUBSTITUTION"
