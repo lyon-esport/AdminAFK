@@ -55,7 +55,7 @@ RUN apt-get -y install git
 RUN rm -Rf /var/www/html/*
 
 # download adminafk project
-RUN git clone https://github.com/M0NsTeRRR/AdminAFK.git
+RUN git clone https://github.com/lyon-esport/AdminAFK.git
 
 # copy file to /var/www
 RUN mv AdminAFK/* /var/www/html/
