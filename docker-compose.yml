@@ -1,7 +1,7 @@
 version: '3'
 services:
   adminafk:
-    build: .
+    image: lyonesport/adminafk:latest
     container_name: adminafk
     restart: always
     ports:

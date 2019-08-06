@@ -1,3 +1,6 @@
+![Docker Automated build](https://img.shields.io/docker/cloud/automated/lyonesport/adminafk?style=flat-square)
+![Docker Build Status](https://img.shields.io/docker/cloud/build/lyonesport/adminafk?style=flat-square)
+
 AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 
 **This tool uses :**
@@ -38,7 +41,7 @@ AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 4. Edit config/config.php with the good setting
 
 ## Docker
-1. Download `Dockerfile`, `docker-compose.yml` and `adminafk.sql`
+1. Download `docker-compose.yml` and `adminafk.sql`
 2. Fill `ADMINAFK_SERVERNAME_EBOT` and `ADMINAFK_BASE_URL` on `docker-compose.yml` (if you use an other database server for adminafk you can delete the mysql container). Description of variables is available on the repository `config/config.php`
 3. Run it with `docker-compose up -d`
 
