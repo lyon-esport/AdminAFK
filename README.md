@@ -1,5 +1,5 @@
-![Docker Automated build](https://img.shields.io/docker/cloud/automated/lyonesport/adminafk?style=flat-square)
-![Docker Build Status](https://img.shields.io/docker/cloud/build/lyonesport/adminafk?style=flat-square)
+[![Docker Automated build](https://img.shields.io/docker/cloud/automated/lyonesport/adminafk?style=flat-square)](https://hub.docker.com/r/lyonesport/adminafk)
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/lyonesport/adminafk?style=flat-square)](https://hub.docker.com/r/lyonesport/adminafk)
 
 AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 
