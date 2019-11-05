@@ -57,7 +57,7 @@ AdminAFK will make life better for CS:GO Admins (plugin working with eBot <3)
 
 The code is under CeCILL license.
 
-You can find all details here: http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
+You can find all details here: https://cecill.info/licences/Licence_CeCILL_V2.1-en.html
 
 # Credits
 
