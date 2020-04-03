@@ -6,8 +6,6 @@ services:
     restart: always
     ports:
       - "80:80"
-    links:
-      - mysql
     environment:
       ADMINAFK_SERVERNAME_ADMINAFK: 'mysql'
       ADMINAFK_PORT_ADMINAFK: '3306'
@@ -20,11 +18,13 @@ services:
       ADMINAFK_DBNAME_EBOT: 'ebotv3'
       ADMINAFK_USERNAME_EBOT: 'ebotv3'
       ADMINAFK_PASSWORD_EBOT: 'ebotv3'
+    depends_on:
+      - mysql
 
 
   mysql:
     image: mysql:5.7
-    container_name: adminafk-mysql
+    container_name: mysql
     restart: always
     command: mysqld --user=root
     volumes:
