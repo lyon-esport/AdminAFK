@@ -310,7 +310,7 @@ echo '<html>';
 														$name_[$k] = $result_toornament[0][$i]->lineup[$k]->name;
 														if(!empty($name_[$k]))
 														{
-															if(!empty($result_toornament[0][$i]->lineup[$k]->custom_fields->steam_id))
+															if(!empty($result_toornament[0][$i]->lineup[$k]->custom_fields->id_steam))
 															{
 																if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
 																{	
@@ -327,7 +327,7 @@ echo '<html>';
 																{
 																	$steam_player = "";
 																}
-																$steam_[$k] = $result_toornament[0][$i]->lineup[$k]->custom_fields->steam_id;
+																$steam_[$k] = $result_toornament[0][$i]->lineup[$k]->custom_fields->id_steam;
 																echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam_[$k].'" target="blank">'.$name_[$k].'</a>'.$steam_player.'</li>';
 															}
 															else
@@ -344,7 +344,7 @@ echo '<html>';
 												else
 												{
 													$name = $result_toornament[0][$i]->name;
-													if(!empty($result_toornament[0][$i]->custom_fields->steam_id))
+													if(!empty($result_toornament[0][$i]->custom_fields->id_steam))
 													{
 														if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
 														{	
@@ -361,7 +361,7 @@ echo '<html>';
 														{
 															$steam_player = "";
 														}
-														$steam = $result_toornament[0][$i]->custom_fields->steam_id;
+														$steam = $result_toornament[0][$i]->custom_fields->id_steam;
 														echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam.'" target="blank">'.$name.'</a>'.$steam_player.'</li>';
 													}
 													else
@@ -426,7 +426,7 @@ echo '<html>';
 														$name_[$k] = $result_toornament[0][$i]->lineup[$k]->name;
 														if(!empty($name_[$k]))
 														{
-															if(!empty($result_toornament[0][$i]->lineup[$k]->custom_fields->steam_id))
+															if(!empty($result_toornament[0][$i]->lineup[$k]->custom_fields->id_steam))
 															{
 																if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
 																{	
@@ -443,7 +443,7 @@ echo '<html>';
 																{
 																	$steam_player = "";
 																}
-																$steam_[$k] = $result_toornament[0][$i]->lineup[$k]->custom_fields->steam_id;
+																$steam_[$k] = $result_toornament[0][$i]->lineup[$k]->custom_fields->id_steam;
 																echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam_[$k].'" target="blank">'.$name_[$k].'</a>'.$steam_player.'</li>';
 															}
 															else
@@ -460,7 +460,7 @@ echo '<html>';
 												else
 												{
 													$name = $result_toornament[0][$i]->name;
-													if(!empty($result_toornament[0][$i]->custom_fields->steam_id))
+													if(!empty($result_toornament[0][$i]->custom_fields->id_steam))
 													{
 														if(isset($CONFIG['steam_api']) && !empty($CONFIG['steam_api']) && isset($CONFIG['steamid_api']) && !empty($CONFIG['steamid_api']))
 														{	
@@ -477,7 +477,7 @@ echo '<html>';
 														{
 															$steam_player = "";
 														}
-														$steam = $result_toornament[0][$i]->custom_fields->steam_id;
+														$steam = $result_toornament[0][$i]->custom_fields->id_steam;
 														echo '<li class="list-group-item"><a href="https://steamrep.com/search?q='.$steam.'" target="blank">'.$name.'</a>'.$steam_player.'</li>';
 													}
 													else

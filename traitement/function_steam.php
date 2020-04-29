@@ -48,11 +48,11 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 		{
 			for($q=0;$q<count($result_toornament[$p]->lineup);$q++)
 			{
-				if(isset($result_toornament[$p]->lineup[$q]->custom_fields->steam_id) && !empty($result_toornament[$p]->lineup[$q]->custom_fields->steam_id))
+				if(isset($result_toornament[$p]->lineup[$q]->custom_fields->id_steam) && !empty($result_toornament[$p]->lineup[$q]->custom_fields->id_steam))
 				{
-					$global_data_steam[$f]['steam_toornament'] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
-					$steam_split = explode(":", $result_toornament[$p]->lineup[$q]->custom_fields->steam_id);
-					$steam_split2 = explode("/", $result_toornament[$p]->lineup[$q]->custom_fields->steam_id);
+					$global_data_steam[$f]['steam_toornament'] = $result_toornament[$p]->lineup[$q]->custom_fields->id_steam;
+					$steam_split = explode(":", $result_toornament[$p]->lineup[$q]->custom_fields->id_steam);
+					$steam_split2 = explode("/", $result_toornament[$p]->lineup[$q]->custom_fields->id_steam);
 					if(isset($steam_split[2]))
 					{
 						$global_data_steam[$f]['steam'] = $steam_split[2];
@@ -63,15 +63,15 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 					}
 					else
 					{
-						$global_data_steam[$f]['steam'] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+						$global_data_steam[$f]['steam'] = $result_toornament[$p]->lineup[$q]->custom_fields->id_steam;
 					}
 					if(empty($steam_id_list[$e]))
 					{
-						$steam_id_list[$e] = $result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+						$steam_id_list[$e] = $result_toornament[$p]->lineup[$q]->custom_fields->id_steam;
 					}
 					else
 					{
-						$steam_id_list[$e] = $steam_id_list[$e].','.$result_toornament[$p]->lineup[$q]->custom_fields->steam_id;
+						$steam_id_list[$e] = $steam_id_list[$e].','.$result_toornament[$p]->lineup[$q]->custom_fields->id_steam;
 					}
 					$d++;
 					$f++;
@@ -85,11 +85,11 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 		}
 		else
 		{
-			if(isset($result_toornament[$p]->custom_fields->steam_id) && !empty($result_toornament[$p]->custom_fields->steam_id))
+			if(isset($result_toornament[$p]->custom_fields->id_steam) && !empty($result_toornament[$p]->custom_fields->id_steam))
 			{
-				$global_data_steam[$f]['steam_toornament'] = $result_toornament[$p]->custom_fields->steam_id;
-				$steam_split = explode(":", $result_toornament[$p]->custom_fields->steam_id);
-				$steam_split2 = explode("/", $result_toornament[$p]->custom_fields->steam_id);
+				$global_data_steam[$f]['steam_toornament'] = $result_toornament[$p]->custom_fields->id_steam;
+				$steam_split = explode(":", $result_toornament[$p]->custom_fields->id_steam);
+				$steam_split2 = explode("/", $result_toornament[$p]->custom_fields->id_steam);
 				if(isset($steam_split[2]))
 				{
 					$global_data_steam[$f]['steam'] = $steam_split[2];
@@ -100,15 +100,15 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 				}
 				else
 				{
-					$global_data_steam[$f]['steam'] = $result_toornament[$p]->custom_fields->steam_id;
+					$global_data_steam[$f]['steam'] = $result_toornament[$p]->custom_fields->id_steam;
 				}
 				if(empty($steam_id_list[$e]))
 				{
-					$steam_id_list[$e] = $result_toornament[$p]->custom_fields->steam_id;
+					$steam_id_list[$e] = $result_toornament[$p]->custom_fields->id_steam;
 				}
 				else
 				{
-					$steam_id_list[$e] = $steam_id_list[$e].','.$result_toornament[$p]->custom_fields->steam_id;
+					$steam_id_list[$e] = $steam_id_list[$e].','.$result_toornament[$p]->custom_fields->id_steam;
 				}
 				$d++;
 				$f++;
@@ -190,7 +190,7 @@ function display_vac_ban($result_toornament, $global_data_steam)
 {
 	$steam_player = "";
 	$key_searched = "";
-	$key_searched = recursive_array_search($result_toornament->custom_fields->steam_id, $global_data_steam);
+	$key_searched = recursive_array_search($result_toornament->custom_fields->id_steam, $global_data_steam);
 	if(isset($global_data_steam[$key_searched]['steam']))
 	{
 		if(isset($global_data_steam[$key_searched]['NumberOfVACBans']))
