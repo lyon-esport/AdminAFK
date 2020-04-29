@@ -75,7 +75,7 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 					}
 					$d++;
 					$f++;
-					if($d > 49)
+					if($d > 20)
 					{
 						$e++;
 						$d = 0;
@@ -112,7 +112,7 @@ function create_steamid_list_toornament($result_toornament, $global_data_steam)
 				}
 				$d++;
 				$f++;
-				if($d > 49)
+				if($d > 20)
 				{
 					$e++;
 					$d = 0;
@@ -130,7 +130,7 @@ function get_steam_id($api_key, $steam_id_list)
 	$curl = curl_init();
 	curl_setopt_array(
 		$curl, array(
-		CURLOPT_URL             => 'https://api.steamid.uk/convert.php?api='.$api_key.'&input='.$steam_id_list.'&format=json',
+		CURLOPT_URL             => 'https://steamidapi.uk/convert.php?api='.$api_key.'&input='.$steam_id_list.'&format=json',
 		CURLOPT_RETURNTRANSFER  => true,
 		CURLOPT_VERBOSE         => true,
 		CURLOPT_HEADER          => true,
